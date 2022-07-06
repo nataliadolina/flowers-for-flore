@@ -112,7 +112,7 @@ namespace TestAlgorithmA.Scripts.Logic
                         cell = point,
                         cameFrom = pathNode,
                         PathLengthFromStart = pathNode.PathLengthFromStart +
-                    GetDistanceBetweenNeighbours(),
+                        GetDistanceBetweenNeighbours(),
                         HeuristicEstimatePathLength = GetHeuristicPathLength(point, goal)
                     };
                     neighbourNodes.Add(neighbourNode);
