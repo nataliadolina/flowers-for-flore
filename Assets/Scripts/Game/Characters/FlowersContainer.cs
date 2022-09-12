@@ -1,59 +1,63 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DI.Attributes.Register;
+using DI.Kernel.Interfaces;
 
-public class FlowersContainer : MonoBehaviour
+namespace Game.Characters
 {
-    [SerializeField] private List<GameObject> flowerMeshes = null;
-    private Transform[] flowerTransforms = null;
-
-    [SerializeField] private float maxScore = 10f;
-    private List<float> scoresNeeded;
-
-    private int lastRotInd = 1;
-
-    private void Awake()
+    [Register]
+    internal class FlowersContainer : MonoBehaviour, IKernelEntity
     {
-        scoresNeeded = new List<float>();
-        flowerTransforms = GetComponentsInChildren<Transform>();
+        [SerializeField] private List<GameObject> flowerMeshes = null;
+        [SerializeField] private float maxScore = 10f;
 
-        SetScoreRange();
-    }
+        private Transform[] _flowerTransforms;
+        private List<float> _scoresNeeded = new List<float>();
 
-    private void SetScoreRange()
-    {
-        float step = maxScore / flowerMeshes.Count;
+        private int _lastRotInd = 0;
 
-        for (int i = 0; i < flowerMeshes.Count; i++)
+        private void Start()
         {
-            scoresNeeded.Add(step * i);
-        }
-    }
-
-    public void SetFlowerRotation(GameObject flower)
-    {
-        if (lastRotInd >= flowerTransforms.Length)
-        {
-            lastRotInd = 1;
+            _flowerTransforms = GetComponentsInChildren<Transform>();
+            SetScoreRange();
         }
 
-        Transform pos = flowerTransforms[lastRotInd];
-
-        flower.transform.rotation = pos.rotation;
-        flower.transform.position = pos.position;
-        lastRotInd++;
-    }
-
-    public GameObject GetMesh(float score)
-    {
-        for (int i = 0; i < scoresNeeded.Count - 1; i++)
+        private void SetScoreRange()
         {
-            if (score >= scoresNeeded[i] & score < scoresNeeded[i + 1])
+            float step = maxScore / flowerMeshes.Count;
+
+            for (int i = 0; i < flowerMeshes.Count; i++)
             {
-                return flowerMeshes[i];
+                _scoresNeeded.Add(step * i);
             }
         }
 
-        return flowerMeshes[flowerMeshes.Count - 1];
+        internal void SetFlowerRotation(GameObject flower)
+        {
+            if (_lastRotInd >= _flowerTransforms.Length)
+            {
+                _lastRotInd = 0;
+            }
+
+            Transform pos = _flowerTransforms[_lastRotInd];
+
+            flower.transform.rotation = pos.rotation;
+            flower.transform.position = pos.position;
+            _lastRotInd++;
+        }
+
+        internal GameObject GetMesh(float score)
+        {
+            for (int i = 0; i < _scoresNeeded.Count - 1; i++)
+            {
+                if (score >= _scoresNeeded[i] & score < _scoresNeeded[i + 1])
+                {
+                    return flowerMeshes[i];
+                }
+            }
+
+            return flowerMeshes[flowerMeshes.Count - 1];
+        }
     }
 }

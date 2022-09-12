@@ -5,6 +5,7 @@ using DI.Kernel.Interfaces;
 using Game.Characters.Interfaces;
 using Game.Characters.Abstract;
 using Game.Characters.Effects;
+using DI.Kernel.Enums;
 
 namespace Game.Characters
 {
@@ -83,7 +84,11 @@ namespace Game.Characters
         public void Open()
         {
             animator.SetTrigger("open");
+            
+            chestEntity.gameObject.SetActive(true);
+            
             Instantiate(chestEntity, transform.position, Quaternion.identity, null);
+            Debug.Log("Chest instantiate");
         }
 
         public void Destroy()

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DI.Kernel.Interfaces;
+using DI.Kernel.Enums;
 using System.Reflection;
+using DI.Kernel;
 
 namespace DI.Attributes.Construct
 {
@@ -12,6 +14,8 @@ namespace DI.Attributes.Construct
     {
         private const string NONUMERIC_METHOD_NAME = nameof(IKernel.GetReflectionInjection);
         private const string NUMERIC_METHOD_NAME = nameof(IKernel.GetReflectionInjections);
+
+        private IKernel kernel;
 
         internal object FindInstance(IKernel kernel, Type type)
         {

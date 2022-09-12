@@ -15,6 +15,9 @@ namespace Game.Characters.States.Managers
     [Register]
     internal class MovingAgent : MonoBehaviour, IKernelEntity
     {
+        [SerializeField] private StateEntityType startState;
+        [SerializeField] private RuntimeType startRuntime;
+
         private IStateEntity _currentState;
         private IRuntime _currentRuntime;
 
@@ -64,6 +67,13 @@ namespace Game.Characters.States.Managers
             {
                 _runtimeEntitiesMap.Add(runtime.RuntimeType, runtime);
             }
+        }
+
+        [RunMethod]
+        private void OnRun(IKernel kernel)
+        {
+            CurrentState = _stateEntitiesMap[startState];
+            _currentRuntime = _runtimeEntitiesMap[startRuntime];
         }
 
 #endregion

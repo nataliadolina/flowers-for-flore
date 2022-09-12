@@ -11,7 +11,7 @@ namespace Game.Characters.Abstract
 {
     [Register]
     [Register(typeof(IChestEntity))]
-    internal abstract class ChestEntityPhysics : MonoBehaviour, IChestEntity, IKernelEntity
+    internal abstract class ChestEntityPhysics : MonoBehaviour, IKernelEntity
     {
         private Collider[] _colliders;
         private Rigidbody[] _rigidbodies;

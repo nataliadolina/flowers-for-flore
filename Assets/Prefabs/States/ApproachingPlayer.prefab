@@ -43,5 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89e0adbc9dba1442b90a65faa9899f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextState: {fileID: 0}
+  nextState: 2
   speed: 3
+  beTakenByPlayerBeforeTerminate: 1

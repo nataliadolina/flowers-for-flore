@@ -10,7 +10,7 @@ using Game.Characters.Enums;
 namespace Game.Characters.Runtimes
 {
     [Register(typeof(IRuntime))]
-    internal class PersueWalkRuntime : IRuntime, IKernelEntity
+    internal class PersueWalkRuntime : MonoBehaviour, IRuntime, IKernelEntity
     {
         [SerializeField] private float persueDist;
 

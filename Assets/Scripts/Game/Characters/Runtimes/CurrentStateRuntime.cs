@@ -4,11 +4,12 @@ using DI.Attributes.Register;
 using Game.Characters.Runtimes.Interfaces;
 using Game.Characters.Enums;
 using DI.Kernel.Interfaces;
+using UnityEngine;
 
 namespace Game.Characters.Runtimes
 {
     [Register(typeof(IRuntime))]
-    internal class CurrentStateRuntime : IRuntime, IKernelEntity
+    internal class CurrentStateRuntime : MonoBehaviour, IRuntime, IKernelEntity
     {
         public RuntimeType RuntimeType { get => RuntimeType.CurrentState; }
 

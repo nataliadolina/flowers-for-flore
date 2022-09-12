@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DI.Kernel.Interfaces;
+using DI.Kernel.Enums;
 using System;
 using DI.Extensions;
 using System.Linq;
@@ -10,8 +11,14 @@ namespace DI.Kernel.Abstract
 {
     internal abstract class BaseMonoKernel : MonoBehaviour, IKernel
     {
-        private IDictionary<Type, List<object>> _injectionsMap = new Dictionary<Type, List<object>>();
+        private readonly IDictionary<Type, List<object>> _injectionsMap = new Dictionary<Type, List<object>>();
+
+        [SerializeField]
+        private KernelType kernelType;
+
         private IKernelEntity[] _injectionsToConstruct;
+
+        public KernelType KernelType { get => kernelType; }
 
         public void Initialize()
         {

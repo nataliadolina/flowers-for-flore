@@ -14,7 +14,7 @@ using DI.Kernel.Interfaces;
 namespace Game.Characters
 {
     [Register]
-    internal class Flower : ChestEntityPhysics, IKernelEntity, IScoreManager
+    internal class Flower : ChestEntityPhysics, IChestEntity, IKernelEntity, IScoreManager
     {
         [SerializeField] private float score = 0;
 
@@ -32,6 +32,10 @@ namespace Game.Characters
             }
         }
 
+        public void Initialize()
+        {
+            
+        }
         private void SetMesh()
         {
             if (currentMesh != null)
