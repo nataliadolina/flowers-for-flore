@@ -9,6 +9,7 @@ using DI.Attributes.Register;
 using DI.Attributes.Construct;
 using DI.Kernel.Interfaces;
 using Game.Characters.Interfaces;
+using Game.Characters.Handlers;
 
 namespace Game.Characters.States.Managers
 {
@@ -28,6 +29,11 @@ namespace Game.Characters.States.Managers
             _currentRuntime.Run();
         }
 
+        private void OnDistanceToPlayerChanged(float distanceToPlayer)
+        {
+            TerminateCurrentState();
+        }
+
         internal void ChangeCurrentRuntime(RuntimeType runtimeType)
         {
             _currentRuntime = _runtimeEntitiesMap[runtimeType];
@@ -43,6 +49,15 @@ namespace Game.Characters.States.Managers
             _currentState.Terminate();
         }
 
+#region MonoBehaviour
+
+        private void OnDestroy()
+        {
+            ClearSubstribtions();
+        }
+
+#endregion
+
 #region KernelEntity
 
         [ConstructField]
@@ -55,9 +70,13 @@ namespace Game.Characters.States.Managers
 
         private Dictionary<RuntimeType, IRuntime> _runtimeEntitiesMap = new Dictionary<RuntimeType, IRuntime>();
 
+        [ConstructField]
+        private DistanceToPlayerHandler _distanceToPlayerHandler;
+
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
+            Debug.Log("MovingAgent onConstruct");
             foreach (var entity in _stateEntities)
             {
                 _stateEntitiesMap.Add(entity.StateEntityType, entity);
@@ -72,8 +91,24 @@ namespace Game.Characters.States.Managers
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
+            SetSubscribtions();
+
             CurrentState = _stateEntitiesMap[startState];
             _currentRuntime = _runtimeEntitiesMap[startRuntime];
+        }
+
+#endregion
+
+#region Subscriptions
+
+        private void SetSubscribtions()
+        {
+            _distanceToPlayerHandler.onDistanceToPlayerChange += OnDistanceToPlayerChanged;
+        }
+
+        private void ClearSubstribtions()
+        {
+            _distanceToPlayerHandler.onDistanceToPlayerChange -= OnDistanceToPlayerChanged;
         }
 
 #endregion

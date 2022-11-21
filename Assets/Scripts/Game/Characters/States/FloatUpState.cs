@@ -3,6 +3,7 @@ using Game.Characters.States.Abstract;
 using Game.Characters.States.Managers;
 using Game.Characters.Interfaces;
 using DI.Attributes.Construct;
+using DI.Attributes.Register;
 using DI.Attributes.Run;
 using DI.Kernel.Interfaces;
 using Game.Characters.Abstract;
@@ -10,11 +11,13 @@ using Game.Characters.Enums;
 
 namespace Game.Characters.States
 {
+    [Register]
     internal class FloatUpState : BaseState
     {
         [SerializeField] private float height = 1f;
+        [SerializeField] private StateEntityType stateEntityType = StateEntityType.FlowerAppear;
+        public override StateEntityType StateEntityType { get => stateEntityType; }
 
-        public override StateEntityType StateEntityType { get => StateEntityType.FlowerAppear; }
         public override void Run()
         {
             float delta = _chestEntityTransform.position.y - _startPoint;
@@ -33,6 +36,7 @@ namespace Game.Characters.States
 
         private protected override void BeforeTerminate()
         {
+            Debug.Log("BeforeTerminate");
             _chestEntityPhysics.SetCollidersEnabled(true);
             _chest.Destroy();
         }
@@ -54,6 +58,11 @@ namespace Game.Characters.States
         {
             _chestEntityTransform = _chestEntityPhysics.transform;
             _startPoint = _chestEntityTransform.position.y;
+        }
+
+        [RunMethod]
+        private void OnRun(IKernel kernel)
+        {
             _chestEntityPhysics.SetCollidersEnabled(false);
         }
 

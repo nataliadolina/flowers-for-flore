@@ -8,9 +8,9 @@ namespace DI.Kernel.Interfaces
 {
     internal interface IKernel
     {
-        KernelType KernelType { get; }
-        void Initialize();
+        KernelTypeOwner KernelTypeOwner { get; }
         void RegisterInjection(Type type, object kernelEntity);
+        void Initialize();
         object ConstructInjection(Type type);
         List<object> GetReflectionInjections(Type type);
         object GetReflectionInjection(Type type);

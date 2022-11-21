@@ -11,7 +11,8 @@ namespace Game.Characters.Handlers
     {
         private void OnTriggerEnter(Collider other)
         {
-            if (check(other.transform))
+            Debug.Log(other);
+            if (other.GetComponent<Player>())
             {
                 _movingAgent.CurrentState.Terminate();
             }

@@ -50,6 +50,7 @@ namespace DI.Extensions
                             if (existedValue == null)
                             {
                                 fieldInfo.SetValue(kernelEntity, value.ToArray(elementType));
+                                Debug.Log($"Set value to {kernelEntity}");
                             }
                             else
                             {
@@ -92,6 +93,7 @@ namespace DI.Extensions
                 if (attribute != null)
                 {
                     object[] parameters = { kernel };
+                    Debug.Log($"ConstructFromMethodAtribute, kernelentity - {kernelEntity}");
                     methodInfo.Invoke(kernelEntity, parameters);
                 }
             }

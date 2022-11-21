@@ -14,11 +14,11 @@ namespace DI.Kernel.Abstract
         private readonly IDictionary<Type, List<object>> _injectionsMap = new Dictionary<Type, List<object>>();
 
         [SerializeField]
-        private KernelType kernelType;
+        private KernelTypeOwner kernelTypeOwner;
 
         private IKernelEntity[] _injectionsToConstruct;
 
-        public KernelType KernelType { get => kernelType; }
+        public KernelTypeOwner KernelTypeOwner { get => kernelTypeOwner; }
 
         public void Initialize()
         {
@@ -38,6 +38,7 @@ namespace DI.Kernel.Abstract
 
         private void ConstructInjections()
         {
+            Debug.Log(_injectionsToConstruct);
             Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.ConstructFromFieldAttribute(this, kernelEntityObject.GetType()));
             Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.ConstructFromMethodAttribute(this, kernelEntityObject.GetType()));
         }
@@ -54,6 +55,7 @@ namespace DI.Kernel.Abstract
                 _injectionsMap[registerType] = new List<object>();
             }
             _injectionsMap[registerType].Add(kernelEntity);
+            Debug.Log($"Injection registered, added kernelEntity {kernelEntity}");
         }
 
         public object ConstructInjection(Type type)

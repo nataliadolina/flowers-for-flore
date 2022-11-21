@@ -9,14 +9,17 @@ using DI.Attributes.Register;
 using DI.Attributes.Construct;
 using DI.Kernel.Interfaces;
 using Game.Characters.States.Managers;
+using DI.Kernel.Enums;
 
 
 namespace Game.Characters.States
 {
+    [Register]
     internal class PersueState : BaseState
     {
         [SerializeField] private bool beTakenByPlayerBeforeTerminate;
-        public override StateEntityType StateEntityType { get => StateEntityType.Persue; }
+        [SerializeField] private StateEntityType stateEntityType = StateEntityType.Persue;
+        public override StateEntityType StateEntityType { get => stateEntityType; }
 
         public override void Run()
         {
@@ -34,7 +37,7 @@ namespace Game.Characters.States
 
 #region Kernel Entity
 
-        [ConstructField]
+        [ConstructField(KernelTypeOwner.Player)]
         private Player _player;
 
         [ConstructField]

@@ -6,9 +6,11 @@ using Game.Characters.Enums;
 using DI.Attributes.Register;
 using DI.Attributes.Construct;
 using DI.Kernel.Interfaces;
+using DI.Kernel.Enums;
 
 namespace Game.Characters.States
 {
+    [Register]
     internal class AttackState : BaseState
     {
         internal event Action<float> onAttacked;
@@ -58,7 +60,7 @@ namespace Game.Characters.States
 
 #region Kernel Entity
 
-        [ConstructField]
+        [ConstructField(KernelTypeOwner.Player)]
         private Player _player;
 
         private Transform _playerTransform;

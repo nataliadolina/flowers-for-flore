@@ -15,7 +15,15 @@ namespace DI.Attributes.Construct
         private const string NONUMERIC_METHOD_NAME = nameof(IKernel.GetReflectionInjection);
         private const string NUMERIC_METHOD_NAME = nameof(IKernel.GetReflectionInjections);
 
-        private IKernel kernel;
+        private IKernel _kernel;
+        
+        public ConstructFieldAttribute(KernelTypeOwner ownerType = KernelTypeOwner.Default)
+        {
+            if (ownerType != KernelTypeOwner.Default)
+            {
+                _kernel = KernelManager.Instance.KernelOwnerMap[ownerType][0];
+            }
+        }
 
         internal object FindInstance(IKernel kernel, Type type)
         {
@@ -23,7 +31,9 @@ namespace DI.Attributes.Construct
                                 ?? throw new NullReferenceException($"Can't find method \'{NONUMERIC_METHOD_NAME}\' for kernel \'{kernel.GetType().Name}\'");
             var invokeArgs = new object[1];
             invokeArgs[0] = type;
-            return method.Invoke(kernel, invokeArgs);
+            var finalKernel = _kernel ?? kernel;
+            Debug.Log("Current method = " + finalKernel);
+            return method.Invoke(finalKernel, invokeArgs);
         }
 
         internal IEnumerable<object> FindInstances(IKernel kernel, Type type)
@@ -33,7 +43,9 @@ namespace DI.Attributes.Construct
 
             var invokeArgs = new object[1];
             invokeArgs[0] = type;
-            return (IEnumerable<object>)method.Invoke(kernel, invokeArgs);
+            var finalKernel = _kernel ?? kernel;
+            Debug.Log("Current method = " + finalKernel);
+            return (IEnumerable<object>)method.Invoke(finalKernel, invokeArgs);
         }
     }
 }

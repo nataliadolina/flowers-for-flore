@@ -9,17 +9,18 @@ using DI.Attributes.Construct;
 using DI.Attributes.Register;
 using DI.Attributes.Run;
 using DI.Kernel.Interfaces;
+using DI.Kernel.Enums;
 
 
 namespace Game.Characters
 {
     [Register]
+    [Register(typeof(ChestEntityPhysics))]
     internal class Flower : ChestEntityPhysics, IChestEntity, IKernelEntity, IScoreManager
     {
         [SerializeField] private float score = 0;
 
         private GameObject currentMesh = null;
-        private Rigidbody flowerRigidbody = null;
 
         public float Score 
         { get => score;
@@ -36,6 +37,7 @@ namespace Game.Characters
         {
             
         }
+
         private void SetMesh()
         {
             if (currentMesh != null)
@@ -45,11 +47,11 @@ namespace Game.Characters
 
             GameObject mesh = _flowersContainer.GetMesh(score);
             currentMesh = Instantiate(mesh, transform.position, Quaternion.identity, transform);
-            _flowersContainer.SetFlowerRotation(currentMesh);
         }
 
         internal void GiveToPlayer()
         {
+            _flowersContainer.SetFlowerRotation(currentMesh);
             _player.Take(this);
         }
 
@@ -58,7 +60,7 @@ namespace Game.Characters
             if (score <= 0f)
             {
                 score = 0f;
-                flowerRigidbody.isKinematic = false;
+                SetRigidbodiesEnabled(false);
                 transform.parent = null;
             }
 
@@ -67,15 +69,17 @@ namespace Game.Characters
 
 #region KernelEntity
 
-        [ConstructField]
+        [ConstructField(KernelTypeOwner.Player)]
         private FlowersContainer _flowersContainer;
 
-        [ConstructField]
+        [ConstructField(KernelTypeOwner.Player)]
         private Player _player;
 
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
+            Debug.Log(_player);
+            Debug.Log(_flowersContainer);
             SetMesh();
         }
 

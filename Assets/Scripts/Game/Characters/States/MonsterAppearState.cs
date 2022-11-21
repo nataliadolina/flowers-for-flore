@@ -3,6 +3,7 @@ using Game.Characters.States.Abstract;
 using Game.Characters.States.Managers;
 using Game.Characters.Interfaces;
 using DI.Attributes.Construct;
+using DI.Attributes.Register;
 using DI.Attributes.Run;
 using DI.Kernel.Interfaces;
 using Game.Characters.Abstract;
@@ -10,6 +11,7 @@ using Game.Characters.Enums;
 
 namespace Game.Characters.States
 {
+    [Register]
     internal class MonsterAppearState : BaseState
     {
         private float _lastPositionY;

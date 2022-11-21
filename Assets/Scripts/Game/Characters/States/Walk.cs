@@ -5,12 +5,14 @@ using UnityEngine.AI;
 using Game.Characters.States.Abstract;
 using Game.Characters.Enums;
 using DI.Attributes.Construct;
+using DI.Attributes.Register;
 using DI.Kernel.Interfaces;
 using Game.Characters.Abstract;
 using Game.Characters.States.Movements;
 
 namespace Game.Characters.States {
 
+    [Register]
     internal class Walk : BaseState
     {
         [SerializeField] private MovingSystem movingSystem;

@@ -59,7 +59,7 @@ namespace Game.Characters
         {
             if (other.GetComponent<Player>())
             {
-                _chestsController.CurrentChest = this;
+                
             }
         }
 
@@ -67,7 +67,7 @@ namespace Game.Characters
         {
             if (other.GetComponent<Player>())
             {
-                _chestsController.CurrentChest = this;
+                
             }
         }
 
@@ -75,7 +75,7 @@ namespace Game.Characters
         {
             if (other.GetComponent<Player>())
             {
-                _chestsController.CurrentChest = null;
+                
             }
         }
 
@@ -95,12 +95,5 @@ namespace Game.Characters
         {
             Destroy(gameObject);
         }
-
-#region KernelEntity
-
-        [ConstructField]
-        private ChestsController _chestsController;
-
-#endregion
     }
 }

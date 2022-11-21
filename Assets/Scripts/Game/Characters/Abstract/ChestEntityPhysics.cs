@@ -9,8 +9,6 @@ using DI.Attributes.Register;
 
 namespace Game.Characters.Abstract
 {
-    [Register]
-    [Register(typeof(IChestEntity))]
     internal abstract class ChestEntityPhysics : MonoBehaviour, IKernelEntity
     {
         private Collider[] _colliders;
@@ -27,6 +25,11 @@ namespace Game.Characters.Abstract
 
         internal void SetCollidersEnabled(bool value)
         {
+            if (_colliders == null)
+            {
+                return;
+            }
+
             foreach (Collider collider in _colliders)
             {
                 collider.enabled = value;
@@ -35,6 +38,11 @@ namespace Game.Characters.Abstract
 
         internal void SetRigidbodiesEnabled(bool value)
         {
+            if (_rigidbodies == null)
+            {
+                return;
+            }
+
             foreach (Rigidbody rigidbody in _rigidbodies)
             {
                 rigidbody.isKinematic = !value;

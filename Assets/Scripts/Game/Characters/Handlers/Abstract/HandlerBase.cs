@@ -2,6 +2,7 @@
 using System;
 using Game.Characters.Enums;
 using DI.Kernel.Interfaces;
+using DI.Attributes.Register;
 
 
 namespace Game.Characters.Handlers.Abstract

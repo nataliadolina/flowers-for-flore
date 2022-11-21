@@ -4,10 +4,11 @@ using UnityEngine;
 
 namespace DI.Kernel.Enums
 {
-    internal enum KernelType
+    internal enum KernelTypeOwner
     {
-        Chest,
-        ChestEntity,
-        Default
+        Player = 0,
+        Chest = 1,
+        ChestEntity = 2,
+        Default = 3
     }
 }
