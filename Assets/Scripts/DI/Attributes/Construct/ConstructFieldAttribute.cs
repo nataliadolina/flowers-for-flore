@@ -32,7 +32,6 @@ namespace DI.Attributes.Construct
             var invokeArgs = new object[1];
             invokeArgs[0] = type;
             var finalKernel = _kernel ?? kernel;
-            Debug.Log("Current method = " + finalKernel);
             return method.Invoke(finalKernel, invokeArgs);
         }
 
@@ -44,7 +43,6 @@ namespace DI.Attributes.Construct
             var invokeArgs = new object[1];
             invokeArgs[0] = type;
             var finalKernel = _kernel ?? kernel;
-            Debug.Log("Current method = " + finalKernel);
             return (IEnumerable<object>)method.Invoke(finalKernel, invokeArgs);
         }
     }

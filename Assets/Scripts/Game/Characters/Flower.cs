@@ -15,16 +15,32 @@ using DI.Kernel.Enums;
 namespace Game.Characters
 {
     [Register]
-    [Register(typeof(ChestEntityPhysics))]
+    [Register(typeof(IChestEntity))]
     internal class Flower : ChestEntityPhysics, IChestEntity, IKernelEntity, IScoreManager
     {
         [SerializeField] private float score = 0;
 
-        private GameObject currentMesh = null;
+        private GameObject _currentMesh = null;
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    _currentMesh.SetActive(value);
+                }
+            }
+        }
 
         public float Score 
-        { get => score;
-          set {
+        { 
+            get => score;
+            set
+            {
                 if (value != 0)
                 {
                     score += value;
@@ -32,26 +48,33 @@ namespace Game.Characters
                 }
             }
         }
+        
 
         public void Initialize()
         {
             
         }
 
+        private void OnFlowerAppear()
+        {
+            IsActive = true;
+        }
+
         private void SetMesh()
         {
-            if (currentMesh != null)
+            if (_currentMesh != null)
             {
-                Destroy(currentMesh);
+                Destroy(_currentMesh);
             }
 
             GameObject mesh = _flowersContainer.GetMesh(score);
-            currentMesh = Instantiate(mesh, transform.position, Quaternion.identity, transform);
+            _currentMesh = Instantiate(mesh, transform.position, Quaternion.identity, transform);
+            _isActive = false;
         }
 
         internal void GiveToPlayer()
         {
-            _flowersContainer.SetFlowerRotation(currentMesh);
+            _flowersContainer.SetFlowerRotation(_currentMesh);
             _player.Take(this);
         }
 
@@ -60,7 +83,7 @@ namespace Game.Characters
             if (score <= 0f)
             {
                 score = 0f;
-                SetRigidbodiesEnabled(false);
+                SetRigidbodiesEnabled(true);
                 transform.parent = null;
             }
 
@@ -78,8 +101,6 @@ namespace Game.Characters
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
-            Debug.Log(_player);
-            Debug.Log(_flowersContainer);
             SetMesh();
         }
 

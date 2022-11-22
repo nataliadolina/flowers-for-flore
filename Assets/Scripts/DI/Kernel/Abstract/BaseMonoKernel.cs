@@ -55,7 +55,6 @@ namespace DI.Kernel.Abstract
                 _injectionsMap[registerType] = new List<object>();
             }
             _injectionsMap[registerType].Add(kernelEntity);
-            Debug.Log($"Injection registered, added kernelEntity {kernelEntity}");
         }
 
         public object ConstructInjection(Type type)

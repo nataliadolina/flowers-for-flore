@@ -19,17 +19,14 @@ namespace DI.Attributes.Register
 
         internal void Register(IKernel kernel, object registerObject)
         {
-            Debug.Log($"register types - {_registerTypes}");
             
             if (CheckRegisterTypes())
             {
                 _registerTypes.ForEach(registerType => kernel.RegisterInjection(registerType, registerObject));
-                Debug.Log($"Kernel type - {kernel.KernelTypeOwner}, Register types - {String.Join(", ", _registerTypes)}");
             }
             else
             {
                 kernel.RegisterInjection(registerObject.GetType(), registerObject);
-                Debug.Log($"Kernel type - {kernel.KernelTypeOwner}, Register object - {registerObject}");
             }
         }
 

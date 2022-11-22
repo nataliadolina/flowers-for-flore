@@ -9,6 +9,7 @@ using System;
 namespace Game.Characters
 {
     [Register]
+    [Register(typeof(IBody))]
     internal class Player : MonoBehaviour, IKernelEntity, IScoreManager
     {
         [SerializeField] private float score = 0;

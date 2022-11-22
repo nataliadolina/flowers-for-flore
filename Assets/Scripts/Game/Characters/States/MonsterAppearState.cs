@@ -44,9 +44,6 @@ namespace Game.Characters.States
         [ConstructField]
         private IChest _chest;
 
-        [ConstructField]
-        private MovingAgent _movingAgent;
-
         private Transform _thisTransform;
 
         [ConstructField]

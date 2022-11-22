@@ -9,21 +9,29 @@ using DI.Attributes.Register;
 
 namespace Game.Characters.Abstract
 {
-    internal abstract class ChestEntityPhysics : MonoBehaviour, IKernelEntity
+    [Register]
+    [Register(typeof(IBody))]
+    internal abstract class ChestEntityPhysics : MonoBehaviour, IBody, IKernelEntity
     {
         private Collider[] _colliders;
         private Rigidbody[] _rigidbodies;
 
         protected Animator _animator;
+        
+        public Transform Transform { get; private set; }
 
-        [ConstructMethod]
-        private void OnConstruct(IKernel kernel)
+#region MonoBehaviour
+
+        private void Awake()
         {
             _colliders = GetComponentsInChildren<Collider>();
             _rigidbodies = GetComponentsInChildren<Rigidbody>();
+            Transform = transform;
         }
 
-        internal void SetCollidersEnabled(bool value)
+#endregion
+
+        public void SetCollidersEnabled(bool value)
         {
             if (_colliders == null)
             {
@@ -36,7 +44,7 @@ namespace Game.Characters.Abstract
             }
         }
 
-        internal void SetRigidbodiesEnabled(bool value)
+        public void SetRigidbodiesEnabled(bool value)
         {
             if (_rigidbodies == null)
             {

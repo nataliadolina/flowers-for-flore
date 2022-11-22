@@ -20,10 +20,12 @@ namespace Game.Characters.States.Abstract
 
         public void Terminate()
         {
+            BeforeTerminate();
             _movingAgent.ChangeCurrentState(nextState);
         }
 
         private protected virtual void BeforeTerminate() { }
+        public virtual void OnStartState() { }
 
 #region Kernel Entity
 

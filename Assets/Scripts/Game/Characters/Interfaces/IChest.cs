@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Characters.Interfaces
 {
-    internal interface IChest
+    internal interface IChest: ITransform
     {
         void Open();
         void Destroy();

@@ -10,7 +10,7 @@ using DI.Attributes.Construct;
 using DI.Kernel.Interfaces;
 using Game.Characters.States.Managers;
 using DI.Kernel.Enums;
-
+using Game.Characters.Abstract;
 
 namespace Game.Characters.States
 {
@@ -35,6 +35,11 @@ namespace Game.Characters.States
             }
         }
 
+        public override void OnStartState()
+        {
+            _body.SetCollidersEnabled(true);
+        }
+
 #region Kernel Entity
 
         [ConstructField(KernelTypeOwner.Player)]
@@ -42,6 +47,9 @@ namespace Game.Characters.States
 
         [ConstructField]
         private IChestEntity _chestEntity;
+
+        [ConstructField]
+        private ChestEntityPhysics _body;
 
         private Transform _playerTransform;
         private Transform _thisTransform;

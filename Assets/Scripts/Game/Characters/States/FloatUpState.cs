@@ -11,11 +11,11 @@ using Game.Characters.Enums;
 
 namespace Game.Characters.States
 {
-    [Register]
     internal class FloatUpState : BaseState
     {
         [SerializeField] private float height = 1f;
         [SerializeField] private StateEntityType stateEntityType = StateEntityType.FlowerAppear;
+
         public override StateEntityType StateEntityType { get => stateEntityType; }
 
         public override void Run()
@@ -36,34 +36,32 @@ namespace Game.Characters.States
 
         private protected override void BeforeTerminate()
         {
-            Debug.Log("BeforeTerminate");
-            _chestEntityPhysics.SetCollidersEnabled(true);
             _chest.Destroy();
         }
 
-#region Kernel Entity
+        public override void OnStartState()
+        {
+            _chestEntity.IsActive = true;
+        }
 
-        [ConstructField]
-        private ChestEntityPhysics _chestEntityPhysics;
+
+#region Kernel Entity
 
         private Transform _chestEntityTransform;
 
         [ConstructField]
         private IChest _chest;
 
-        private float _startPoint;
+        [ConstructField]
+        private IChestEntity _chestEntity;
 
-        [ConstructMethod]
-        private void OnConstruct(IKernel kernel)
-        {
-            _chestEntityTransform = _chestEntityPhysics.transform;
-            _startPoint = _chestEntityTransform.position.y;
-        }
+        private float _startPoint;
 
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
-            _chestEntityPhysics.SetCollidersEnabled(false);
+            _chestEntityTransform = kernel.GetInjection<IBody>().Transform;
+            _startPoint = _chestEntityTransform.position.y;
         }
 
 #endregion

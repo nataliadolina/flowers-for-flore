@@ -8,5 +8,6 @@ namespace Game.Characters.Interfaces
 
         void Run();
         void Terminate();
+        void OnStartState();
     }
 }
