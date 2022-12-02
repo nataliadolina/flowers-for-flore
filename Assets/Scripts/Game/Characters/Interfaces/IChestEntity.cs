@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Game.Characters.Interfaces
 {
-    internal interface IChestEntity : ISetActive
+    internal interface IChestEntity : IOwnerType, ISetActive
     {
-        void Initialize();
+
     }
 }

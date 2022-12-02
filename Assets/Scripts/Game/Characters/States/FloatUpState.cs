@@ -36,7 +36,8 @@ namespace Game.Characters.States
 
         private protected override void BeforeTerminate()
         {
-            _chest.Destroy();
+            _chestEntityTransform.parent = null;
+            Destroy(_chestGameObject);
         }
 
         public override void OnStartState()
@@ -49,8 +50,7 @@ namespace Game.Characters.States
 
         private Transform _chestEntityTransform;
 
-        [ConstructField]
-        private IChest _chest;
+        private GameObject _chestGameObject;
 
         [ConstructField]
         private IChestEntity _chestEntity;
@@ -62,6 +62,7 @@ namespace Game.Characters.States
         {
             _chestEntityTransform = kernel.GetInjection<IBody>().Transform;
             _startPoint = _chestEntityTransform.position.y;
+            _chestGameObject = kernel.GetInjection<IChest>().Transform.gameObject;
         }
 
 #endregion

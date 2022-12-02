@@ -3,17 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DI.Kernel.Interfaces;
+using DI.Kernel.Enums;
+using DI.Kernel;
 
 namespace DI.Attributes.Construct
 {
     [AttributeUsage(AttributeTargets.Method)]
     internal class ConstructMethodAttribute : Attribute
     {
-        private Type _kernelType;
-        internal IKernel Kernel;
-        internal ConstructMethodAttribute(Type kernelType = null)
+        private IKernel _kernel = null;
+        internal ConstructMethodAttribute(KernelTypeOwner ownerType = KernelTypeOwner.Default)
         {
-            _kernelType = kernelType;
+            if (ownerType == KernelTypeOwner.Default)
+            {
+                _kernel = KernelManager.Instance.KernelOwnerMap[ownerType][0];
+            }
+        }
+
+        internal object[] GetParametres(IKernel kernel)
+        {
+            if (_kernel != null)
+            {
+                return new object[] { _kernel };
+            }
+            return new object[] { kernel};
         }
     }
 }

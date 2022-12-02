@@ -1,38 +1,47 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DI.Kernel.Interfaces;
 using DI.Attributes.Register;
+using DI.Attributes.Construct;
 using Game.Characters.Interfaces;
 using System;
+using DI.Kernel.Enums;
+using Game.Characters.Enums;
+using Game.Characters.Handlers;
 
 namespace Game.Characters
 {
     [Register]
-    [Register(typeof(IBody))]
-    internal class Player : MonoBehaviour, IKernelEntity, IScoreManager
+    internal class Player : MonoBehaviour, IKernelEntity
     {
         [SerializeField] private float score = 0;
+        [SerializeField] private TriggerEnterHandler triggerEnterHandler;
 
-        public float Score
+        private void OnChestEntityContactedPlayer(Transform chestEntityTransform, OwnerType ownerType)
         {
-            get => score;
-        }
-
-        public float HitPoint
-        {
-            set
+            if (ownerType == OwnerType.Flower)
             {
-                score += value;
-                ChangeLook(value);
+                _flowerContainer.SetFlowerParent(chestEntityTransform);
             }
         }
 
-        internal void Take(IChestEntity _chestEntity)
-        {
 
+#region Kernel Entity
+
+        // toDo: сделать возможным извлекание инъекций из других ядер (ошибка KeyNotFound: ConstructField выполняется раньше чем Register в ядре ChestEntity)
+        // решение - сначала вызывать Register во всех ядрах, а затем Construct во всех ядрах?
+        [ConstructField(KernelTypeOwner.ChestEntity)]
+        private IPlayerContact _playerContact;
+
+        [ConstructField]
+        private FlowerContainer _flowerContainer;
+
+        private void SetSubstriptions()
+        {
+            _playerContact.onChestEntityContancedPlayer += OnChestEntityContactedPlayer;
         }
 
-        private void ChangeLook(float damage) { }
+#endregion
     }
 }

@@ -15,24 +15,23 @@ using DI.Kernel.Enums;
 namespace Game.Characters
 {
     [Register]
-    [Register(typeof(IChestEntity))]
-    internal class Flower : ChestEntityPhysics, IChestEntity, IKernelEntity, IScoreManager
+    internal class Flower : BaseChestEntity, IScoreManager
     {
         [SerializeField] private float score = 0;
+        [SerializeField] private List<GameObject> flowerMeshes = null;
+        [SerializeField] private float maxScore = 10f;
 
-        private GameObject _currentMesh = null;
+        private List<float> _scoresNeeded = new List<float>();
 
-        private bool _isActive;
-        public bool IsActive
+#region IScoreManager
+
+        public void SetScoreRange()
         {
-            get => _isActive;
-            set
+            float step = maxScore / flowerMeshes.Count;
+
+            for (int i = 0; i < flowerMeshes.Count; i++)
             {
-                if (_isActive != value)
-                {
-                    _isActive = value;
-                    _currentMesh.SetActive(value);
-                }
+                _scoresNeeded.Add(step * i);
             }
         }
 
@@ -48,12 +47,21 @@ namespace Game.Characters
                 }
             }
         }
-        
 
-        public void Initialize()
+        public GameObject GetLook(float score)
         {
-            
+            for (int i = 0; i < _scoresNeeded.Count - 1; i++)
+            {
+                if (score >= _scoresNeeded[i] & score < _scoresNeeded[i + 1])
+                {
+                    return flowerMeshes[i];
+                }
+            }
+
+            return flowerMeshes[flowerMeshes.Count - 1];
         }
+
+#endregion
 
         private void OnFlowerAppear()
         {
@@ -67,15 +75,8 @@ namespace Game.Characters
                 Destroy(_currentMesh);
             }
 
-            GameObject mesh = _flowersContainer.GetMesh(score);
-            _currentMesh = Instantiate(mesh, transform.position, Quaternion.identity, transform);
-            _isActive = false;
-        }
-
-        internal void GiveToPlayer()
-        {
-            _flowersContainer.SetFlowerRotation(_currentMesh);
-            _player.Take(this);
+            GameObject look = GetLook(score);
+            _currentMesh = Instantiate(look, transform.position, Quaternion.identity, transform);
         }
 
         private void ChangeLook()
@@ -92,15 +93,10 @@ namespace Game.Characters
 
 #region KernelEntity
 
-        [ConstructField(KernelTypeOwner.Player)]
-        private FlowersContainer _flowersContainer;
-
-        [ConstructField(KernelTypeOwner.Player)]
-        private Player _player;
-
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
+            IsActive = false;
             SetMesh();
         }
 

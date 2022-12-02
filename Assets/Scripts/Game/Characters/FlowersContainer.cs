@@ -7,33 +7,18 @@ using DI.Kernel.Interfaces;
 namespace Game.Characters
 {
     [Register]
-    internal class FlowersContainer : MonoBehaviour, IKernelEntity
+    internal class FlowerContainer : MonoBehaviour, IKernelEntity
     {
-        [SerializeField] private List<GameObject> flowerMeshes = null;
-        [SerializeField] private float maxScore = 10f;
-
         private Transform[] _flowerTransforms;
-        private List<float> _scoresNeeded = new List<float>();
 
         private int _lastRotInd = 0;
 
         private void Start()
         {
             _flowerTransforms = GetComponentsInChildren<Transform>();
-            SetScoreRange();
         }
 
-        private void SetScoreRange()
-        {
-            float step = maxScore / flowerMeshes.Count;
-
-            for (int i = 0; i < flowerMeshes.Count; i++)
-            {
-                _scoresNeeded.Add(step * i);
-            }
-        }
-
-        internal void SetFlowerRotation(GameObject flower)
+        private void SetFlowerRotation(Transform flowerTransform)
         {
             if (_lastRotInd >= _flowerTransforms.Length)
             {
@@ -42,22 +27,15 @@ namespace Game.Characters
 
             Transform pos = _flowerTransforms[_lastRotInd];
 
-            flower.transform.rotation = pos.rotation;
-            flower.transform.position = pos.position;
+            flowerTransform.rotation = pos.rotation;
+            flowerTransform.position = pos.position;
             _lastRotInd++;
         }
 
-        internal GameObject GetMesh(float score)
+        internal void SetFlowerParent(Transform flowerTransform)
         {
-            for (int i = 0; i < _scoresNeeded.Count - 1; i++)
-            {
-                if (score >= _scoresNeeded[i] & score < _scoresNeeded[i + 1])
-                {
-                    return flowerMeshes[i];
-                }
-            }
-
-            return flowerMeshes[flowerMeshes.Count - 1];
+            flowerTransform.parent = transform;
+            SetFlowerRotation(flowerTransform);
         }
     }
 }

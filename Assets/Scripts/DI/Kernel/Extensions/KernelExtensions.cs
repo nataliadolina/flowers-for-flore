@@ -92,7 +92,7 @@ namespace DI.Extensions
                 var attribute = methodInfo.GetCustomAttribute<ConstructMethodAttribute>();
                 if (attribute != null)
                 {
-                    object[] parameters = { kernel };
+                    object[] parameters = attribute.GetParametres(kernel);
                     Debug.Log($"ConstructFromMethodAtribute, kernelentity - {kernelEntity}");
                     methodInfo.Invoke(kernelEntity, parameters);
                 }

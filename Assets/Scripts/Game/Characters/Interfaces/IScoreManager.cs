@@ -6,6 +6,10 @@ namespace Game.Characters.Interfaces
 {
     internal interface IScoreManager
     {
+        void SetScoreRange();
+
+        GameObject GetLook(float score);
+
         float Score { get; }
     }
 }

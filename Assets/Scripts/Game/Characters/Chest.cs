@@ -9,11 +9,9 @@ using DI.Kernel.Enums;
 
 namespace Game.Characters
 {
-    [Register]
+    [Register(typeof(IChest))]
     internal class Chest : MonoBehaviour, IKernelEntity, IChest
     {
-        [SerializeField] private ChestEntityPhysics chestEntity;
-
         [SerializeField] private Particles appearParticles;
         [SerializeField] private Particles destroyParticles;
 
@@ -40,19 +38,23 @@ namespace Game.Characters
                 appearParticles.IsActivated = value;
             }
         }
-        
+
+#region ITransform
+
+        public Transform Transform { get; private set; }
+
+#endregion
+
 #region MonoBehaviour
+
+        private void Awake()
+        {
+            Transform = transform;
+        }
 
         private void Start()
         {
             animator = GetComponent<Animator>();
-            selectionAura.SetActive(false);
-        }
-
-        private void OnDestroy()
-        {
-            destroyParticles.transform.parent = null;
-            destroyParticles.IsActivated = true;
         }
 
         protected void OnTriggerEnter(Collider other)
@@ -84,10 +86,9 @@ namespace Game.Characters
         public void Open()
         {
             animator.SetTrigger("open");
+
+            _chestEntitySetActive.IsActive = true;
             
-            chestEntity.gameObject.SetActive(true);
-            
-            Instantiate(chestEntity, transform.position, Quaternion.identity, null);
             Debug.Log("Chest instantiate");
         }
 
@@ -95,5 +96,18 @@ namespace Game.Characters
         {
             Destroy(gameObject);
         }
+
+#region Kernel Entity
+
+        private ISetActive _chestEntitySetActive;
+
+        [ConstructMethod]
+        private void OnConstruct(IKernel kernel)
+        {
+            _chestEntitySetActive = kernel.GetInjection<IChestEntity>();
+        }
+
+#endregion
+
     }
 }

@@ -17,7 +17,6 @@ namespace Game.Characters.States
     [Register]
     internal class PersueState : BaseState
     {
-        [SerializeField] private bool beTakenByPlayerBeforeTerminate;
         [SerializeField] private StateEntityType stateEntityType = StateEntityType.Persue;
         public override StateEntityType StateEntityType { get => stateEntityType; }
 
@@ -25,14 +24,6 @@ namespace Game.Characters.States
         {
             _thisTransform.LookAt(_playerTransform.position + new Vector3(0, _halfPlayerHeight, 0));
             _thisTransform.position += transform.forward * speed * Time.deltaTime;
-        }
-
-        private protected override void BeforeTerminate()
-        {
-            if (beTakenByPlayerBeforeTerminate)
-            {
-                _player.Take(_chestEntity);
-            }
         }
 
         public override void OnStartState()
@@ -49,7 +40,7 @@ namespace Game.Characters.States
         private IChestEntity _chestEntity;
 
         [ConstructField]
-        private ChestEntityPhysics _body;
+        private IBody _body;
 
         private Transform _playerTransform;
         private Transform _thisTransform;
