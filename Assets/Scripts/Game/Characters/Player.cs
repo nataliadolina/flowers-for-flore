@@ -15,9 +15,6 @@ namespace Game.Characters
     [Register]
     internal class Player : MonoBehaviour, IKernelEntity
     {
-        [SerializeField] private float score = 0;
-        [SerializeField] private TriggerEnterHandler triggerEnterHandler;
-
         private void OnChestEntityContactedPlayer(Transform chestEntityTransform, OwnerType ownerType)
         {
             if (ownerType == OwnerType.Flower)
@@ -26,20 +23,26 @@ namespace Game.Characters
             }
         }
 
-
 #region Kernel Entity
 
-        // toDo: сделать возможным извлекание инъекций из других ядер (ошибка KeyNotFound: ConstructField выполняется раньше чем Register в ядре ChestEntity)
-        // решение - сначала вызывать Register во всех ядрах, а затем Construct во всех ядрах?
-        [ConstructField(KernelTypeOwner.ChestEntity)]
-        private IPlayerContact _playerContact;
+        [ConstructField(KernelTypeOwner.LogicScene)]
+        private IPlayerContact[] _playerContacts;
 
         [ConstructField]
-        private FlowerContainer _flowerContainer;
+        private FlowersContainer _flowerContainer;
+
+        [ConstructMethod]
+        private void OnConstruct(IKernel kernel)
+        {
+            SetSubstriptions();
+        }
 
         private void SetSubstriptions()
         {
-            _playerContact.onChestEntityContancedPlayer += OnChestEntityContactedPlayer;
+            foreach (var playerContact in _playerContacts)
+            {
+                playerContact.onChestEntityContancedPlayer += OnChestEntityContactedPlayer;
+            }
         }
 
 #endregion

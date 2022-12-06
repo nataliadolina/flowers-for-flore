@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace DI.Kernel.Enums
 {
-    internal enum KernelContextTypes
+    internal enum KernelContextType
     {
         Game, Scene, Object
     }
-
 }

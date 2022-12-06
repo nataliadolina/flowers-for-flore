@@ -47,11 +47,6 @@ namespace Game.Characters
 
 #region MonoBehaviour
 
-        private void Awake()
-        {
-            Transform = transform;
-        }
-
         private void Start()
         {
             animator = GetComponent<Animator>();
@@ -104,6 +99,7 @@ namespace Game.Characters
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
+            Transform = transform;
             _chestEntitySetActive = kernel.GetInjection<IChestEntity>();
         }
 

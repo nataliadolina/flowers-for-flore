@@ -5,6 +5,7 @@ using Game.Characters.States.Managers;
 using Game.Characters.Enums;
 using DI.Kernel.Interfaces;
 using DI.Attributes.Register;
+using DI.Attributes.Run;
 using Game.Characters.Utilities.Utils.Delegates;
 using Game.Characters.Interfaces;
 
@@ -35,8 +36,8 @@ namespace Game.Characters.Handlers
 
         private OwnerType _ownerType;
 
-        [ConstructMethod]
-        private void OnConstruct(IKernel kernel)
+        [RunMethod]
+        private void OnRun(IKernel kernel)
         {
             _chestEntityTransform = kernel.GetInjection<IBody>().Transform;
             _ownerType = kernel.GetInjection<IOwnerType>().OwnerType;

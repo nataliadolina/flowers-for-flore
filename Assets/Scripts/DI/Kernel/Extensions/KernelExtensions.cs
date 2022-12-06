@@ -50,7 +50,6 @@ namespace DI.Extensions
                             if (existedValue == null)
                             {
                                 fieldInfo.SetValue(kernelEntity, value.ToArray(elementType));
-                                Debug.Log($"Set value to {kernelEntity}");
                             }
                             else
                             {
@@ -89,11 +88,10 @@ namespace DI.Extensions
             MethodInfo[] methodInfos = kernelEntityType.GetMethods(BINDING_FLAG);
             foreach (var methodInfo in methodInfos)
             {
-                var attribute = methodInfo.GetCustomAttribute<ConstructMethodAttribute>();
+                var attribute = methodInfo.GetCustomAttribute<ConstructMethodAttribute>();  
                 if (attribute != null)
                 {
                     object[] parameters = attribute.GetParametres(kernel);
-                    Debug.Log($"ConstructFromMethodAtribute, kernelentity - {kernelEntity}");
                     methodInfo.Invoke(kernelEntity, parameters);
                 }
             }

@@ -19,5 +19,7 @@ namespace Utilities.Extensions
         {
             return type.IsGenericType && type.GetInterfaces().Any(i => i.GetType() == IEnumerableType || i.Name == IENUMERABLE_TYPE_NAME); 
         }
+
+        public static bool Implements<UInterface>(this object Object) => typeof(UInterface).IsInstanceOfType(Object);
     }
 }

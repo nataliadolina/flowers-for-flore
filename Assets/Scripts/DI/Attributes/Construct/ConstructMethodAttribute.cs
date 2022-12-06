@@ -14,7 +14,7 @@ namespace DI.Attributes.Construct
         private IKernel _kernel = null;
         internal ConstructMethodAttribute(KernelTypeOwner ownerType = KernelTypeOwner.Default)
         {
-            if (ownerType == KernelTypeOwner.Default)
+            if (ownerType != KernelTypeOwner.Default)
             {
                 _kernel = KernelManager.Instance.KernelOwnerMap[ownerType][0];
             }

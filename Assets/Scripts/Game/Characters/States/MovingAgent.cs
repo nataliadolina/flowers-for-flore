@@ -31,7 +31,6 @@ namespace Game.Characters.States.Managers
 
         private void OnDistanceToPlayerChanged(float distanceToPlayer)
         {
-            Debug.Log("Terminate");
             TerminateCurrentState();
         }
 
@@ -44,7 +43,6 @@ namespace Game.Characters.States.Managers
         {
             _currentState = _stateEntitiesMap[toState];
             _currentState.OnStartState();
-            Debug.Log(_currentState);
         }
 
         internal void TerminateCurrentState()
@@ -98,7 +96,6 @@ namespace Game.Characters.States.Managers
             CurrentState = _stateEntitiesMap[startState];
             _currentRuntime = _runtimeEntitiesMap[startRuntime];
             _currentState.OnStartState();
-            Debug.Log(_currentState);
         }
 
 #endregion

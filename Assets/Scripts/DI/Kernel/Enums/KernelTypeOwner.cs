@@ -6,9 +6,11 @@ namespace DI.Kernel.Enums
 {
     internal enum KernelTypeOwner
     {
-        Player = 0,
-        Chest = 1,
-        ChestEntity = 2,
-        Default = 3
+        Player,
+        Chest,
+        ChestEntity,
+        LogicScene,
+        Labirint,
+        Default
     }
 }

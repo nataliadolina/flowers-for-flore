@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using DI.Attributes.Register;
 using DI.Kernel.Interfaces;
 
 namespace Game.Characters
 {
     [Register]
-    internal class FlowerContainer : MonoBehaviour, IKernelEntity
+    internal class FlowersContainer : MonoBehaviour, IKernelEntity
     {
         private Transform[] _flowerTransforms;
 

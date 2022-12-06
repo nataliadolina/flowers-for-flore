@@ -9,7 +9,8 @@ using DI.Kernel.Interfaces;
 namespace Game.Characters.Abstract
 {
     [Register(typeof(IChestEntity))]
-    internal abstract class BaseChestEntity : ChestEntityPhysics, IChestEntity, IKernelEntity
+    [Register(typeof(IOwnerType))]
+    internal abstract class BaseChestEntity : ChestEntityPhysics, IChestEntity
     {
         [SerializeField] private protected OwnerType ownerType;
         private protected GameObject _currentMesh = null;

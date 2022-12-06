@@ -13,40 +13,16 @@ namespace DI.Kernel.Abstract
     {
         private readonly IDictionary<Type, List<object>> _injectionsMap = new Dictionary<Type, List<object>>();
 
-        [SerializeField]
-        private KernelTypeOwner kernelTypeOwner;
+        private protected IKernelEntity[] _injectionsToConstruct;
 
-        private IKernelEntity[] _injectionsToConstruct;
+        public abstract KernelContextType KernelContextType { get; }
+        public abstract KernelTypeOwner KernelTypeOwner { get; }
 
-        public KernelTypeOwner KernelTypeOwner { get => kernelTypeOwner; }
+        public virtual void RegisterInjections() { }
 
-        public void Initialize()
-        {
-            CreateInjections();
-            RegisterInjections();
-            ConstructInjections();
-            RunInjections();
-        }
+        public virtual void ConstructInjections() { }
 
-        private protected virtual void CreateInjections() { }
-
-        private void RegisterInjections()
-        {
-            _injectionsToConstruct = GetComponentsInChildren<IKernelEntity>(true);
-            Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.RegisterFromClassAttribute(this, kernelEntityObject.GetType()));
-        }
-
-        private void ConstructInjections()
-        {
-            Debug.Log(_injectionsToConstruct);
-            Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.ConstructFromFieldAttribute(this, kernelEntityObject.GetType()));
-            Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.ConstructFromMethodAttribute(this, kernelEntityObject.GetType()));
-        }
-
-        private void RunInjections()
-        {
-            Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.RunFromMethodAttribute(this, kernelEntityObject.GetType()));
-        }
+        public virtual void RunInjections() { }
 
         public void RegisterInjection(Type registerType, object kernelEntity)
         {
@@ -55,16 +31,6 @@ namespace DI.Kernel.Abstract
                 _injectionsMap[registerType] = new List<object>();
             }
             _injectionsMap[registerType].Add(kernelEntity);
-        }
-
-        public object ConstructInjection(Type type)
-        {
-            if (_injectionsMap.TryGetValue(type, out List<object> listOfEntities))
-            {
-                return listOfEntities[0];
-            }
-
-            return null;
         }
 
         public List<object> GetReflectionInjections(Type type)

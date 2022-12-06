@@ -57,7 +57,6 @@ namespace Game.Characters.Handlers
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            Debug.Log("Handler", player);
             thisTransform = transform;
             playerTransform = player.transform;
 
