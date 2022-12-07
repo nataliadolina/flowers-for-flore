@@ -1,20 +1,17 @@
 ﻿using UnityEngine;
 using DI.Attributes.Register;
 using DI.Kernel.Interfaces;
+using System.Collections.Generic;
 
 namespace Game.Characters
 {
     [Register]
     internal class FlowersContainer : MonoBehaviour, IKernelEntity
     {
+        [SerializeField]
         private Transform[] _flowerTransforms;
 
         private int _lastRotInd = 0;
-
-        private void Start()
-        {
-            _flowerTransforms = GetComponentsInChildren<Transform>();
-        }
 
         private void SetFlowerRotation(Transform flowerTransform)
         {
@@ -23,10 +20,13 @@ namespace Game.Characters
                 _lastRotInd = 0;
             }
 
-            Transform pos = _flowerTransforms[_lastRotInd];
+            Transform transformValues = _flowerTransforms[_lastRotInd];
+            Vector3 rotationValues = transformValues.eulerAngles;
+            Vector3 positionValues = transformValues.position;
+            Vector3 flowerCurrentRotation = flowerTransform.eulerAngles;
 
-            flowerTransform.rotation = pos.rotation;
-            flowerTransform.position = pos.position;
+            flowerTransform.Rotate(-flowerCurrentRotation.x + rotationValues.x, 0, flowerCurrentRotation.z + rotationValues.z);
+            flowerTransform.position = positionValues;
             _lastRotInd++;
         }
 
