@@ -66,8 +66,12 @@ namespace Game.Characters.Chest
             }
 
             float minDistanceToPlayer = _openableChests.Min(x => x.DistanceToPlayer);
-            IChest chestToOpenInfo = _openableChests.Where(x => x.DistanceToPlayer == minDistanceToPlayer).FirstOrDefault().Chest;
-            chestToOpenInfo.Open();
+            var chestToOpenInfo = _openableChests.Where(x => x.DistanceToPlayer == minDistanceToPlayer).FirstOrDefault();
+            IChest chestToOpen = chestToOpenInfo.Chest;
+            chestToOpen.Open();
+            _chestAnimatorDistanceToPlayerMap.Remove(chestToOpen);
+            _openableChests.Remove(chestToOpenInfo);
+            IsThereAnyOpenableChests = _openableChests.Count > 0;
         }
 
 #region MonoBehaviour
