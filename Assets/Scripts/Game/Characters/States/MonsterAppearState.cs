@@ -16,7 +16,7 @@ namespace Game.Characters.States
     {
         private float _lastPositionY;
 
-        public override StateEntityType StateEntityType { get => StateEntityType.MonsterAppear; }
+        public override StateEntityType StateEntityType { get => StateEntityType.Appear; }
 
         public override void Run()
         {

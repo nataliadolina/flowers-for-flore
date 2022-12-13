@@ -20,9 +20,15 @@ namespace DI.Kernel.Abstract
 
         public virtual void RegisterInjections() { }
 
-        public virtual void ConstructInjections() { }
+        public void ConstructInjections() {
+            Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.ConstructFromFieldAttribute(this, kernelEntityObject.GetType()));
+            Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.ConstructFromMethodAttribute(this, kernelEntityObject.GetType()));
+        }
 
-        public virtual void RunInjections() { }
+        public void RunInjections()
+        {
+            Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.RunFromMethodAttribute(this, kernelEntityObject.GetType()));
+        }
 
         public void RegisterInjection(Type registerType, object kernelEntity)
         {

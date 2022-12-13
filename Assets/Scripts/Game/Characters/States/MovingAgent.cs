@@ -10,6 +10,7 @@ using DI.Attributes.Construct;
 using DI.Kernel.Interfaces;
 using Game.Characters.Interfaces;
 using Game.Characters.Handlers;
+using Game.Characters.Utilities.Utils;
 
 namespace Game.Characters.States.Managers
 {
@@ -27,11 +28,6 @@ namespace Game.Characters.States.Managers
         private void Update()
         {
             _currentRuntime.Run();
-        }
-
-        private void OnDistanceToPlayerChanged(float distanceToPlayer)
-        {
-            TerminateCurrentState();
         }
 
         internal void ChangeCurrentRuntime(RuntimeType runtimeType)
@@ -65,14 +61,14 @@ namespace Game.Characters.States.Managers
         private IStateEntity[] _stateEntities;
 
         [ConstructField]
+        private IChestAnimator _chestAnimator;
+
+        [ConstructField]
         private IRuntime[] _runtimes;
 
         private Dictionary<StateEntityType, IStateEntity> _stateEntitiesMap = new Dictionary<StateEntityType, IStateEntity>();
 
         private Dictionary<RuntimeType, IRuntime> _runtimeEntitiesMap = new Dictionary<RuntimeType, IRuntime>();
-
-        [ConstructField]
-        private DistanceToPlayerHandler _distanceToPlayerHandler;
 
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
@@ -104,12 +100,12 @@ namespace Game.Characters.States.Managers
 
         private void SetSubscribtions()
         {
-            _distanceToPlayerHandler.onDistanceToPlayerChange += OnDistanceToPlayerChanged;
+            _chestAnimator.onOpenAnimationStoppedPlaying += TerminateCurrentState;
         }
 
         private void ClearSubstribtions()
         {
-            _distanceToPlayerHandler.onDistanceToPlayerChange -= OnDistanceToPlayerChanged;
+            _chestAnimator.onOpenAnimationStoppedPlaying -= TerminateCurrentState;
         }
 
 #endregion

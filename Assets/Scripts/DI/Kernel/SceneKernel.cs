@@ -19,6 +19,8 @@ namespace DI.Kernel
         [SerializeField]
         private KernelTypeOwner kernelTypeOwner;
 
+        private IKernelEntity[] _allInjections;
+
         public override KernelContextType KernelContextType { get => KernelContextType.Scene; }
         public override KernelTypeOwner KernelTypeOwner { get => kernelTypeOwner; }
 
@@ -26,13 +28,15 @@ namespace DI.Kernel
         {
             List<MonoBehaviour> objects = FindObjectsOfType<MonoBehaviour>().Where(x => x.Implements<IKernelEntity>()).ToList();
             int length = objects.Count();
-            _injectionsToConstruct = new IKernelEntity[length];
+            _allInjections = new IKernelEntity[length];
+            _injectionsToConstruct = GetComponentsInChildren<IKernelEntity>();
+
             for (int i = 0; i < length; i++)
             {
-                _injectionsToConstruct[i] = objects[i].GetComponent<IKernelEntity>();
+                _allInjections[i] = objects[i].GetComponent<IKernelEntity>();
             }
 
-            Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.RegisterFromClassAttribute(this, kernelEntityObject.GetType()));
+            Array.ForEach(_allInjections, kernelEntityObject => kernelEntityObject.RegisterFromClassAttribute(this, kernelEntityObject.GetType()));
         }
     }
 }  

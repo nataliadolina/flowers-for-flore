@@ -19,16 +19,5 @@ namespace DI.Kernel
             _injectionsToConstruct = GetComponentsInChildren<IKernelEntity>(true);
             Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.RegisterFromClassAttribute(this, kernelEntityObject.GetType()));
         }
-
-        public override void ConstructInjections()
-        {
-            Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.ConstructFromFieldAttribute(this, kernelEntityObject.GetType()));
-            Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.ConstructFromMethodAttribute(this, kernelEntityObject.GetType()));
-        }
-
-        public override void RunInjections()
-        {
-            Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.RunFromMethodAttribute(this, kernelEntityObject.GetType()));
-        }
     }
 }

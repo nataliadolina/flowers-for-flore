@@ -7,15 +7,17 @@ using DI.Attributes.Register;
 using DI.Kernel.Interfaces;
 using DI.Kernel.Enums;
 using Game.Characters;
+using Game.Characters.Interfaces;
+using Game.Characters.Utilities.Utils;
 using System;
 
 namespace Game.Characters.Handlers
 {
     [Register]
-    [Register(typeof(HandlerBase))]
-    internal class DistanceToPlayerHandler : HandlerBase
+    [Register(typeof(IDistanceToPlayerHandler))]
+    internal class DistanceToPlayerHandler : HandlerBase, IDistanceToPlayerHandler, IKernelEntity
     {
-        internal Action<float> onDistanceToPlayerChange;
+        public event Action<DistanceToPlayerArgs> onDistanceToPlayerChange;
         [SerializeField] private float maxVisibleDistance = 10;
 
         private float _currentDistance;
@@ -30,10 +32,11 @@ namespace Game.Characters.Handlers
                 if (_isPlayerVisible != value)
                 {
                     _isPlayerVisible = value;
-                    onDistanceToPlayerChange(_currentDistance);
+                    onDistanceToPlayerChange(new DistanceToPlayerArgs(_currentDistance, _chest, value));
                 }
             }
         }
+
         private void Update()
         {
             _currentDistance = Vector3.Distance(playerTransform.position, thisTransform.position);
@@ -46,6 +49,9 @@ namespace Game.Characters.Handlers
         }
 
 #region KernelEntity
+
+        [ConstructField]
+        private IChest _chest;
 
         private Transform thisTransform;
 

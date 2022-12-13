@@ -253,13 +253,14 @@ GameObject:
   - component: {fileID: 225942906}
   - component: {fileID: 225942905}
   - component: {fileID: 225942904}
+  - component: {fileID: 225942908}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &225942904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,6 +342,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &225942908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225942903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 521a0d55e118d6c47a3c699063003511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kernelTypeOwner: 4
 --- !u!1 &239027536
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,7 +674,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 597092959}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -674,6 +689,49 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6068983810653640687, guid: 106fde01171e6ca4bbf4b53b5770fb2a, type: 3}
   m_PrefabInstance: {fileID: 1658709967}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &597092958
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 597092959}
+  - component: {fileID: 597092960}
+  m_Layer: 0
+  m_Name: ChestsContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &597092959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597092958}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 421511344}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &597092960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597092958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff420dfb1a59cef46942480d03c602be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &599096382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1285787186168582085, guid: 01a39a3840cf3964c91b52d8b11f4aab, type: 3}
@@ -896,35 +954,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 857850621, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
       propertyPath: height
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 857850623, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
-      propertyPath: ownerType
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 857850623, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
-      propertyPath: flowerMeshes.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 857850623, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
-      propertyPath: flowerMeshes.Array.data[0]
-      value: 
-      objectReference: {fileID: 6521186236362598074, guid: 106fde01171e6ca4bbf4b53b5770fb2a, type: 3}
-    - target: {fileID: 857850623, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
-      propertyPath: flowerMeshes.Array.data[1]
-      value: 
-      objectReference: {fileID: 7479098637113266355, guid: 01a39a3840cf3964c91b52d8b11f4aab, type: 3}
-    - target: {fileID: 857850623, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
-      propertyPath: flowerMeshes.Array.data[2]
-      value: 
-      objectReference: {fileID: 2925159891021138754, guid: affc7256500037a4284c0966dd729bff, type: 3}
-    - target: {fileID: 857850623, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
-      propertyPath: flowerMeshes.Array.data[3]
-      value: 
-      objectReference: {fileID: 5644060788380878294, guid: a7e6cff5f20554840a2164c00cb28bd2, type: 3}
-    - target: {fileID: 1779155686, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
-      propertyPath: m_Enabled
-      value: 0
+    - target: {fileID: 2330222824998241221, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.021
       objectReference: {fileID: 0}
     - target: {fileID: 9125062764650404383, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
       propertyPath: m_RootOrder
@@ -974,8 +1008,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChestWithFlower
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 857850626, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
 --- !u!1 &971114614
 GameObject:
@@ -1056,7 +1089,7 @@ GameObject:
   - component: {fileID: 1092125321}
   - component: {fileID: 1092125324}
   m_Layer: 5
-  m_Name: Button
+  m_Name: OpenChestButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1126,7 +1159,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1092125324}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenButton, Assembly-CSharp
         m_MethodName: ClickToOpen
         m_Mode: 1
@@ -1185,7 +1218,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1092125319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a426d59aa1023044bbfa296b0147392, type: 3}
+  m_Script: {fileID: 11500000, guid: 24409c91961faab498368afd775924f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1129063783

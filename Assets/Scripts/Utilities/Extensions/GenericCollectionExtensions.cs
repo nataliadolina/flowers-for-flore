@@ -37,5 +37,15 @@ namespace Utilities.Extensions
             }
             return list;
         }
+
+        internal static List<TValue> GetValues<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> hashMap)
+        {
+            List<TValue> values = new List<TValue>();
+            foreach (var keyValuePair in hashMap)
+            {
+                values.Add(keyValuePair.Value);
+            }
+            return values;
+        }
     }
 }

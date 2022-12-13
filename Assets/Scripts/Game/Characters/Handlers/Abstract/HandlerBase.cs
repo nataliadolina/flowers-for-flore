@@ -7,7 +7,7 @@ using DI.Attributes.Register;
 
 namespace Game.Characters.Handlers.Abstract
 {
-    internal class HandlerBase : MonoBehaviour, IKernelEntity
+    internal class HandlerBase : MonoBehaviour
     {
         [SerializeField] private TypeAim typeAim;
         private protected Predicate<Transform> check;

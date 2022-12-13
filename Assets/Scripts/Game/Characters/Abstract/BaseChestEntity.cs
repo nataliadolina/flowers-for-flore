@@ -4,6 +4,7 @@ using UnityEngine;
 using Game.Characters.Interfaces;
 using Game.Characters.Enums;
 using DI.Attributes.Register;
+using DI.Attributes.Construct;
 using DI.Kernel.Interfaces;
 
 namespace Game.Characters.Abstract
@@ -29,12 +30,36 @@ namespace Game.Characters.Abstract
             get => _isActive;
             set
             {
-                if (_isActive != value)
-                {
-                    _isActive = value;
-                    _currentMesh.SetActive(value);
-                }
+                _isActive = value;
+                _currentMesh.SetActive(value);
             }
+        }
+
+#endregion
+
+#region Kernel Entity
+
+        [ConstructField]
+        private IChest chest;
+
+        [ConstructMethod]
+        private void OnConstruct(IKernel kernel)
+        {
+            
+        }
+
+#endregion
+
+#region Substriptions
+
+        private void SetSubscriptions()
+        {
+            
+        }
+
+        private void ClearSubscriptions()
+        {
+
         }
 
 #endregion

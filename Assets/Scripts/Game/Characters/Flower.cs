@@ -93,11 +93,15 @@ namespace Game.Characters
 
 #region KernelEntity
 
+        [ConstructField]
+        private IChestAnimator _chestAnimator;
+
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
-            IsActive = false;
             SetMesh();
+            IsActive = false;
+            _chestAnimator.onOpenAnimationStoppedPlaying += () => IsActive = true;
         }
 
 #endregion

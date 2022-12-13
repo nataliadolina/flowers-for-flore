@@ -8,13 +8,14 @@ using DI.Attributes.Run;
 using DI.Kernel.Interfaces;
 using Game.Characters.Abstract;
 using Game.Characters.Enums;
+using System;
 
 namespace Game.Characters.States
 {
     internal class FloatUpState : BaseState
     {
         [SerializeField] private float height = 1f;
-        [SerializeField] private StateEntityType stateEntityType = StateEntityType.FlowerAppear;
+        [SerializeField] private StateEntityType stateEntityType = StateEntityType.Appear;
 
         public override StateEntityType StateEntityType { get => stateEntityType; }
 
@@ -34,26 +35,10 @@ namespace Game.Characters.States
             }
         }
 
-        private protected override void BeforeTerminate()
-        {
-            _chestEntityTransform.parent = null;
-            Destroy(_chestGameObject);
-        }
-
-        public override void OnStartState()
-        {
-            _chestEntity.IsActive = true;
-        }
-
 
 #region Kernel Entity
 
         private Transform _chestEntityTransform;
-
-        private GameObject _chestGameObject;
-
-        [ConstructField]
-        private IChestEntity _chestEntity;
 
         private float _startPoint;
 
@@ -62,7 +47,6 @@ namespace Game.Characters.States
         {
             _chestEntityTransform = kernel.GetInjection<IBody>().Transform;
             _startPoint = _chestEntityTransform.position.y;
-            _chestGameObject = kernel.GetInjection<IChest>().Transform.gameObject;
         }
 
 #endregion

@@ -2,8 +2,7 @@ namespace Game.Characters.Enums
 {
     internal enum StateEntityType
     {
-        MonsterAppear,
-        FlowerAppear,
+        Appear,
         Still,
         Walk,
         Persue,

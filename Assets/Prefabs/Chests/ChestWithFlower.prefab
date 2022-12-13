@@ -268,7 +268,6 @@ GameObject:
   - component: {fileID: 9150727406660837245}
   - component: {fileID: 9221361309541465087}
   - component: {fileID: 6801599253637019266}
-  - component: {fileID: 857850626}
   m_Layer: 0
   m_Name: chest_wooden
   m_TagString: Untagged
@@ -376,21 +375,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1170112, y: 0.7538111, z: 0.73413986}
   m_Center: {x: -0.00000003532036, y: -0.00433549, z: 0.36707032}
---- !u!114 &857850626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9126905377209253675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3befe7136be534d49be7ec5d4ac86cef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  appearParticles: {fileID: 857850625}
-  destroyParticles: {fileID: 857850624}
-  selectionAura: {fileID: 8395857209041505684}
 --- !u!1 &9127098993292618313
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,6 +386,7 @@ GameObject:
   - component: {fileID: 9125062764650404383}
   - component: {fileID: 1388517098}
   - component: {fileID: 196458308}
+  - component: {fileID: 997917049310270842}
   m_Layer: 0
   m_Name: ChestWithFlower
   m_TagString: Untagged
@@ -453,6 +438,18 @@ MonoBehaviour:
   appearParticles: {fileID: 0}
   destroyParticles: {fileID: 0}
   selectionAura: {fileID: 0}
+--- !u!114 &997917049310270842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9127098993292618313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33fad05ec383cd408cafb66d729a351, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9127378111817119019
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,11 +970,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 291184448752891234, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
       propertyPath: startState
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 291184448752891234, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
       propertyPath: startRuntime
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931175919910597809, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
+      propertyPath: nextState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4344613920429677858, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
+      propertyPath: nextState
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6270790763919825596, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1047,6 +1052,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8597600016817931468, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
+      propertyPath: height
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597600016817931468, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
+      propertyPath: nextState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597600016817931468, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
+      propertyPath: stateEntityType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597600016817931470, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
+      propertyPath: ownerType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597600016817931470, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
+      propertyPath: flowerMeshes.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597600016817931470, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
+      propertyPath: flowerMeshes.Array.data[0]
+      value: 
+      objectReference: {fileID: 6521186236362598074, guid: 106fde01171e6ca4bbf4b53b5770fb2a, type: 3}
+    - target: {fileID: 8597600016817931470, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
+      propertyPath: flowerMeshes.Array.data[1]
+      value: 
+      objectReference: {fileID: 7479098637113266355, guid: 01a39a3840cf3964c91b52d8b11f4aab, type: 3}
+    - target: {fileID: 8597600016817931470, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
+      propertyPath: flowerMeshes.Array.data[2]
+      value: 
+      objectReference: {fileID: 2925159891021138754, guid: affc7256500037a4284c0966dd729bff, type: 3}
+    - target: {fileID: 8597600016817931470, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
+      propertyPath: flowerMeshes.Array.data[3]
+      value: 
+      objectReference: {fileID: 5644060788380878294, guid: a7e6cff5f20554840a2164c00cb28bd2, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb63765516fb6394d8c28a21e80e5dfc, type: 3}
 --- !u!4 &2330222824998241221 stripped

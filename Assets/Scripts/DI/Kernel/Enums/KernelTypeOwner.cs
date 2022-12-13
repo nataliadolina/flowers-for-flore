@@ -10,6 +10,7 @@ namespace DI.Kernel.Enums
         Chest,
         ChestEntity,
         LogicScene,
+        UI,
         Labirint,
         Default
     }

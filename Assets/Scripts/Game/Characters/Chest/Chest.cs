@@ -6,18 +6,21 @@ using Game.Characters.Interfaces;
 using Game.Characters.Abstract;
 using Game.Characters.Effects;
 using DI.Kernel.Enums;
+using System;
+using Game.Characters.Utilities.Utils;
 
-namespace Game.Characters
+namespace Game.Characters.Chest
 {
     [Register(typeof(IChest))]
     internal class Chest : MonoBehaviour, IKernelEntity, IChest
     {
+        public event Action onOpened;
+
         [SerializeField] private Particles appearParticles;
         [SerializeField] private Particles destroyParticles;
 
         [SerializeField] private GameObject selectionAura;
 
-        private Animator animator;
         private bool _isSelected = false;
         private bool _isVisible = false;
 
@@ -45,46 +48,12 @@ namespace Game.Characters
 
 #endregion
 
-#region MonoBehaviour
-
-        private void Start()
-        {
-            animator = GetComponent<Animator>();
-        }
-
-        protected void OnTriggerEnter(Collider other)
-        {
-            if (other.GetComponent<Player>())
-            {
-                
-            }
-        }
-
-        protected void OnTriggerStay(Collider other)
-        {
-            if (other.GetComponent<Player>())
-            {
-                
-            }
-        }
-
-        protected void OnTriggerExit(Collider other)
-        {
-            if (other.GetComponent<Player>())
-            {
-                
-            }
-        }
-
-#endregion
+#region IChest
 
         public void Open()
         {
-            animator.SetTrigger("open");
-
-            _chestEntitySetActive.IsActive = true;
-            
-            Debug.Log("Chest instantiate");
+            _chestEntityTransform.parent = null;
+            onOpened?.Invoke();
         }
 
         public void Destroy()
@@ -92,15 +61,20 @@ namespace Game.Characters
             Destroy(gameObject);
         }
 
+#endregion
+
 #region Kernel Entity
 
-        private ISetActive _chestEntitySetActive;
+        [ConstructField]
+        private IChestEntity _chestEntity;
+
+        private Transform _chestEntityTransform;
 
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
+            _chestEntityTransform = kernel.GetInjection<IBody>().Transform;
             Transform = transform;
-            _chestEntitySetActive = kernel.GetInjection<IChestEntity>();
         }
 
 #endregion
