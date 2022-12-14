@@ -15,11 +15,13 @@ namespace Game.Characters
     [Register]
     internal class Player : MonoBehaviour, IKernelEntity
     {
-        private void OnChestEntityContactedPlayer(Transform chestEntityTransform, OwnerType ownerType)
+        private void OnChestEntityContactedPlayer(IBody chestEntityBody, OwnerType ownerType, StateEntityType currentStateType)
         {
-            if (ownerType == OwnerType.Flower)
+            if (ownerType == OwnerType.Flower && currentStateType == StateEntityType.Persue)
             {
-                _flowerContainer.SetFlowerParent(chestEntityTransform);
+                chestEntityBody.SetRigidbodiesEnabled(false);
+                chestEntityBody.SetCollisionDetectorsEnabled(false);
+                _flowerContainer.SetFlowerParent(chestEntityBody.Transform);
             }
         }
 

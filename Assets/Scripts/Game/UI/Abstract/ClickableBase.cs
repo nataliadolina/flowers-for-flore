@@ -15,7 +15,10 @@ namespace Game.UI.Abstract
             _button = GetComponent<Button>();
             _buttonGameObject = _button.gameObject;
             _button.onClick.AddListener(OnClick);
+            OnPostStart();
         }
+
+        private protected virtual void OnPostStart() { }
 
         private protected abstract void OnClick();
     }

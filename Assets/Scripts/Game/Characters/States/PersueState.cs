@@ -28,7 +28,7 @@ namespace Game.Characters.States
 
         public override void OnStartState()
         {
-            _body.SetCollidersEnabled(true);
+            _chestEntitybody.SetCollisionDetectorsEnabled(true);
         }
 
 #region Kernel Entity
@@ -36,11 +36,7 @@ namespace Game.Characters.States
         [ConstructField(KernelTypeOwner.Player)]
         private Player _player;
 
-        [ConstructField]
-        private IChestEntity _chestEntity;
-
-        [ConstructField]
-        private IBody _body;
+        private IBody _chestEntitybody;
 
         private Transform _playerTransform;
         private Transform _thisTransform;
@@ -52,6 +48,7 @@ namespace Game.Characters.States
             _playerTransform = _player.transform;
             _thisTransform = kernel.GetInjection<MovingAgent>().transform;
             _halfPlayerHeight = _playerTransform.localScale.y / 2;
+            _chestEntitybody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
         }
 
 #endregion

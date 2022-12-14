@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Game.Characters.Enums;
+using Game.Characters.Interfaces;
 
 namespace Game.Characters.Utilities.Utils.Delegates
 {
-    internal delegate void OnChestEntityContactedPlayer(Transform chestEntity, OwnerType ownerType);
+    internal delegate void OnChestEntityContactedPlayer(IBody chestEntity, OwnerType ownerType, StateEntityType stateEntityType);
 }

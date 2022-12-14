@@ -7,6 +7,7 @@ namespace Game.Characters.Enums
     internal enum OwnerType
     {
         Monster,
-        Flower
+        Flower,
+        ChestEntity
     }
 }

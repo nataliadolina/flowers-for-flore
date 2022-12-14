@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using Game.Characters.Effects;
 using Game.Characters.Interfaces;
+using Game.Characters.Enums;
 using Game.Characters.Abstract;
 using DI.Attributes.Construct;
 using DI.Attributes.Register;
@@ -84,7 +85,7 @@ namespace Game.Characters
             if (score <= 0f)
             {
                 score = 0f;
-                SetRigidbodiesEnabled(true);
+                _chestEntityBody.SetRigidbodiesEnabled(true);
                 transform.parent = null;
             }
 
@@ -95,6 +96,14 @@ namespace Game.Characters
 
         [ConstructField]
         private IChestAnimator _chestAnimator;
+
+        private IBody _chestEntityBody;
+
+        [ConstructMethod]
+        private void OnConstruct(IKernel kernel)
+        {
+            _chestEntityBody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
+        }
 
         [RunMethod]
         private void OnRun(IKernel kernel)

@@ -35,7 +35,7 @@ namespace Game.Characters.States
         private protected override void BeforeTerminate()
         {
             _movingAgent.ChangeCurrentRuntime(RuntimeType.PersueWalk);
-            _chestEntityPhysics.SetRigidbodiesEnabled(false);
+            _chestEntityBody.SetRigidbodiesEnabled(false);
             _chest.Destroy();
         }
 
@@ -46,19 +46,20 @@ namespace Game.Characters.States
 
         private Transform _thisTransform;
 
-        [ConstructField]
-        private ChestEntityPhysics _chestEntityPhysics;
+        private IBody _chestEntityBody;
 
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _thisTransform = _chestEntityPhysics.transform;
+            _chestEntityBody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
         }
 
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
-            _chestEntityPhysics.EnableRigidBodiesAndColliders();
+            _thisTransform = _chestEntityBody.Transform;
+            _chestEntityBody.SetCollisionDetectorsEnabled(true);
+            _chestEntityBody.SetRigidbodiesEnabled(true);
         }
 
 #endregion

@@ -6,7 +6,7 @@ using System;
 
 namespace Game.Characters.Interfaces
 {
-    internal interface IDistanceToPlayerHandler
+    internal interface IDistanceToPlayerHandler : ICollisionDetector
     {
         event Action<DistanceToPlayerArgs> onDistanceToPlayerChange;
     }

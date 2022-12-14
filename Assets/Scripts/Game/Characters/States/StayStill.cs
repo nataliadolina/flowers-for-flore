@@ -3,6 +3,8 @@ using Game.Characters.Enums;
 using UnityEngine;
 using DI.Attributes.Register;
 using DI.Attributes.Construct;
+using DI.Attributes.Run;
+using DI.Kernel.Interfaces;
 using Game.Characters.Interfaces;
 
 namespace Game.Characters.States
@@ -18,16 +20,21 @@ namespace Game.Characters.States
 
         }
 
-        public override void OnStartState()
-        {
-            _body.SetCollidersEnabled(false);
-            _body.SetRigidbodiesEnabled(false);
-        }
-
 #region Kernel Entity
 
-        [ConstructField]
         private IBody _body;
+
+        [ConstructMethod]
+        private void OnConstruct(IKernel kernel)
+        {
+            _body = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
+        }
+
+        [RunMethod]
+        private void OnRun(IKernel kernel)
+        {
+            _body.SetRigidbodiesEnabled(false);
+        }
 
 #endregion
 

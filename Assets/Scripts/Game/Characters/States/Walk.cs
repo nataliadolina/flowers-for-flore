@@ -7,7 +7,7 @@ using Game.Characters.Enums;
 using DI.Attributes.Construct;
 using DI.Attributes.Register;
 using DI.Kernel.Interfaces;
-using Game.Characters.Abstract;
+using Game.Characters.Interfaces;
 using Game.Characters.States.Movements;
 
 namespace Game.Characters.States {
@@ -18,7 +18,6 @@ namespace Game.Characters.States {
         [SerializeField] private MovingSystem movingSystem;
         [SerializeField] private TypeMove typeMove;
         private Transform targetPoint = null;
-        private Transform _monsterTransform;
 
         public override StateEntityType StateEntityType { get => StateEntityType.Walk; }
 
@@ -34,7 +33,7 @@ namespace Game.Characters.States {
 
         public override void Run()
         {
-            if (_monsterTransform.position == targetPoint.position)
+            if (_chestEntityTransform.position == targetPoint.position)
             {
                 targetPoint = movingSystem.GetNextPoint(typeMove);
             }
@@ -43,16 +42,18 @@ namespace Game.Characters.States {
 
         private void MoveToTheNextPoint()
         {
-            _monsterTransform.LookAt(targetPoint);
-            _monsterTransform.position = Vector3.MoveTowards(_monsterTransform.position, targetPoint.position, speed * Time.fixedDeltaTime);
+            _chestEntityTransform.LookAt(targetPoint);
+            _chestEntityTransform.position = Vector3.MoveTowards(_chestEntityTransform.position, targetPoint.position, speed * Time.fixedDeltaTime);
         }
 
 #region Kernel Entity
 
+        private Transform _chestEntityTransform;
+
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _monsterTransform = kernel.GetInjection<ChestEntityPhysics>().transform;
+            _chestEntityTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity).Transform;
         }
 
 #endregion

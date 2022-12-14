@@ -25,6 +25,10 @@ namespace Game.UI
 
 #region MonoBehaviour
 
+        private protected override void OnPostStart()
+        {
+            SetActive(false);
+        }
         private void OnDestroy()
         {
             ClearSubstriptions();
@@ -40,7 +44,6 @@ namespace Game.UI
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            SetActive(false);
             SetSubstriptions();
         }
 

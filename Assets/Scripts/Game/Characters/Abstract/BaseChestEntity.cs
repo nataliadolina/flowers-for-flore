@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Game.Characters.Interfaces;
 using Game.Characters.Enums;
@@ -10,8 +8,7 @@ using DI.Kernel.Interfaces;
 namespace Game.Characters.Abstract
 {
     [Register(typeof(IChestEntity))]
-    [Register(typeof(IOwnerType))]
-    internal abstract class BaseChestEntity : ChestEntityPhysics, IChestEntity
+    internal abstract class BaseChestEntity : MonoBehaviour, IChestEntity, IKernelEntity
     {
         [SerializeField] private protected OwnerType ownerType;
         private protected GameObject _currentMesh = null;

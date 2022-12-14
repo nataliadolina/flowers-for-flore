@@ -35,17 +35,25 @@ namespace Game.Characters.States
             }
         }
 
+        public override void OnStartState()
+        {
+            _chestEntityBody.SetCollisionDetectorsEnabled(true);
+        }
+
 
 #region Kernel Entity
 
         private Transform _chestEntityTransform;
+
+        private IBody _chestEntityBody;
 
         private float _startPoint;
 
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
-            _chestEntityTransform = kernel.GetInjection<IBody>().Transform;
+            _chestEntityBody = kernel.GetInjection<IBody>();
+            _chestEntityTransform = _chestEntityBody.Transform;
             _startPoint = _chestEntityTransform.position.y;
         }
 

@@ -5,7 +5,7 @@ using Game.Characters.Utilities.Utils.Delegates;
 
 namespace Game.Characters.Interfaces
 {
-    internal interface IPlayerContact
+    internal interface IPlayerContact : ICollisionDetector
     {
         event OnChestEntityContactedPlayer onChestEntityContancedPlayer;
     }

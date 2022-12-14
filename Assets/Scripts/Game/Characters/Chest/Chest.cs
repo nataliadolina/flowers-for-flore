@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using DI.Attributes.Register;
-using DI.Attributes.Construct;
+using DI.Attributes.Run;
 using DI.Kernel.Interfaces;
 using Game.Characters.Interfaces;
-using Game.Characters.Abstract;
+using Game.Characters.Enums;
 using Game.Characters.Effects;
 using DI.Kernel.Enums;
 using System;
@@ -65,15 +65,12 @@ namespace Game.Characters.Chest
 
 #region Kernel Entity
 
-        [ConstructField]
-        private IChestEntity _chestEntity;
-
         private Transform _chestEntityTransform;
 
-        [ConstructMethod]
-        private void OnConstruct(IKernel kernel)
+        [RunMethod]
+        private void OnRun(IKernel kernel)
         {
-            _chestEntityTransform = kernel.GetInjection<IBody>().Transform;
+            _chestEntityTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity).Transform;
             Transform = transform;
         }
 

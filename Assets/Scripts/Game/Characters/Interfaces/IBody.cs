@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Game.Characters.Interfaces
 {
-    internal interface IBody : ITransform
+    internal interface IBody : ITransform, IOwnerType
     {
-        void SetCollidersEnabled(bool enabled);
+        void SetCollisionDetectorsEnabled(bool enabled);
 
         void SetRigidbodiesEnabled(bool enabled);
 
