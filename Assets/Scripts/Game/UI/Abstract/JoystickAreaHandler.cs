@@ -38,7 +38,7 @@ namespace Game.UI.Abstract
             StartInternal();
         }
 
-        private protected virtual void UpdateDirection(in Vector3 direction) { }
+        private protected virtual void UpdateDirection(in Vector2 direction) { }
 
         private Vector2 GetMarkerPositionByDirection(Vector2 direction)
         {
@@ -47,7 +47,7 @@ namespace Game.UI.Abstract
 
         private void UpdateJoystickPositionOnClick()
         {
-            if (!_updateDirectionInProcess && Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 Vector2 touchPosition = Input.mousePosition;
 
@@ -59,14 +59,14 @@ namespace Game.UI.Abstract
                 else if (activeJoystickZone.IsPositionInsideZone(touchPosition))
                 {
                     joystickTransform.position = touchPosition;
-                    markerTransform.position = touchPosition;
+                    //markerTransform.position = touchPosition;
                     _joystickUpdatedPosition = touchPosition;
                     _updateDirectionInProcess = true;
                 }
 
             }
 
-            else if (_updateDirectionInProcess && Input.GetMouseButtonUp(0))
+            else if (Input.GetMouseButtonUp(0))
             {
                 _joystickUpdatedPosition = _joystickStartPosition;
                 joystickTransform.position = _joystickStartPosition;
@@ -84,12 +84,13 @@ namespace Game.UI.Abstract
 
             Vector2 mousePosition = Input.mousePosition;
 
-            Vector2 direction = mousePosition - _joystickUpdatedPosition;
-            UpdateDirection(direction);
-
             markerTransform.position = joystickZone.IsPositionInsideZone(mousePosition)
                 ? mousePosition
-                : GetMarkerPositionByDirection(direction);
+                : GetMarkerPositionByDirection(mousePosition - _joystickUpdatedPosition);
+
+            Vector3 markerTransformPosition = markerTransform.position;
+            Vector2 direction = new Vector2(markerTransformPosition.x, markerTransformPosition.y) - _joystickUpdatedPosition;
+            UpdateDirection(direction);
         }
 
 #region Update

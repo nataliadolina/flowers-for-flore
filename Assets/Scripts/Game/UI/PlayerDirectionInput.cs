@@ -13,9 +13,10 @@ namespace Game.UI
         /// </summary>
         public Action<Vector3> onCharacterDirectionChanged;
 
-        private protected override void UpdateDirection(in Vector3 direction)
+        private protected override void UpdateDirection(in Vector2 direction)
         {
-            onCharacterDirectionChanged?.Invoke(new Vector3(direction.x, 0, direction.y));
+            Debug.Log(direction.normalized);
+            onCharacterDirectionChanged?.Invoke(direction.normalized);
         }
     }
 }
