@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Game.UI.Abstract;
+using Game.UI.Interfaces;
+using DI.Attributes.Register;
+using DI.Kernel.Interfaces;
+using DI.Kernel.Enums;
 
 namespace Game.UI
 {
-    internal class PlayerDirectionInput : JoystickAreaHandler
+    [Register(typeof(IPlayerDirectionInput))]
+    internal class PlayerDirectionInput : JoystickAreaHandler, IPlayerDirectionInput, IKernelEntity
     {
         /// <summary>
         /// Vector3: direction
         /// </summary>
-        public Action<Vector3> onCharacterDirectionChanged;
+        public event Action<Vector2> onCharacterDirectionChanged;
 
         private protected override void UpdateDirection(in Vector2 direction)
         {
-            Debug.Log(direction.normalized);
-            onCharacterDirectionChanged?.Invoke(direction.normalized);
+            onCharacterDirectionChanged?.Invoke(direction);
         }
     }
 }

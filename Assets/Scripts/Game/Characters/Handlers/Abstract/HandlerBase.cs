@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using Game.Characters.Enums;
+using Game.Characters.Player;
 using DI.Kernel.Interfaces;
 using DI.Attributes.Register;
 
@@ -25,7 +26,7 @@ namespace Game.Characters.Handlers.Abstract
         {
             switch (typeAim)
             {
-                case TypeAim.Player: return (Transform t) => t.GetComponent<Player>();
+                case TypeAim.Player: return (Transform t) => t.GetComponent<PlayerHandler>();
                 case TypeAim.Hand: return (Transform t) => t.CompareTag("Hand");
                 default: throw new ArgumentException("Недопустимый ключ");
             }

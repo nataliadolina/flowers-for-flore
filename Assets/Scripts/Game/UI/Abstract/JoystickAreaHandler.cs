@@ -26,6 +26,7 @@ namespace Game.UI.Abstract
         private bool _touchPositionOnCanvas;
 
         private Vector2 _lastMarkerPosition;
+        
 
         private void Start()
         {
@@ -34,7 +35,6 @@ namespace Game.UI.Abstract
             _joystickRadius = joystickZone.Radius;
 
             _joystickTransformPositionZ = transform.position.z;
-
             StartInternal();
         }
 
@@ -59,7 +59,6 @@ namespace Game.UI.Abstract
                 else if (activeJoystickZone.IsPositionInsideZone(touchPosition))
                 {
                     joystickTransform.position = touchPosition;
-                    //markerTransform.position = touchPosition;
                     _joystickUpdatedPosition = touchPosition;
                     _updateDirectionInProcess = true;
                 }
@@ -68,6 +67,8 @@ namespace Game.UI.Abstract
 
             else if (Input.GetMouseButtonUp(0))
             {
+                UpdateDirection(Vector2.zero);
+
                 _joystickUpdatedPosition = _joystickStartPosition;
                 joystickTransform.position = _joystickStartPosition;
                 markerTransform.position = _joystickStartPosition;
@@ -89,7 +90,7 @@ namespace Game.UI.Abstract
                 : GetMarkerPositionByDirection(mousePosition - _joystickUpdatedPosition);
 
             Vector3 markerTransformPosition = markerTransform.position;
-            Vector2 direction = new Vector2(markerTransformPosition.x, markerTransformPosition.y) - _joystickUpdatedPosition;
+            Vector2 direction = (new Vector2(markerTransformPosition.x, markerTransformPosition.y) - _joystickUpdatedPosition) / joystickZone.Radius;
             UpdateDirection(direction);
         }
 

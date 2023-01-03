@@ -86,7 +86,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: TriggerEnterHandler
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4004358799284495958, guid: c5dab937c381c854982481b59fa6dbfb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c5dab937c381c854982481b59fa6dbfb, type: 3}
 --- !u!1 &7641252569705161009 stripped
 GameObject:
@@ -107,7 +108,19 @@ BoxCollider:
   m_GameObject: {fileID: 7641252569705161009}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.47357297, y: 1.4624454, z: 0.6343528}
   m_Center: {x: -0.015511169, y: 0.45180178, z: -0.06066958}
+--- !u!114 &691826614228519078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7641252569705161009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af78510b40563294aa2ef946413b5d18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

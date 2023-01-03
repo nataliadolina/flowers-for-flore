@@ -59,7 +59,7 @@ namespace Game.Characters.Handlerss
             }
         }
 
-#region ITriggerHandler
+#region ICollisionDetector
 
         public void ColliderSetEnabled(bool isEnabled)
         {
@@ -75,15 +75,18 @@ namespace Game.Characters.Handlerss
 
         private Transform _chestEntityTransform;
 
+        [ConstructField(KernelTypeOwner.Player)]
         private Transform _playerTransform;
 
-        [ConstructField(KernelTypeOwner.Player)]
-        private Player player;
+        [RunMethod(KernelTypeOwner.Player)]
+        private void OnPlayerRun(IKernel kernel)
+        {
+            _playerTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.Player).Transform;
+        }
 
         [RunMethod]
-        private void OnConstruct(IKernel kernel)
+        private void OnRun(IKernel kernel)
         {
-            _playerTransform = player.transform;
             _chestEntityTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity).Transform;
         }
 

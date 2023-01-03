@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using DI.Attributes.Register;
+using DI.Attributes.Construct;
 using DI.Kernel.Interfaces;
 using System.Collections.Generic;
+using DI.Kernel.Enums;
+using Game.Characters.Interfaces;
 
 namespace Game.Characters
 {
@@ -30,10 +33,39 @@ namespace Game.Characters
             _lastRotInd++;
         }
 
-        internal void SetFlowerParent(Transform flowerTransform)
+        internal void SetFlowerParent(in Transform flowerTransform)
         {
             flowerTransform.parent = transform;
             SetFlowerRotation(flowerTransform);
         }
+
+        private void OnFlowerContactedContainer(IBody flowerBody)
+        {
+            flowerBody.SetRigidbodiesEnabled(false);
+            flowerBody.SetCollisionDetectorsEnabled(false);
+            SetFlowerParent(flowerBody.Transform);
+        }
+
+#region KernelEntity
+
+        [ConstructMethod(KernelTypeOwner.LogicScene)]
+        private void OnConstruct(IKernel kernel)
+        {
+            SetContactsSubscriptions(kernel.GetInjections<IFlowerTriggerEnterHandler>().ToArray());
+        }
+
+#endregion
+
+#region Subscriptions
+
+        private void SetContactsSubscriptions(IFlowerTriggerEnterHandler[] contacts)
+        {
+            foreach (var contact in contacts)
+            {
+                contact.onFlowersContainerContact += OnFlowerContactedContainer;
+            }
+        }
+
+#endregion
     }
 }

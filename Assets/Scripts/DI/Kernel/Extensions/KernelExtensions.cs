@@ -105,8 +105,8 @@ namespace DI.Extensions
                 var attribute = methodInfo.GetCustomAttribute<RunMethodAttribute>();
                 if (attribute!= null)
                 {
-                    object[] parametres = { kernel };
-                    methodInfo.Invoke(kernelEntity, parametres);
+                    object[] parameters = attribute.GetParametres(kernel);
+                    methodInfo.Invoke(kernelEntity, parameters);
                 }
             }
         }

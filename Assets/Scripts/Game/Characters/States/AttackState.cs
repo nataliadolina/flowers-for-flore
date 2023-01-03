@@ -7,6 +7,7 @@ using DI.Attributes.Register;
 using DI.Attributes.Construct;
 using DI.Kernel.Interfaces;
 using DI.Kernel.Enums;
+using Game.Characters.Player;
 
 namespace Game.Characters.States
 {
@@ -61,7 +62,7 @@ namespace Game.Characters.States
 #region Kernel Entity
 
         [ConstructField(KernelTypeOwner.Player)]
-        private Player _player;
+        private PlayerHandler _player;
 
         private Transform _playerTransform;
 

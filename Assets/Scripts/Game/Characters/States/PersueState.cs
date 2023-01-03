@@ -7,8 +7,10 @@ using Game.Characters.Enums;
 using Game.Characters.Interfaces;
 using DI.Attributes.Register;
 using DI.Attributes.Construct;
+using DI.Attributes.Run;
 using DI.Kernel.Interfaces;
 using Game.Characters.States.Managers;
+using Game.Characters.Player;
 using DI.Kernel.Enums;
 using Game.Characters.Abstract;
 
@@ -33,9 +35,7 @@ namespace Game.Characters.States
 
 #region Kernel Entity
 
-        [ConstructField(KernelTypeOwner.Player)]
-        private Player _player;
-
+        [ConstructField]
         private IBody _chestEntitybody;
 
         private Transform _playerTransform;
@@ -45,10 +45,14 @@ namespace Game.Characters.States
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _playerTransform = _player.transform;
-            _thisTransform = kernel.GetInjection<MovingAgent>().transform;
+            _thisTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity).Transform;
+        }
+
+        [RunMethod(KernelTypeOwner.Player)]
+        private void OnRun(IKernel kernel)
+        {
+            _playerTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.Player).Transform;
             _halfPlayerHeight = _playerTransform.localScale.y / 2;
-            _chestEntitybody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
         }
 
 #endregion

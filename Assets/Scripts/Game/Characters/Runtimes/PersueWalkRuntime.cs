@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Game.Characters.States.Managers;
 using DI.Kernel.Interfaces;
+using DI.Kernel.Enums;
 using DI.Attributes.Construct;
 using DI.Attributes.Register;
 using Game.Characters.Runtimes.Interfaces;
@@ -46,11 +47,14 @@ namespace Game.Characters.Runtimes
 
         private IStateEntity _walkState;
 
+        [ConstructField(KernelTypeOwner.Player)]
+        private IBody _playerBody;
+
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _playerTransform = kernel.GetInjection<Player>().transform;
-            _thisTransform = _movingAgent.transform;
+            _playerTransform = _playerBody.Transform;
+            _thisTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity).Transform;
             _persueState = kernel.GetInjection<IStateEntity>(x => x.StateEntityType == StateEntityType.Persue);
             _walkState = kernel.GetInjection<IStateEntity>(x => x.StateEntityType == StateEntityType.Walk);
         }

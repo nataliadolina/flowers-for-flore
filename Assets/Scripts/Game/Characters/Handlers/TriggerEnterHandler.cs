@@ -8,6 +8,8 @@ using DI.Attributes.Register;
 using DI.Attributes.Run;
 using Game.Characters.Utilities.Utils.Delegates;
 using Game.Characters.Interfaces;
+using Game.Characters.Player;
+using System;
 
 
 namespace Game.Characters.Handlers
@@ -18,14 +20,19 @@ namespace Game.Characters.Handlers
     internal class TriggerEnterHandler : MonoBehaviour, IKernelEntity, IPlayerContact
     {
         public event OnChestEntityContactedPlayer onChestEntityContancedPlayer;
+        public event Action<Transform> onFlowerContancedPlayer;
         private Collider _collider;
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.GetComponent<Player>())
+            if (other.GetComponent<PlayerHandler>())
             {
                 onChestEntityContancedPlayer(_chestEntityTransform, _ownerType, _movingAgent.CurrentState.StateEntityType);
                 _movingAgent.CurrentState.Terminate();
+            }
+
+            if (_ownerType == OwnerType.Flower && other.GetComponent<FlowersContainer>())
+            {
                 
             }
         }
