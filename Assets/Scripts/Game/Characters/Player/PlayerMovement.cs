@@ -19,17 +19,19 @@ namespace Game.Characters.Player
 
         private float _speedRatio = 0f;
 
-        private void ApplyDirection(Vector2 direction)
+        private void ApplyDirection(Vector2 direction, bool updateDirectionInProgress)
         {
-            
-            if (direction != Vector2.zero)
-            {
-                _playerTransform.forward = new Vector3(direction.x, 0, direction.y);
-            }
-
-            _animator.SetSpeedRatio(_speedRatio);
             _speedRatio = direction.magnitude;
-            _playerTransform.Translate(Vector3.forward * speed * _speedRatio * Time.deltaTime);
+            _animator.SetSpeedRatio(_speedRatio);
+
+            if (updateDirectionInProgress)
+            {
+                if (direction != Vector2.zero)
+                {
+                    _playerTransform.forward = new Vector3(direction.x, 0, direction.y);
+                }
+                _playerTransform.Translate(Vector3.forward * speed * _speedRatio * Time.deltaTime);
+            }
         }
 
 #region Kernel Entity

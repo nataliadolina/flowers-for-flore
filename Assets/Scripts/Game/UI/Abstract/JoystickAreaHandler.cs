@@ -38,7 +38,7 @@ namespace Game.UI.Abstract
             StartInternal();
         }
 
-        private protected virtual void UpdateDirection(in Vector2 direction) { }
+        private protected virtual void UpdateDirection(in Vector2 direction, in bool updateDirectionInProcess) { }
 
         private Vector2 GetMarkerPositionByDirection(Vector2 direction)
         {
@@ -67,7 +67,7 @@ namespace Game.UI.Abstract
 
             else if (Input.GetMouseButtonUp(0))
             {
-                UpdateDirection(Vector2.zero);
+                UpdateDirection(Vector2.zero, _updateDirectionInProcess);
 
                 _joystickUpdatedPosition = _joystickStartPosition;
                 joystickTransform.position = _joystickStartPosition;
@@ -78,20 +78,17 @@ namespace Game.UI.Abstract
 
         private void UpdateDirection()
         {
-            if (!_updateDirectionInProcess)
+            if (_updateDirectionInProcess)
             {
-                return;
-            }
-
-            Vector2 mousePosition = Input.mousePosition;
-
-            markerTransform.position = joystickZone.IsPositionInsideZone(mousePosition)
+                Vector2 mousePosition = Input.mousePosition;
+                markerTransform.position = joystickZone.IsPositionInsideZone(mousePosition)
                 ? mousePosition
                 : GetMarkerPositionByDirection(mousePosition - _joystickUpdatedPosition);
+            }
 
             Vector3 markerTransformPosition = markerTransform.position;
             Vector2 direction = (new Vector2(markerTransformPosition.x, markerTransformPosition.y) - _joystickUpdatedPosition) / joystickZone.Radius;
-            UpdateDirection(direction);
+            UpdateDirection(direction, _updateDirectionInProcess);
         }
 
 #region Update

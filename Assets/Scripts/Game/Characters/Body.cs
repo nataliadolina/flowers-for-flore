@@ -21,7 +21,7 @@ namespace Game.Characters
 
         private Rigidbody[] _rigidbodies;
 
-        public Transform Transform { get; private set; }
+        public Transform Transform { get => transform; }
 
 #region IOwnerType
 
@@ -64,7 +64,6 @@ namespace Game.Characters
         private void OnConstruct(IKernel kernel)
         {
             _rigidbodies = GetComponentsInChildren<Rigidbody>();
-            Transform = transform;
         }
 
 #endregion

@@ -46,14 +46,23 @@ namespace Game.Characters.States {
             _chestEntityTransform.position = Vector3.MoveTowards(_chestEntityTransform.position, targetPoint.position, speed * Time.fixedDeltaTime);
         }
 
+        public override void OnStartState()
+        {
+            _body.SetCollisionDetectorsEnabled(true);
+            _body.SetRigidbodiesEnabled(false);
+        }
+
 #region Kernel Entity
+
+        private IBody _body;
 
         private Transform _chestEntityTransform;
 
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _chestEntityTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity).Transform;
+            _body = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
+            _chestEntityTransform = _body.Transform;
         }
 
 #endregion

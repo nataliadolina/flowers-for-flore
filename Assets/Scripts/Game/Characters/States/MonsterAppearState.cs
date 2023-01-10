@@ -32,11 +32,16 @@ namespace Game.Characters.States
             }
         }
 
+        public override void OnStartState()
+        {
+            _chestEntityBody.SetRigidbodiesEnabled(true);
+        }
+
         private protected override void BeforeTerminate()
         {
             _movingAgent.ChangeCurrentRuntime(RuntimeType.PersueWalk);
             _chestEntityBody.SetRigidbodiesEnabled(false);
-            _chest.Destroy();
+            Debug.Log("Terminate");
         }
 
 #region KernelEntity
@@ -58,8 +63,6 @@ namespace Game.Characters.States
         private void OnRun(IKernel kernel)
         {
             _thisTransform = _chestEntityBody.Transform;
-            _chestEntityBody.SetCollisionDetectorsEnabled(true);
-            _chestEntityBody.SetRigidbodiesEnabled(true);
         }
 
 #endregion

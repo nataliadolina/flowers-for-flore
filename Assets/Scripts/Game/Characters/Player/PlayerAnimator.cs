@@ -18,9 +18,28 @@ namespace Game.Characters.Player
     internal class PlayerAnimator : MonoBehaviour, IKernelEntity
     {
         private readonly int Speed = Animator.StringToHash("Speed");
-        private readonly int StopWalking = Animator.StringToHash("Stop walking");
+        private readonly int StopMoving = Animator.StringToHash("Stop moving");
         
         private Animator _animator;
+
+        private float _speedRatio;
+        private float SpeedRatio
+        {
+            get => _speedRatio;
+            set
+            {
+                if (_speedRatio != value)
+                {
+                    _speedRatio = value;
+                    _animator.SetFloat(Speed, value);
+
+                    if (value == 0)
+                    {
+                        _animator.SetTrigger(StopMoving);
+                    }
+                }
+            }
+        }
 
         private void Start()
         {
@@ -29,11 +48,7 @@ namespace Game.Characters.Player
 
         internal void SetSpeedRatio(float ratio)
         {
-            _animator.SetFloat(Speed, ratio);
-            if (ratio == 0f)
-            {
-                _animator.SetTrigger(StopWalking);
-            }
+            SpeedRatio = ratio;
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Game.Characters.Runtimes
         private IBody _playerBody;
 
         [ConstructMethod]
-        private void OnConstruct(IKernel kernel)
+        private void OnRun(IKernel kernel)
         {
             _playerTransform = _playerBody.Transform;
             _thisTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity).Transform;

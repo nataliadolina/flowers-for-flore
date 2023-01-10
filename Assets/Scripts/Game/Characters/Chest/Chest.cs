@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using DI.Attributes.Register;
 using DI.Attributes.Run;
+using DI.Attributes.Construct;
 using DI.Kernel.Interfaces;
 using Game.Characters.Interfaces;
 using Game.Characters.Enums;
@@ -67,11 +68,16 @@ namespace Game.Characters.Chest
 
         private Transform _chestEntityTransform;
 
+        [ConstructMethod]
+        private void OnConstruct(IKernel kernel)
+        {
+            Transform = transform;
+        }
+
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
             _chestEntityTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity).Transform;
-            Transform = transform;
         }
 
 #endregion

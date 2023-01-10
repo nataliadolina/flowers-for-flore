@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b37700472fbfd644b9d92968ac5e777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: -10
+  ownerType: 0
 --- !u!114 &2588493244919598682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,8 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4cc7c76bf70594688fb9d9c3195520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMove: {fileID: 6995878833001634027}
-  currentRuntime: {fileID: 4736233109641246573}
+  startState: 0
+  startRuntime: 0
 --- !u!54 &7044623254732532761
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -208,8 +208,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8147913473352417548, guid: 82f5f639cb78b664fad7c234e7ae94d2, type: 3}
       propertyPath: nextState
-      value: 
-      objectReference: {fileID: 6241012840102979839}
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8147913473352417548, guid: 82f5f639cb78b664fad7c234e7ae94d2, type: 3}
       propertyPath: nextRuntime
       value: 
@@ -225,17 +225,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5665201426767011222, guid: 82f5f639cb78b664fad7c234e7ae94d2, type: 3}
   m_PrefabInstance: {fileID: 1154450486984104423}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6995878833001634027 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8147913473352417548, guid: 82f5f639cb78b664fad7c234e7ae94d2, type: 3}
-  m_PrefabInstance: {fileID: 1154450486984104423}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d48e8e589112040b71a8530a60e990, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1667783380921194104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -469,8 +458,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8048739283122261083, guid: 866b37d06944e24478a33425bef03150, type: 3}
       propertyPath: nextState
-      value: 
-      objectReference: {fileID: 4239738992655325192}
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8048739283122261083, guid: 866b37d06944e24478a33425bef03150, type: 3}
       propertyPath: timeBeetweenAttacks
       value: 1
@@ -739,11 +728,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58de502793d4d58439901975e25f055e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextState: {fileID: 6241012840102979839}
+  nextState: 0
   speed: 2.5
-  setAnim:
-    m_PersistentCalls:
-      m_Calls: []
+  movingSystem: {fileID: 0}
   typeMove: 1
 --- !u!1001 &7805088142818456082
 PrefabInstance:
@@ -841,24 +828,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89e0adbc9dba1442b90a65faa9899f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextState: {fileID: 4138256425351556202}
+  nextState: 0
   speed: 5
-  setAnim:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2486620152540630911}
-        m_TargetAssemblyTypeName: Monster, Assembly-CSharp
-        m_MethodName: SetNumMove
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0.75
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onTerminate: 0
+  stateEntityType: 3
 --- !u!1001 &9080831653801382448
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -913,6 +885,10 @@ PrefabInstance:
     - target: {fileID: 6237640997504034986, guid: d59b257fbf784c94a823d1402c919aa1, type: 3}
       propertyPath: m_Name
       value: MonsterAppearParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237640997519100010, guid: d59b257fbf784c94a823d1402c919aa1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d59b257fbf784c94a823d1402c919aa1, type: 3}

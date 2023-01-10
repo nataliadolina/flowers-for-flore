@@ -8,13 +8,14 @@ using DI.Attributes.Construct;
 using DI.Kernel.Interfaces;
 using DI.Kernel.Enums;
 using Game.Characters.Player;
+using Game.Characters.Interfaces;
 
 namespace Game.Characters.States
 {
     [Register]
-    internal class AttackState : BaseState
+    internal class AttackState : BaseState, IMonsterAttack
     {
-        internal event Action<float> onAttacked;
+        public event Action<float> onMonsterAttackedPlayer;
 
         [SerializeField] private float harm;
         [SerializeField] float timeBeetweenAttacks = 1f;
@@ -49,12 +50,11 @@ namespace Game.Characters.States
 
                 if (distToPlayer <= attackDist)
                 {
-                    onAttacked(harm);
+                    onMonsterAttackedPlayer(harm);
 
                     int index = UnityEngine.Random.Range(0, _collisionParticles.Length);
                     _collisionParticles[index].IsActivated = true;
                 }
-
             }
             _currentTime += Time.deltaTime;
         }
@@ -62,14 +62,14 @@ namespace Game.Characters.States
 #region Kernel Entity
 
         [ConstructField(KernelTypeOwner.Player)]
-        private PlayerHandler _player;
+        private IBody _playerBody;
 
         private Transform _playerTransform;
 
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _playerTransform = _player.transform;
+            _playerTransform = _playerBody.Transform;
         }
 
 #endregion

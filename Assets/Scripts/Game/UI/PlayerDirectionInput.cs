@@ -16,11 +16,11 @@ namespace Game.UI
         /// <summary>
         /// Vector3: direction
         /// </summary>
-        public event Action<Vector2> onCharacterDirectionChanged;
+        public event Action<Vector2, bool> onCharacterDirectionChanged;
 
-        private protected override void UpdateDirection(in Vector2 direction)
+        private protected override void UpdateDirection(in Vector2 direction, in bool updateDirectionInProgress)
         {
-            onCharacterDirectionChanged?.Invoke(direction);
+            onCharacterDirectionChanged?.Invoke(direction, updateDirectionInProgress);
         }
     }
 }
