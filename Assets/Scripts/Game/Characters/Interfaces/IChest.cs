@@ -9,6 +9,7 @@ namespace Game.Characters.Interfaces
     internal interface IChest: ITransform
     {
         event Action onOpened;
+        public event Action<DistanceToPlayerArgs> onPlayerEnteredChestZone;
 
         void Open();
 

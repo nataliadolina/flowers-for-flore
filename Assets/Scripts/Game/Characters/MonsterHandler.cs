@@ -7,7 +7,7 @@ using DI.Attributes.Register;
 namespace Game.Characters
 {
     [Register]
-    internal class Monster : BaseChestEntity
+    internal class MonsterHandler : BaseChestEntity
     {
         
     }

@@ -16,6 +16,7 @@ namespace Game.Characters.Chest
     internal class Chest : MonoBehaviour, IKernelEntity, IChest
     {
         public event Action onOpened;
+        public event Action<DistanceToPlayerArgs> onPlayerEnteredChestZone;
 
         [SerializeField] private Particles appearParticles;
         [SerializeField] private Particles destroyParticles;
@@ -43,6 +44,11 @@ namespace Game.Characters.Chest
             }
         }
 
+        private void OnPlayerEnteredChestZone(float distanceToPlayer)
+        {
+            onPlayerEnteredChestZone?.Invoke(new DistanceToPlayerArgs(distanceToPlayer, this, true));
+        }
+
 #region ITransform
 
         public Transform Transform { get; private set; }
@@ -59,6 +65,7 @@ namespace Game.Characters.Chest
 
         public void Destroy()
         {
+            ClearSubscriptions();
             Destroy(gameObject);
         }
 
@@ -67,17 +74,33 @@ namespace Game.Characters.Chest
 #region Kernel Entity
 
         private Transform _chestEntityTransform;
+        private IDistanceToSubjectZoneProcessor _distanceToPlayerProcessor;
 
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
             Transform = transform;
+            _distanceToPlayerProcessor = kernel.GetInjection<IDistanceToSubjectZoneProcessor>(x => (x.OwnerType == OwnerType.ChestEntity | x.OwnerType == OwnerType.Chest) && x.AimType == OwnerType.Player);
         }
 
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
             _chestEntityTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity).Transform;
+        }
+
+#endregion
+
+#region Subscriptions
+
+        private void SetSubscriptions()
+        {
+            _distanceToPlayerProcessor.onAimEnterZone += OnPlayerEnteredChestZone;
+        }
+
+        private void ClearSubscriptions()
+        {
+            _distanceToPlayerProcessor.onAimEnterZone -= OnPlayerEnteredChestZone;
         }
 
 #endregion

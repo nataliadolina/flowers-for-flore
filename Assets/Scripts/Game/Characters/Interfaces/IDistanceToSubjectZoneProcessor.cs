@@ -6,8 +6,9 @@ using System;
 
 namespace Game.Characters.Interfaces
 {
-    internal interface IDistanceToPlayerHandler : ICollisionDetector
+    internal interface IDistanceToSubjectZoneProcessor : IOwnerType, IAimType
     {
-        event Action<DistanceToPlayerArgs> onDistanceToPlayerChange;
+        public event Action<float> onAimEnterZone;
+        public event Action onAimExitZone;
     }
 }

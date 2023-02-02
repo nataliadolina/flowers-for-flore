@@ -25467,7 +25467,7 @@ Animator:
   m_GameObject: {fileID: 325469152}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 902eedcaf6164ab4aa84bee782b015a5, type: 3}
-  m_Controller: {fileID: 9100000, guid: f0f6b4a4aa1733746a9e2182e626c40e, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -30515,7 +30515,7 @@ Transform:
   m_Children:
   - {fileID: 597092959}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &425391885
 GameObject:
@@ -35827,7 +35827,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14a2037faaa5be14fa8de167341dfd00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  persueDist: 1
 --- !u!1 &597092958
 GameObject:
   m_ObjectHideFlags: 0
@@ -51203,7 +51202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9127098993292618313, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
@@ -51645,7 +51644,6 @@ MonoBehaviour:
   speed: 0
   harm: 0
   timeBeetweenAttacks: 1
-  attackDist: 2
 --- !u!1 &978431585
 GameObject:
   m_ObjectHideFlags: 0
@@ -52225,7 +52223,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14a2037faaa5be14fa8de167341dfd00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  persueDist: 1
 --- !u!1 &1101944410
 GameObject:
   m_ObjectHideFlags: 0
@@ -57145,7 +57142,6 @@ MonoBehaviour:
   speed: 0
   harm: 0
   timeBeetweenAttacks: 1
-  attackDist: 2
 --- !u!1 &1163859894
 GameObject:
   m_ObjectHideFlags: 0
@@ -57200,7 +57196,6 @@ GameObject:
   - component: {fileID: 1172330918}
   - component: {fileID: 1172330917}
   - component: {fileID: 1172330916}
-  - component: {fileID: 1172330921}
   - component: {fileID: 1172330922}
   - component: {fileID: 1172330915}
   m_Layer: 0
@@ -57314,20 +57309,8 @@ Transform:
   m_Children:
   - {fileID: 842010342}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1172330921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1172330914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b11d577aee2c1904eb3e8349d0e4784a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1172330922
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57352,6 +57335,14 @@ PrefabInstance:
       propertyPath: movingSystem
       value: 
       objectReference: {fileID: 1165853442}
+    - target: {fileID: 3680615764835014246, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4311874182153054039, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
+      propertyPath: speed
+      value: 700
+      objectReference: {fileID: 0}
     - target: {fileID: 5306262822773127816, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -57400,6 +57391,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChestWithMonster 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7743591119901475193, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743591119901475195, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
+      propertyPath: persueDist
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743591121065626963, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
+      propertyPath: speed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8114068748337875321, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
+      propertyPath: m_Name
+      value: Persue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
 --- !u!1001 &1202648255
@@ -57440,6 +57447,10 @@ PrefabInstance:
     - target: {fileID: 1779155686, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946128824469206569, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
+      propertyPath: ownerType
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9125062764650404383, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
       propertyPath: m_RootOrder
@@ -57491,7 +57502,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9127098993292618313, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 857850626, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
@@ -57879,7 +57890,7 @@ Animator:
   m_GameObject: {fileID: 1262022439}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 902eedcaf6164ab4aa84bee782b015a5, type: 3}
-  m_Controller: {fileID: 9100000, guid: f0f6b4a4aa1733746a9e2182e626c40e, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -108171,6 +108182,10 @@ PrefabInstance:
     - target: {fileID: 2925159891021138754, guid: affc7256500037a4284c0966dd729bff, type: 3}
       propertyPath: m_Name
       value: Flower4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2925159891021138754, guid: affc7256500037a4284c0966dd729bff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: affc7256500037a4284c0966dd729bff, type: 3}

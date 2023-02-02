@@ -8,12 +8,11 @@ using UnityEngine;
 
 namespace Game.Characters.Runtimes
 {
-    [Register(typeof(IRuntime))]
-    internal class CurrentStateRuntime : MonoBehaviour, IRuntime, IKernelEntity
+    internal class CurrentStateRuntime : BaseRuntime
     {
-        public RuntimeType RuntimeType { get => RuntimeType.CurrentState; }
+        public override RuntimeType RuntimeType { get => RuntimeType.CurrentState; }
 
-        public void Run()
+        public override void Run()
         {
             _movingAgent.CurrentState.Run();
         }

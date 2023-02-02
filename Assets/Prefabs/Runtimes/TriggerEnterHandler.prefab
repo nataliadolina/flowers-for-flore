@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6368916230010938843}
-  - component: {fileID: 6368916230010938844}
-  - component: {fileID: 5159976568772961051}
-  - component: {fileID: 4628436263401946518}
+  - component: {fileID: 8786877387199788264}
+  - component: {fileID: 7020764326777754046}
   m_Layer: 0
   m_Name: TriggerEnterHandler
   m_TagString: Untagged
@@ -33,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6368916230010938844
+--- !u!114 &8786877387199788264
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,32 +41,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 6368916230010938840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6519ec03b1ca1a41a5356a15e0005f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!135 &5159976568772961051
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6368916230010938840}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.071531855
-  m_Center: {x: -0.015314613, y: 0.024276087, z: 0.022462023}
---- !u!114 &4628436263401946518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6368916230010938840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 143a8a61615160b4297f137b3a2c2644, type: 3}
+  m_Script: {fileID: 11500000, guid: 2809bea8005c65c4aa4857e848e67d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toState: 2
+--- !u!114 &7020764326777754046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6368916230010938840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1231187e2b37bde44905b503b9ab10bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxVisibleDistance: 1
+  ownerType: 3

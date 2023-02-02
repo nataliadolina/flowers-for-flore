@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Game.Characters.Handlers.Abstract;
 using DI.Attributes.Run;
 using DI.Attributes.Register;
 using DI.Attributes.Construct;

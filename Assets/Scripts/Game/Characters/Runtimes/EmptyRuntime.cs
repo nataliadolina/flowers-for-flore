@@ -1,16 +1,11 @@
-﻿using Game.Characters.Runtimes.Interfaces;
-using Game.Characters.Enums;
-using DI.Attributes.Register;
-using DI.Kernel.Interfaces;
-using UnityEngine;
+﻿using Game.Characters.Enums;
 
 namespace Game.Characters.Runtimes
 {
-    [Register(typeof(IRuntime))]
-    internal class EmptyRuntime : MonoBehaviour, IRuntime, IKernelEntity
+    internal class EmptyRuntime : BaseRuntime
     {
-        public RuntimeType RuntimeType { get => RuntimeType.Empty; }
-        public void Run()
+        public override RuntimeType RuntimeType { get => RuntimeType.Empty; }
+        public override void Run()
         {
 
         }

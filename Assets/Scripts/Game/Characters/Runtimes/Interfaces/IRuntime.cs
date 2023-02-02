@@ -6,5 +6,7 @@ namespace Game.Characters.Runtimes.Interfaces
     {
         RuntimeType RuntimeType { get; }
         void Run();
+        void OnStartRunning();
+        void OnStopRunning();
     }
 }

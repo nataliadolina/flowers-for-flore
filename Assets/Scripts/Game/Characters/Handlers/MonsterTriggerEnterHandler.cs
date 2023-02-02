@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Game.Characters.Handlers.Abstract;
 using DI.Attributes.Construct;
 using Game.Characters.States.Managers;
 using Game.Characters.Enums;
@@ -22,9 +21,10 @@ namespace Game.Characters.Handlers
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.GetComponent<PlayerHandler>())
+            if (other.GetComponent<PlayerMovement>())
             {
                 _movingAgent.CurrentState.Terminate();
+                Debug.Log($"Changed to state {_movingAgent.CurrentState}");
             }
         }
 

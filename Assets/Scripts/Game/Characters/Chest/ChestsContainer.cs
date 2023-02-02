@@ -86,9 +86,9 @@ namespace Game.Characters.Chest
 #region Kernel entity
 
         [ConstructField(KernelTypeOwner.LogicScene)]
-        private IDistanceToPlayerHandler[] _distanceToPlayerHandles;
+        private IChest[] chests;
 
-        [ConstructMethod]
+        [ConstructMethod(KernelTypeOwner.LogicScene)]
         private void OnConstruct(IKernel kernel)
         {
             SetSubscriptions();
@@ -100,17 +100,17 @@ namespace Game.Characters.Chest
 
         private void SetSubscriptions()
         {
-            foreach (var handler in _distanceToPlayerHandles)
+            foreach (var chest in chests)
             {
-                handler.onDistanceToPlayerChange += AnyChestDistanceToPlayerChange;
+                chest.onPlayerEnteredChestZone += AnyChestDistanceToPlayerChange;
             }
         }
 
         private void ClearSubstriptions()
         {
-            foreach (var handler in _distanceToPlayerHandles)
+            foreach (var chest in chests)
             {
-                handler.onDistanceToPlayerChange -= AnyChestDistanceToPlayerChange;
+                chest.onPlayerEnteredChestZone -= AnyChestDistanceToPlayerChange;
             }
         }
 

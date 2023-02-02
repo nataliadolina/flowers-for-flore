@@ -11,12 +11,15 @@ using DI.Kernel.Interfaces;
 using Game.Characters.Interfaces;
 using Game.Characters.Handlers;
 using Game.Characters.Utilities.Utils;
+using System;
 
 namespace Game.Characters.States.Managers
 {
     [Register]
     internal class MovingAgent : MonoBehaviour, IKernelEntity
     {
+        internal event Action<StateEntityType> onCurrentStateChanged;
+
         [SerializeField] private StateEntityType startState;
         [SerializeField] private RuntimeType startRuntime;
 
@@ -32,12 +35,15 @@ namespace Game.Characters.States.Managers
 
         internal void ChangeCurrentRuntime(RuntimeType runtimeType)
         {
+            _currentRuntime.OnStopRunning();
             _currentRuntime = _runtimeEntitiesMap[runtimeType];
+            _currentRuntime.OnStartRunning();
         }
 
         internal void ChangeCurrentState(StateEntityType toState)
         {
             _currentState = _stateEntitiesMap[toState];
+            onCurrentStateChanged?.Invoke(toState);
             _currentState.OnStartState();
         }
 
@@ -92,6 +98,17 @@ namespace Game.Characters.States.Managers
             CurrentState = _stateEntitiesMap[startState];
             _currentRuntime = _runtimeEntitiesMap[startRuntime];
             _currentState.OnStartState();
+
+            foreach (var runtime in _runtimeEntitiesMap.Values)
+            {
+                if (runtime.Equals(_currentRuntime))
+                {
+                    _currentRuntime.OnStartRunning();
+                    return;
+                }
+
+                runtime.OnStopRunning();
+            }
         }
 
 #endregion

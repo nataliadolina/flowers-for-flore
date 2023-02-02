@@ -21,7 +21,19 @@ namespace Game.Characters
 
         private Rigidbody[] _rigidbodies;
 
+        private Rigidbody _mainRigidBody;
+
+#region IRigidBody
+
+        public Rigidbody Rigidbody { get => _mainRigidBody; }
+
+#endregion
+
+#region ITransform
+
         public Transform Transform { get => transform; }
+
+#endregion
 
 #region IOwnerType
 
@@ -60,9 +72,11 @@ namespace Game.Characters
         [ConstructField]
         private ICollisionDetector[] _collisionDetectors;
 
+
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
+            _mainRigidBody = GetComponent<Rigidbody>();
             _rigidbodies = GetComponentsInChildren<Rigidbody>();
         }
 

@@ -15,11 +15,17 @@ namespace Game.Characters.States
     internal class MonsterAppearState : BaseState
     {
         private float _lastPositionY;
+        private bool _startUpdate = false;
 
         public override StateEntityType StateEntityType { get => StateEntityType.Appear; }
 
         public override void Run()
         {
+            if (!_startUpdate)
+            {
+                return;
+            }
+
             float currentY = _thisTransform.position.y;
             if (currentY < _lastPositionY)
             {
@@ -35,13 +41,15 @@ namespace Game.Characters.States
         public override void OnStartState()
         {
             _chestEntityBody.SetRigidbodiesEnabled(true);
+            _chestEntityRigidbody.AddForce(Vector3.up * speed * 0.02f, ForceMode.Impulse);
+            _startUpdate = true;
         }
 
         private protected override void BeforeTerminate()
         {
             _movingAgent.ChangeCurrentRuntime(RuntimeType.PersueWalk);
             _chestEntityBody.SetRigidbodiesEnabled(false);
-            Debug.Log("Terminate");
+            Debug.Log($"Changed Runtime to {RuntimeType.PersueWalk}");
         }
 
 #region KernelEntity
@@ -53,6 +61,8 @@ namespace Game.Characters.States
 
         private IBody _chestEntityBody;
 
+        private Rigidbody _chestEntityRigidbody;
+
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
@@ -63,6 +73,7 @@ namespace Game.Characters.States
         private void OnRun(IKernel kernel)
         {
             _thisTransform = _chestEntityBody.Transform;
+            _chestEntityRigidbody = _chestEntityBody.Rigidbody;
         }
 
 #endregion
