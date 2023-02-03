@@ -43,8 +43,9 @@ namespace Game.Characters.States.Managers
         internal void ChangeCurrentState(StateEntityType toState)
         {
             _currentState = _stateEntitiesMap[toState];
-            onCurrentStateChanged?.Invoke(toState);
             _currentState.OnStartState();
+
+            onCurrentStateChanged?.Invoke(toState);
         }
 
         internal void TerminateCurrentState()

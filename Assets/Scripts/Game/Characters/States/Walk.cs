@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Game.Characters.States.Abstract;
 using Game.Characters.Enums;
-using DI.Attributes.Construct;
+using DI.Attributes.Run;
 using DI.Attributes.Register;
 using DI.Kernel.Interfaces;
 using Game.Characters.Interfaces;
@@ -58,8 +58,8 @@ namespace Game.Characters.States {
 
         private Transform _chestEntityTransform;
 
-        [ConstructMethod]
-        private void OnConstruct(IKernel kernel)
+        [RunMethod]
+        private void OnRun(IKernel kernel)
         {
             _body = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
             _chestEntityTransform = _body.Transform;

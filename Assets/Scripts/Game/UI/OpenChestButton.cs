@@ -5,6 +5,7 @@ using Game.UI.Abstract;
 using DI.Kernel.Interfaces;
 using DI.Kernel.Enums;
 using DI.Attributes.Construct;
+using DI.Attributes.Run;
 using DI.Attributes.Register;
 using Game.Characters.Interfaces;
 
@@ -41,8 +42,8 @@ namespace Game.UI
         [ConstructField(KernelTypeOwner.LogicScene)]
         private IChestsContainer _chestsContainer;
 
-        [ConstructMethod]
-        private void OnConstruct(IKernel kernel)
+        [RunMethod]
+        private void OnRun(IKernel kernel)
         {
             SetSubstriptions();
         }

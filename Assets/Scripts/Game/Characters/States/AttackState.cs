@@ -36,6 +36,7 @@ namespace Game.Characters.States
             }
 
             onMonsterAttackedPlayer(harm);
+            Debug.Log("Attacked");
             _currentTime = 0f;
 
             //int index = UnityEngine.Random.Range(0, _collisionParticles.Length);
@@ -75,6 +76,7 @@ namespace Game.Characters.States
         private void OnConstruct(IKernel kernel)
         {
             _distanceToPlayerProcessor = kernel.GetInjection<IDistanceToSubjectZoneProcessor>(x => x.OwnerType == OwnerType.ChestEntity && x.AimType == OwnerType.Player);
+            SetSubscriptions();
         }
 
 #endregion

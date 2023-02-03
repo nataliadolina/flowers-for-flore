@@ -7,6 +7,8 @@ using Game.Characters.Enums;
 using DI.Kernel.Interfaces;
 using DI.Attributes.Register;
 using DI.Attributes.Construct;
+using Utilities.Extensions;
+using Game.Characters.States.Managers;
 
 namespace Game.Characters.Handlers
 {
@@ -22,24 +24,28 @@ namespace Game.Characters.Handlers
 
         private bool _isSubjectInsideZone = false;
         private float _currentDistance;
+        private bool _needToSwitchStateIfValueNotChanged = false;
 
         public bool IsSubjectInsideZone
         {
             get => _isSubjectInsideZone;
             set
             {
-                if (_isSubjectInsideZone != value)
+                if (_isSubjectInsideZone == value & !_needToSwitchStateIfValueNotChanged)
                 {
-                    if (!value)
-                    {
-                        onAimExitZone?.Invoke();
-                    }
-                    else if (value)
-                    {
-                        onAimEnterZone?.Invoke(_currentDistance);
-                    }
-                    _isSubjectInsideZone = value;
+                    return;
                 }
+
+                if (!value)
+                {
+                    onAimExitZone?.Invoke();
+                }
+                else if (value)
+                {
+                    onAimEnterZone?.Invoke(_currentDistance);
+                }
+                _isSubjectInsideZone = value;
+                _needToSwitchStateIfValueNotChanged = false;
             }
         }
 
@@ -61,20 +67,35 @@ namespace Game.Characters.Handlers
             IsSubjectInsideZone = distanceToAim <= maxVisibleDistance ? true : false;
         }
 
+        private void SetNeedToSwitchStateIfValueNotChanged(StateEntityType stateType)
+        {
+            if (stateType == StateEntityType.Walk)
+            {
+                _needToSwitchStateIfValueNotChanged = true;
+            }
+        }
+
 #region KernelEntity
 
         [ConstructField]
         private IDistanceToSubjectDetector _distanceToSubjectDetector;
 
+        [ConstructField]
+        private MovingAgent _movingAgent;
+
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _distanceToSubjectDetector = kernel.GetInjection<IDistanceToSubjectDetector>(x => x.AimType == aimType && x.OwnerTypes.HasFlag(ownerType));
+            _distanceToSubjectDetector = kernel.GetInjection<IDistanceToSubjectDetector>(
+                x => x.AimType == aimType && x.OwnerTypes.HasValue(ownerType.ToString())
+                );
+            SetSubscriptions();
         }
 
         private void SetSubscriptions()
         {
             _distanceToSubjectDetector.onDistanceToSubjectChange += SetIsSubjectInsideZone;
+            _movingAgent.onCurrentStateChanged += SetNeedToSwitchStateIfValueNotChanged;
         }
 
 #endregion

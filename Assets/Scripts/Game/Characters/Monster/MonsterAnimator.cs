@@ -19,10 +19,19 @@ namespace Game.Characters.Monster
 
         private Animator _animator;
 
+#region MonoBehaviour
+
         private void Start()
         {
             _animator = GetComponent<Animator>();
         }
+
+        private void OnDestroy()
+        {
+            ClearSubscriptions();
+        }
+
+#endregion
 
         private void Walk()
         {
@@ -37,6 +46,7 @@ namespace Game.Characters.Monster
         private void Attack(float harm)
         {
             _animator.SetTrigger(AttackIndex);
+            Debug.Log("Animator set index attack");
         }
 
         private void OnCurrentStateChanged(StateEntityType stateType)
@@ -48,11 +58,36 @@ namespace Game.Characters.Monster
             }
         }
 
+#region Kernel Entity
+
+        [ConstructField]
+        private IMonsterAttack _monsterAttack;
+
+        [ConstructField]
+        private MovingAgent _movingAgent;
+
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            kernel.GetInjection<IMonsterAttack>().onMonsterAttackedPlayer += Attack;
-            kernel.GetInjection<MovingAgent>().onCurrentStateChanged += OnCurrentStateChanged;
+            SetSubscriptions();
         }
+
+#endregion
+
+#region Subscriptions
+
+        private void SetSubscriptions()
+        {
+            _monsterAttack.onMonsterAttackedPlayer += Attack;
+            _movingAgent.onCurrentStateChanged += OnCurrentStateChanged;
+        }
+
+        private void ClearSubscriptions()
+        {
+            _monsterAttack.onMonsterAttackedPlayer -= Attack;
+            _movingAgent.onCurrentStateChanged -= OnCurrentStateChanged;
+        }
+
+#endregion
     }
 }

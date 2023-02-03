@@ -7,6 +7,7 @@ namespace DI.Kernel.Enums
     internal enum KernelTypeOwner
     {
         Player,
+        Creature,
         Chest,
         ChestEntity,
         LogicScene,

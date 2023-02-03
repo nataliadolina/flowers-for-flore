@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6368916230010938843}
   - component: {fileID: 8786877387199788264}
-  - component: {fileID: 7020764326777754046}
+  - component: {fileID: 414388938090418706}
   m_Layer: 0
   m_Name: TriggerEnterHandler
   m_TagString: Untagged
@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2809bea8005c65c4aa4857e848e67d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toState: 2
---- !u!114 &7020764326777754046
+  distanceToPlayerProcessor: {fileID: 414388938090418706}
+--- !u!114 &414388938090418706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,8 +54,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6368916230010938840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1231187e2b37bde44905b503b9ab10bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a5f059674a44da4ab4e6980be9e6a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVisibleDistance: 1
-  ownerType: 3
+  maxVisibleDistance: 1.5
+  ownerType: 1
+  aimType: 4

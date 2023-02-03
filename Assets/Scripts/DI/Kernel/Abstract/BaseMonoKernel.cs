@@ -27,6 +27,10 @@ namespace DI.Kernel.Abstract
 
         public void RunInjections()
         {
+            if (KernelTypeOwner == KernelTypeOwner.Creature)
+            {
+                Debug.Log("Monster on construct");
+            }
             Array.ForEach(_injectionsToConstruct, kernelEntityObject => kernelEntityObject.RunFromMethodAttribute(this, kernelEntityObject.GetType()));
         }
 

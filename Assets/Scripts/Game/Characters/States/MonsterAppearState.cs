@@ -49,7 +49,6 @@ namespace Game.Characters.States
         {
             _movingAgent.ChangeCurrentRuntime(RuntimeType.PersueWalk);
             _chestEntityBody.SetRigidbodiesEnabled(false);
-            Debug.Log($"Changed Runtime to {RuntimeType.PersueWalk}");
         }
 
 #region KernelEntity

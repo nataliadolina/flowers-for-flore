@@ -11,14 +11,17 @@ namespace Game.Characters.Handlers
     [Register]
     internal class StateManager : MonoBehaviour, IKernelEntity
     {
+        [SerializeField]
+        private DistanceToSubjectZoneProcessor distanceToPlayerProcessor;
+
         private void OnSubjectEnter(float distance)
         {
-            _movingAgent.CurrentState.Terminate();
+            _movingAgent.TerminateCurrentState();
         }
 
         private void OnSubjectLeave()
         {
-            _movingAgent.CurrentState.Terminate();
+            _movingAgent.TerminateCurrentState();
         }
 
 #region MonoBehaviour
@@ -35,12 +38,9 @@ namespace Game.Characters.Handlers
         [ConstructField]
         private MovingAgent _movingAgent;
 
-        private IDistanceToSubjectZoneProcessor _distanceToPlayerProcessor;
-
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _distanceToPlayerProcessor = kernel.GetInjection<IDistanceToSubjectZoneProcessor>(x => x.OwnerType == OwnerType.ChestEntity && x.AimType == OwnerType.Player);
             SetSubscriptions();
         }
 
@@ -50,14 +50,14 @@ namespace Game.Characters.Handlers
 
         private void SetSubscriptions()
         {
-            _distanceToPlayerProcessor.onAimEnterZone += OnSubjectEnter;
-            _distanceToPlayerProcessor.onAimExitZone += OnSubjectLeave;
+            distanceToPlayerProcessor.onAimEnterZone += OnSubjectEnter;
+            distanceToPlayerProcessor.onAimExitZone += OnSubjectLeave;
         }
 
         private void ClearSubscriptions()
         {
-            _distanceToPlayerProcessor.onAimEnterZone -= OnSubjectEnter;
-            _distanceToPlayerProcessor.onAimExitZone -= OnSubjectLeave;
+            distanceToPlayerProcessor.onAimEnterZone -= OnSubjectEnter;
+            distanceToPlayerProcessor.onAimExitZone -= OnSubjectLeave;
         }
 
 #endregion

@@ -43,8 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d48e8e589112040b71a8530a60e990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextState: {fileID: 0}
-  speed: 10
-  setAnim:
-    m_PersistentCalls:
-      m_Calls: []
+  nextState: 2
+  speed: 30

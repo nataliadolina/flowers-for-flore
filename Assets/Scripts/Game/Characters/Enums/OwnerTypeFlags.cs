@@ -8,11 +8,8 @@ namespace Game.Characters.Enums
     [Flags]
     internal enum OwnerTypeFlags
     {
-        Player,
-        Monster,
-        Flower,
-        ChestEntity,
-        Chest,
-        Runtime
+        ChestEntity = 1,
+        Chest = 2,
+        Runtime = 3
     }
 }

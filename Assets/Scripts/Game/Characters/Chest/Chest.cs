@@ -81,6 +81,7 @@ namespace Game.Characters.Chest
         {
             Transform = transform;
             _distanceToPlayerProcessor = kernel.GetInjection<IDistanceToSubjectZoneProcessor>(x => (x.OwnerType == OwnerType.ChestEntity | x.OwnerType == OwnerType.Chest) && x.AimType == OwnerType.Player);
+            SetSubscriptions();
         }
 
         [RunMethod]

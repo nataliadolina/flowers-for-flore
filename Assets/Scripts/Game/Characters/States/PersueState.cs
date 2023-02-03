@@ -42,7 +42,7 @@ namespace Game.Characters.States
         private Transform _thisTransform;
         private float _halfPlayerHeight;
 
-        [ConstructMethod]
+        [RunMethod]
         private void OnConstruct(IKernel kernel)
         {
             _thisTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity).Transform;
