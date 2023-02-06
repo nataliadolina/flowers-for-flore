@@ -17,14 +17,7 @@ namespace Game.Characters.Monster
         private readonly int RunIndex = Animator.StringToHash("Run");
         private readonly int AttackIndex = Animator.StringToHash("Attack");
 
-        private Animator _animator;
-
 #region MonoBehaviour
-
-        private void Start()
-        {
-            _animator = GetComponent<Animator>();
-        }
 
         private void OnDestroy()
         {
@@ -66,9 +59,12 @@ namespace Game.Characters.Monster
         [ConstructField]
         private MovingAgent _movingAgent;
 
+        private Animator _animator;
+
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
+            _animator = GetComponent<Animator>();
             SetSubscriptions();
         }
 

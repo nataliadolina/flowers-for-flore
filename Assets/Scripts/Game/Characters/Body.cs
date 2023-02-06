@@ -10,7 +10,7 @@ using Game.Characters.Enums;
 namespace Game.Characters
 {
     /// <summary>
-    /// Operates object physics using Trannsform, Rigidbody and Collider components
+    /// Operates object physics using Transform, Rigidbody, Collider and DistanceToSubjectDetector components
     /// </summary>
     /// 
     [Register(typeof(IBody))]

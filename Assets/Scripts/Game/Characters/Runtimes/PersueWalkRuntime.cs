@@ -17,12 +17,25 @@ namespace Game.Characters.Runtimes
 
         public override void Run()
         {
+            //if (!_isRunning)
+            //{
+            //    return;
+            //}
+
+            //if (_distanceToSubjectZoneProcessor.IsSubjectInsideZone && _movingAgent.CurrentState.StateEntityType != StateEntityType.Persue)
+            //{
+            //    ToPersueState();
+            //}
+            //else if (!_distanceToSubjectZoneProcessor.IsSubjectInsideZone && _movingAgent.CurrentState.StateEntityType != StateEntityType.Walk)
+            //{
+            //    ToWalkState();
+            //}
             _movingAgent.CurrentState.Run();
         }
 
         private void ToPersueState(float distance)
         {
-            if (!_isRunning)
+            if (!_isRunning | _movingAgent.CurrentState.StateEntityType == StateEntityType.Attack)
             {
                 return;
             }
@@ -31,12 +44,21 @@ namespace Game.Characters.Runtimes
 
         private void ToWalkState()
         {
-            if (!_isRunning)
+            if (!_isRunning | _movingAgent.CurrentState.StateEntityType == StateEntityType.Attack)
             {
                 return;
             }
             _movingAgent.CurrentState = _walkState;
         }
+
+#region Mono Behaviour
+
+        private void OnDestroy()
+        {
+            ClearSubscriptions();
+        }
+
+#endregion
 
 #region Kernel entity
 
@@ -47,15 +69,32 @@ namespace Game.Characters.Runtimes
 
         private IStateEntity _walkState;
 
+        private IDistanceToSubjectZoneProcessor _distanceToSubjectZoneProcessor;
+
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
             _persueState = kernel.GetInjection<IStateEntity>(x => x.StateEntityType == StateEntityType.Persue);
             _walkState = kernel.GetInjection<IStateEntity>(x => x.StateEntityType == StateEntityType.Walk);
 
-            IDistanceToSubjectZoneProcessor distanceToSubjectZoneProcessor = kernel.GetInjection<IDistanceToSubjectZoneProcessor>(x => x.OwnerType == OwnerType.Runtime && x.AimType == OwnerType.Player);
-            distanceToSubjectZoneProcessor.onAimEnterZone += ToPersueState;
-            distanceToSubjectZoneProcessor.onAimExitZone += ToWalkState;
+            _distanceToSubjectZoneProcessor = kernel.GetInjection<IDistanceToSubjectZoneProcessor>(x => x.OwnerType == OwnerType.Runtime && x.AimType == OwnerType.Player);
+            SetSubscriprions();
+        }
+
+#endregion
+
+#region Subscriptions
+
+        private void SetSubscriprions()
+        {
+            _distanceToSubjectZoneProcessor.onAimEnterZone += ToPersueState;
+            _distanceToSubjectZoneProcessor.onAimExitZone += ToWalkState;
+        }
+
+        private void ClearSubscriptions()
+        {
+            _distanceToSubjectZoneProcessor.onAimEnterZone -= ToPersueState;
+            _distanceToSubjectZoneProcessor.onAimExitZone -= ToWalkState;
         }
 
 #endregion

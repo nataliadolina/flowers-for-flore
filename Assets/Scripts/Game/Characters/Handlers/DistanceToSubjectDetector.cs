@@ -75,7 +75,6 @@ namespace Game.Characters.Handlers
         [RunMethod(KernelTypeOwner.LogicScene)]
         private void OnRun(IKernel kernel)
         {
-            Debug.Log("DistanceToSubjectDetector Run");
             _thisTransform = transform;
             _subjectTransform = kernel.GetInjection<IBody>(x => x.OwnerType == aimType).Transform;
             StartInternal();

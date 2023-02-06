@@ -10,5 +10,7 @@ namespace Game.Characters.Interfaces
     {
         public event Action<float> onAimEnterZone;
         public event Action onAimExitZone;
+
+        public bool IsSubjectInsideZone { get; }
     }
 }

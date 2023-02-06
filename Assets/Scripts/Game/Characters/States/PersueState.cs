@@ -51,7 +51,6 @@ namespace Game.Characters.States
         [RunMethod(KernelTypeOwner.Player)]
         private void OnRun(IKernel kernel)
         {
-            Debug.Log(kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.Player));
             _playerTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.Player).Transform;
             _halfPlayerHeight = _playerTransform.localScale.y / 2;
         }

@@ -63,7 +63,7 @@ namespace Game.Characters.States
 
         private void OnDestroy()
         {
-            ClearSubscriptions();
+            //ClearSubscriptions();
         }
 
 #endregion
@@ -76,7 +76,7 @@ namespace Game.Characters.States
         private void OnConstruct(IKernel kernel)
         {
             _distanceToPlayerProcessor = kernel.GetInjection<IDistanceToSubjectZoneProcessor>(x => x.OwnerType == OwnerType.ChestEntity && x.AimType == OwnerType.Player);
-            SetSubscriptions();
+            //SetSubscriptions();
         }
 
 #endregion

@@ -22,11 +22,21 @@ namespace Game.Characters.States.Managers
 
         [SerializeField] private StateEntityType startState;
         [SerializeField] private RuntimeType startRuntime;
+        [SerializeField] private StateEntityType currentState;
 
         private IStateEntity _currentState;
         private IRuntime _currentRuntime;
 
-        public IStateEntity CurrentState { get { return _currentState; } set { _currentState = value; } }
+        public IStateEntity CurrentState { get { return _currentState; } 
+            set
+            {
+                _currentState = value;
+                _currentState.OnStartState();
+
+                onCurrentStateChanged?.Invoke(value.StateEntityType);
+                currentState = value.StateEntityType;
+            } 
+        }
 
         private void Update()
         {
@@ -42,10 +52,7 @@ namespace Game.Characters.States.Managers
 
         internal void ChangeCurrentState(StateEntityType toState)
         {
-            _currentState = _stateEntitiesMap[toState];
-            _currentState.OnStartState();
-
-            onCurrentStateChanged?.Invoke(toState);
+            CurrentState = _stateEntitiesMap[toState];
         }
 
         internal void TerminateCurrentState()
@@ -53,22 +60,10 @@ namespace Game.Characters.States.Managers
             _currentState.Terminate();
         }
 
-#region MonoBehaviour
-
-        private void OnDestroy()
-        {
-            ClearSubstribtions();
-        }
-
-#endregion
-
 #region KernelEntity
 
         [ConstructField]
         private IStateEntity[] _stateEntities;
-
-        [ConstructField]
-        private IChestAnimator _chestAnimator;
 
         [ConstructField]
         private IRuntime[] _runtimes;
@@ -94,11 +89,9 @@ namespace Game.Characters.States.Managers
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
-            SetSubscribtions();
-
             CurrentState = _stateEntitiesMap[startState];
             _currentRuntime = _runtimeEntitiesMap[startRuntime];
-            _currentState.OnStartState();
+            _currentRuntime.OnStartRunning();
 
             foreach (var runtime in _runtimeEntitiesMap.Values)
             {
@@ -110,20 +103,6 @@ namespace Game.Characters.States.Managers
 
                 runtime.OnStopRunning();
             }
-        }
-
-#endregion
-
-#region Subscriptions
-
-        private void SetSubscribtions()
-        {
-            _chestAnimator.onOpenAnimationStoppedPlaying += TerminateCurrentState;
-        }
-
-        private void ClearSubstribtions()
-        {
-            _chestAnimator.onOpenAnimationStoppedPlaying -= TerminateCurrentState;
         }
 
 #endregion

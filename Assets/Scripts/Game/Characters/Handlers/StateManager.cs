@@ -12,16 +12,22 @@ namespace Game.Characters.Handlers
     internal class StateManager : MonoBehaviour, IKernelEntity
     {
         [SerializeField]
+        private StateEntityType stateOnEnterZone;
+
+        [SerializeField]
+        private StateEntityType stateOnExitZone;
+
+        [SerializeField]
         private DistanceToSubjectZoneProcessor distanceToPlayerProcessor;
 
         private void OnSubjectEnter(float distance)
         {
-            _movingAgent.TerminateCurrentState();
+            _movingAgent.ChangeCurrentState(stateOnEnterZone);
         }
-
+       
         private void OnSubjectLeave()
         {
-            _movingAgent.TerminateCurrentState();
+            _movingAgent.ChangeCurrentState(stateOnExitZone);
         }
 
 #region MonoBehaviour

@@ -32,12 +32,6 @@ namespace Game.Characters.States.Abstract
         [ConstructField]
         private protected MovingAgent _movingAgent;
 
-        [ConstructMethod]
-        private void OnConstruct()
-        {
-            Debug.Log("On construct");
-        }
-
 #endregion
 
     }

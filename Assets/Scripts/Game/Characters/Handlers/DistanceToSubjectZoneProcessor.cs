@@ -39,6 +39,7 @@ namespace Game.Characters.Handlers
                 if (!value)
                 {
                     onAimExitZone?.Invoke();
+
                 }
                 else if (value)
                 {
@@ -69,10 +70,7 @@ namespace Game.Characters.Handlers
 
         private void SetNeedToSwitchStateIfValueNotChanged(StateEntityType stateType)
         {
-            if (stateType == StateEntityType.Walk)
-            {
-                _needToSwitchStateIfValueNotChanged = true;
-            }
+            _needToSwitchStateIfValueNotChanged = true;
         }
 
 #region KernelEntity

@@ -9,6 +9,7 @@ using Game.Characters.Effects;
 using DI.Kernel.Enums;
 using System;
 using Game.Characters.Utilities.Utils;
+using Game.Characters.States.Managers;
 
 namespace Game.Characters.Chest
 {
@@ -76,6 +77,12 @@ namespace Game.Characters.Chest
         private Transform _chestEntityTransform;
         private IDistanceToSubjectZoneProcessor _distanceToPlayerProcessor;
 
+        [ConstructField]
+        private IChestAnimator _chestAnimator;
+
+        [ConstructField]
+        private MovingAgent _movingAgent;
+
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
@@ -97,11 +104,21 @@ namespace Game.Characters.Chest
         private void SetSubscriptions()
         {
             _distanceToPlayerProcessor.onAimEnterZone += OnPlayerEnteredChestZone;
+
+            if (_movingAgent != null)
+            {
+                _chestAnimator.onOpenAnimationStoppedPlaying += _movingAgent.TerminateCurrentState;
+            }
         }
 
         private void ClearSubscriptions()
         {
             _distanceToPlayerProcessor.onAimEnterZone -= OnPlayerEnteredChestZone;
+
+            if (_movingAgent != null)
+            {
+                _chestAnimator.onOpenAnimationStoppedPlaying -= _movingAgent.TerminateCurrentState;
+            }
         }
 
 #endregion
