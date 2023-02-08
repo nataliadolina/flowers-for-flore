@@ -12,12 +12,12 @@ namespace Game.Characters.Runtimes
         private protected bool _isRunning = false;
         public abstract RuntimeType RuntimeType { get; }
 
-        public void OnStartRunning()
+        public virtual void OnStartRunning()
         {
             _isRunning = true;
         }
 
-        public void OnStopRunning()
+        public virtual void OnStopRunning()
         {
             _isRunning = false;
         }

@@ -8,35 +8,41 @@ using Game.Characters.Runtimes.Interfaces;
 using Game.Characters.Interfaces;
 using Game.Characters.Enums;
 using Game.Characters.Handlers;
+using System;
 
 namespace Game.Characters.Runtimes
 {
+    [Register]
     internal class PersueWalkRuntime : BaseRuntime
     {
+        internal event Action onPersueWalkRuntimeStartedRunning;
+        internal event Action onPersueWalkRuntimeStoppedRunning;
+
         public override RuntimeType RuntimeType { get => RuntimeType.PersueWalk; }
 
         public override void Run()
         {
-            //if (!_isRunning)
-            //{
-            //    return;
-            //}
-
-            //if (_distanceToSubjectZoneProcessor.IsSubjectInsideZone && _movingAgent.CurrentState.StateEntityType != StateEntityType.Persue)
-            //{
-            //    ToPersueState();
-            //}
-            //else if (!_distanceToSubjectZoneProcessor.IsSubjectInsideZone && _movingAgent.CurrentState.StateEntityType != StateEntityType.Walk)
-            //{
-            //    ToWalkState();
-            //}
             _movingAgent.CurrentState.Run();
         }
 
-        private void ToPersueState(float distance)
+        public override void OnStartRunning()
         {
-            if (!_isRunning | _movingAgent.CurrentState.StateEntityType == StateEntityType.Attack)
+            _isRunning = true;
+            onPersueWalkRuntimeStartedRunning?.Invoke();
+        }
+
+        public override void OnStopRunning()
+        {
+            _isRunning = false;
+            onPersueWalkRuntimeStoppedRunning?.Invoke();
+        }
+
+        private void ToPersueState(Transform aimTransform)
+        {
+            Debug.Log("To persue state");
+            if (!_isRunning || _movingAgent.CurrentState.StateEntityType == StateEntityType.Attack)
             {
+                Debug.Log($"Is running = false");
                 return;
             }
             _movingAgent.CurrentState = _persueState;
@@ -44,8 +50,10 @@ namespace Game.Characters.Runtimes
 
         private void ToWalkState()
         {
-            if (!_isRunning | _movingAgent.CurrentState.StateEntityType == StateEntityType.Attack)
+            Debug.Log("To walk state");
+            if (!_isRunning || _movingAgent.CurrentState.StateEntityType == StateEntityType.Attack)
             {
+                Debug.Log($"Is running = false");
                 return;
             }
             _movingAgent.CurrentState = _walkState;

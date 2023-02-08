@@ -387,6 +387,8 @@ GameObject:
   - component: {fileID: 1388517098}
   - component: {fileID: 196458308}
   - component: {fileID: 997917049310270842}
+  - component: {fileID: 882132278}
+  - component: {fileID: 882132277}
   m_Layer: 0
   m_Name: ChestWithFlower
   m_TagString: Untagged
@@ -435,9 +437,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3befe7136be534d49be7ec5d4ac86cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearParticles: {fileID: 0}
-  destroyParticles: {fileID: 0}
-  selectionAura: {fileID: 0}
 --- !u!114 &997917049310270842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,6 +449,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d33fad05ec383cd408cafb66d729a351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &882132278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9127098993292618313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3e40306dae38db4ab36b97b7326a4d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerTypes: 2
+  aimType: 4
+--- !u!114 &882132277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9127098993292618313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5f059674a44da4ab4e6980be9e6a91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxVisibleDistance: 5
+  ownerType: 2
+  aimType: 4
 --- !u!1 &9127378111817119019
 GameObject:
   m_ObjectHideFlags: 0

@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521a0d55e118d6c47a3c699063003511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kernelTypeOwner: 1
+  kernelTypeOwner: 2
 --- !u!114 &3963481928532023251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,9 +275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3befe7136be534d49be7ec5d4ac86cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearParticles: {fileID: 0}
-  destroyParticles: {fileID: 0}
-  selectionAura: {fileID: 0}
 --- !u!114 &85841538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -876,6 +873,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5306262822773127816}
     m_Modifications:
+    - target: {fileID: 223208474249301870, guid: a6434b6c3d33a83428bfc7fd21eb5990, type: 3}
+      propertyPath: currentState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1845024783563779422, guid: a6434b6c3d33a83428bfc7fd21eb5990, type: 3}
       propertyPath: speed
       value: 15
@@ -936,10 +937,19 @@ PrefabInstance:
       propertyPath: speed
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6947816374146213723, guid: a6434b6c3d33a83428bfc7fd21eb5990, type: 3}
+      propertyPath: stateOnExitZone
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6947816374146213723, guid: a6434b6c3d33a83428bfc7fd21eb5990, type: 3}
+      propertyPath: stateOnEnterZone
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5851101563556848699, guid: a6434b6c3d33a83428bfc7fd21eb5990, type: 3}
     - {fileID: 6879216021940383470, guid: a6434b6c3d33a83428bfc7fd21eb5990, type: 3}
     - {fileID: 5110582933710296404, guid: a6434b6c3d33a83428bfc7fd21eb5990, type: 3}
+    - {fileID: 124272057, guid: a6434b6c3d33a83428bfc7fd21eb5990, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a6434b6c3d33a83428bfc7fd21eb5990, type: 3}
 --- !u!4 &7906272819890262929 stripped
 Transform:

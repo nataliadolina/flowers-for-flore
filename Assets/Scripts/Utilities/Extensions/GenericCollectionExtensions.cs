@@ -10,6 +10,7 @@ namespace Utilities.Extensions
     {
         internal static Array ToArray(this IEnumerable source, Type type)
         {
+            Debug.Log(type);
             var sourceCopy = (IEnumerable<object>)source;
             var srcArray = sourceCopy.ToArray();
 

@@ -7,6 +7,7 @@ using Game.Characters.Enums;
 using DI.Kernel.Interfaces;
 using DI.Attributes.Register;
 using DI.Attributes.Construct;
+using DI.Attributes.Run;
 using Utilities.Extensions;
 using Game.Characters.States.Managers;
 
@@ -15,7 +16,8 @@ namespace Game.Characters.Handlers
     [Register(typeof(IDistanceToSubjectZoneProcessor))]
     internal class DistanceToSubjectZoneProcessor : MonoBehaviour, IDistanceToSubjectZoneProcessor, IKernelEntity
     {
-        public event Action<float> onAimEnterZone;
+        //aim GameObject Transform
+        public event Action<Transform> onAimEnterZone;
         public event Action onAimExitZone;
 
         [SerializeField] private float maxVisibleDistance;
@@ -23,7 +25,6 @@ namespace Game.Characters.Handlers
         [SerializeField] private OwnerType aimType;
 
         private bool _isSubjectInsideZone = false;
-        private float _currentDistance;
         private bool _needToSwitchStateIfValueNotChanged = false;
 
         public bool IsSubjectInsideZone
@@ -43,7 +44,7 @@ namespace Game.Characters.Handlers
                 }
                 else if (value)
                 {
-                    onAimEnterZone?.Invoke(_currentDistance);
+                    onAimEnterZone?.Invoke(_distanceToSubjectDetector.AimTransform);
                 }
                 _isSubjectInsideZone = value;
                 _needToSwitchStateIfValueNotChanged = false;
@@ -64,7 +65,6 @@ namespace Game.Characters.Handlers
 
         private void SetIsSubjectInsideZone(float distanceToAim)
         {
-            _currentDistance = distanceToAim;
             IsSubjectInsideZone = distanceToAim <= maxVisibleDistance ? true : false;
         }
 
@@ -84,6 +84,10 @@ namespace Game.Characters.Handlers
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
+            if (OwnerType == OwnerType.Runtime && AimType == OwnerType.Player)
+            {
+                Debug.Log("Finding distanceDetector");
+            }
             _distanceToSubjectDetector = kernel.GetInjection<IDistanceToSubjectDetector>(
                 x => x.AimType == aimType && x.OwnerTypes.HasValue(ownerType.ToString())
                 );
@@ -92,6 +96,10 @@ namespace Game.Characters.Handlers
 
         private void SetSubscriptions()
         {
+            if (OwnerType == OwnerType.Runtime && AimType == OwnerType.Player)
+            {
+                Debug.Log("Setting subscriptions");
+            }
             _distanceToSubjectDetector.onDistanceToSubjectChange += SetIsSubjectInsideZone;
             _movingAgent.onCurrentStateChanged += SetNeedToSwitchStateIfValueNotChanged;
         }

@@ -18,37 +18,9 @@ namespace Game.Characters.Chest
     {
         public event Action onOpened;
         public event Action<DistanceToPlayerArgs> onPlayerEnteredChestZone;
+        public event Action<IChest> onPlayerExitedChestZone;
 
-        [SerializeField] private Particles appearParticles;
-        [SerializeField] private Particles destroyParticles;
-
-        [SerializeField] private GameObject selectionAura;
-
-        private bool _isSelected = false;
-        private bool _isVisible = false;
-
-        public bool IsSelected {
-            get => _isSelected;
-            set { 
-                selectionAura.SetActive(value);
-                _isSelected = value;
-            }
-        }
-
-        public bool IsVisible
-        {
-            get => _isVisible;
-            set
-            {
-                _isVisible = value;
-                appearParticles.IsActivated = value;
-            }
-        }
-
-        private void OnPlayerEnteredChestZone(float distanceToPlayer)
-        {
-            onPlayerEnteredChestZone?.Invoke(new DistanceToPlayerArgs(distanceToPlayer, this, true));
-        }
+        private bool _canBeOpened;
 
 #region ITransform
 
@@ -57,6 +29,8 @@ namespace Game.Characters.Chest
 #endregion
 
 #region IChest
+
+        public bool CanBeOpened { get => _canBeOpened;}
 
         public void Open()
         {
@@ -68,6 +42,27 @@ namespace Game.Characters.Chest
         {
             ClearSubscriptions();
             Destroy(gameObject);
+        }
+
+#endregion
+
+        private void OnPlayerEnteredChestZone(Transform playerTransform)
+        {
+            _canBeOpened = true;
+            onPlayerEnteredChestZone?.Invoke(new DistanceToPlayerArgs(Transform, playerTransform, this));
+        }
+
+        private void OnPlayerExitedChestZone()
+        {
+            _canBeOpened = false;
+            onPlayerExitedChestZone?.Invoke(this);
+        }
+
+#region MonoBehaviour
+
+        private void OnDestroy()
+        {
+            ClearSubscriptions();
         }
 
 #endregion
@@ -87,7 +82,7 @@ namespace Game.Characters.Chest
         private void OnConstruct(IKernel kernel)
         {
             Transform = transform;
-            _distanceToPlayerProcessor = kernel.GetInjection<IDistanceToSubjectZoneProcessor>(x => (x.OwnerType == OwnerType.ChestEntity | x.OwnerType == OwnerType.Chest) && x.AimType == OwnerType.Player);
+            _distanceToPlayerProcessor = kernel.GetInjection<IDistanceToSubjectZoneProcessor>(x => x.OwnerType == OwnerType.Chest && x.AimType == OwnerType.Player);
             SetSubscriptions();
         }
 
@@ -104,7 +99,8 @@ namespace Game.Characters.Chest
         private void SetSubscriptions()
         {
             _distanceToPlayerProcessor.onAimEnterZone += OnPlayerEnteredChestZone;
-
+            _distanceToPlayerProcessor.onAimExitZone += OnPlayerExitedChestZone;
+       
             if (_movingAgent != null)
             {
                 _chestAnimator.onOpenAnimationStoppedPlaying += _movingAgent.TerminateCurrentState;
@@ -114,6 +110,7 @@ namespace Game.Characters.Chest
         private void ClearSubscriptions()
         {
             _distanceToPlayerProcessor.onAimEnterZone -= OnPlayerEnteredChestZone;
+            _distanceToPlayerProcessor.onAimExitZone -= OnPlayerExitedChestZone;
 
             if (_movingAgent != null)
             {

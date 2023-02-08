@@ -808,10 +808,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 857850623, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
-      propertyPath: ownerType
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 9125062764650404383, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -1254,15 +1250,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChestWithMonster 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5307745038890519262, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5706517656218799748, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
       propertyPath: movingSystem
       value: 
       objectReference: {fileID: 1165853442}
-    m_RemovedComponents: []
+    - target: {fileID: 8352808984341241391, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8114068748374240838, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
 --- !u!1001 &1202648255
 PrefabInstance:
@@ -1744,6 +1741,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1559312140 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8352808984341241391, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
+  m_PrefabInstance: {fileID: 1200234979}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1562976634
 GameObject:
   m_ObjectHideFlags: 0
@@ -2133,6 +2135,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9125062764650404383, guid: f3dc6f5f2508a5c48b6c7958f805ca6a, type: 3}
   m_PrefabInstance: {fileID: 1651529558}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1850249945 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7906272819890262895, guid: 86b5c158f49f3b84cb134285d90def20, type: 3}
+  m_PrefabInstance: {fileID: 1200234979}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1850249950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850249945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c9a5ec893ed5b469159cc2bbfe741b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerType: 1
+  currentMesh: {fileID: 1559312140}
 --- !u!1001 &1863536088
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2595,6 +2616,10 @@ PrefabInstance:
     - target: {fileID: 1873798205601364859, guid: f1d8d5049aa983e4cafba32d3a0bc087, type: 3}
       propertyPath: m_Name
       value: Free monster
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873798205601364859, guid: f1d8d5049aa983e4cafba32d3a0bc087, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1873798205601364869, guid: f1d8d5049aa983e4cafba32d3a0bc087, type: 3}
       propertyPath: m_RootOrder

@@ -38,6 +38,8 @@ namespace Game.Characters.Handlers
 
         public OwnerTypeFlags OwnerTypes { get => ownerTypes; }
 
+        public Transform AimTransform { get => _subjectTransform; }
+
         private float CurrentDistance { get => _currentDistance;
             set
             {
@@ -67,6 +69,7 @@ namespace Game.Characters.Handlers
 
         public void ColliderSetEnabled(bool isEnabled)
         {
+            Debug.Log($"Distance Detector set isEnabled = {isEnabled}");
             _isDetectionAreaActive = isEnabled;
         }
 
@@ -75,6 +78,7 @@ namespace Game.Characters.Handlers
         [RunMethod(KernelTypeOwner.LogicScene)]
         private void OnRun(IKernel kernel)
         {
+            Debug.Log($"Detector: {ownerTypes.ToString()}");
             _thisTransform = transform;
             _subjectTransform = kernel.GetInjection<IBody>(x => x.OwnerType == aimType).Transform;
             StartInternal();

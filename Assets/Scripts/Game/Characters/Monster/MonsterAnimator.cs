@@ -39,7 +39,6 @@ namespace Game.Characters.Monster
         private void Attack(float harm)
         {
             _animator.SetTrigger(AttackIndex);
-            Debug.Log("Animator set index attack");
         }
 
         private void OnCurrentStateChanged(StateEntityType stateType)

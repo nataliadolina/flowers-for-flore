@@ -8,14 +8,13 @@ namespace Game.Characters.Interfaces
 {
     internal interface IChest: ITransform
     {
-        event Action onOpened;
+        public event Action onOpened;
         public event Action<DistanceToPlayerArgs> onPlayerEnteredChestZone;
+        public event Action<IChest> onPlayerExitedChestZone;
 
-        void Open();
+        public bool CanBeOpened { get; }
 
-        void Destroy();
-
-        bool IsSelected { get; set; }
-        bool IsVisible { get; set; }
+        public void Open();
+        public void Destroy();
     }
 }

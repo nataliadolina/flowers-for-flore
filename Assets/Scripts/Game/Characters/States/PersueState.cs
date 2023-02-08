@@ -35,7 +35,6 @@ namespace Game.Characters.States
 
 #region Kernel Entity
 
-        [ConstructField]
         private IBody _chestEntitybody;
 
         private Transform _playerTransform;
@@ -45,7 +44,8 @@ namespace Game.Characters.States
         [RunMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _thisTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity).Transform;
+            _chestEntitybody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
+            _thisTransform = _chestEntitybody.Transform;
         }
 
         [RunMethod(KernelTypeOwner.Player)]

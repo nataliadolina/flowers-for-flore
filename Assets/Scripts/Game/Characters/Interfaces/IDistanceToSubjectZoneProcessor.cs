@@ -8,7 +8,10 @@ namespace Game.Characters.Interfaces
 {
     internal interface IDistanceToSubjectZoneProcessor : IOwnerType, IAimType
     {
-        public event Action<float> onAimEnterZone;
+        /// <summary>
+        /// Passes aim GameObject Transform when it enteres the zone
+        /// </summary>
+        public event Action<Transform> onAimEnterZone;
         public event Action onAimExitZone;
 
         public bool IsSubjectInsideZone { get; }

@@ -11,7 +11,7 @@ namespace Game.Characters.Abstract
     internal abstract class BaseChestEntity : MonoBehaviour, IChestEntity, IKernelEntity
     {
         [SerializeField] private protected OwnerType ownerType;
-        private protected GameObject _currentMesh = null;
+        private protected GameObject _currentMesh;
 
 #region IOwnerType
 
@@ -30,33 +30,6 @@ namespace Game.Characters.Abstract
                 _isActive = value;
                 _currentMesh.SetActive(value);
             }
-        }
-
-#endregion
-
-#region Kernel Entity
-
-        [ConstructField]
-        private IChest chest;
-
-        [ConstructMethod]
-        private void OnConstruct(IKernel kernel)
-        {
-            
-        }
-
-#endregion
-
-#region Substriptions
-
-        private void SetSubscriptions()
-        {
-            
-        }
-
-        private void ClearSubscriptions()
-        {
-
         }
 
 #endregion

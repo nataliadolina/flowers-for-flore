@@ -35,6 +35,25 @@ namespace Game.Characters.Chest
             }
         }
 
+        private void UpdateOpenableChests()
+        {
+            _openableChests = _chestAnimatorDistanceToPlayerMap.Where(x => x.Value.CanBeOpened == true).GetValues();
+        }
+
+        private void OpenChest(DistanceToPlayerArgs distanceToPlayerArgs)
+        {
+            IChest chest = distanceToPlayerArgs.Chest;
+
+            chest.onPlayerEnteredChestZone -= AnyChestDistanceToPlayerChange;
+            _chestAnimatorDistanceToPlayerMap.Remove(chest);
+            _openableChests.Remove(distanceToPlayerArgs);
+            UpdateOpenableChests();
+
+            chest.Open();
+            
+            IsThereAnyOpenableChests = _openableChests.Count > 0;
+        }
+
         private void AnyChestDistanceToPlayerChange(DistanceToPlayerArgs distanceToPlayerArgs)
         {
             bool isExistingChest = false;
@@ -54,7 +73,14 @@ namespace Game.Characters.Chest
                 _chestAnimatorDistanceToPlayerMap.Add(currentChest, distanceToPlayerArgs);
             }
 
-            _openableChests = _chestAnimatorDistanceToPlayerMap.Where(x => x.Value.CanBeOpened == true).GetValues();
+            UpdateOpenableChests();
+            IsThereAnyOpenableChests = _openableChests.Count > 0;
+        }
+
+        private void PlayerExitedAnyChestZone(IChest chest)
+        {
+            _chestAnimatorDistanceToPlayerMap.Remove(chest);
+            UpdateOpenableChests();
             IsThereAnyOpenableChests = _openableChests.Count > 0;
         }
 
@@ -65,13 +91,10 @@ namespace Game.Characters.Chest
                 return;
             }
 
+            UpdateOpenableChests();
             float minDistanceToPlayer = _openableChests.Min(x => x.DistanceToPlayer);
             var chestToOpenInfo = _openableChests.Where(x => x.DistanceToPlayer == minDistanceToPlayer).FirstOrDefault();
-            IChest chestToOpen = chestToOpenInfo.Chest;
-            chestToOpen.Open();
-            _chestAnimatorDistanceToPlayerMap.Remove(chestToOpen);
-            _openableChests.Remove(chestToOpenInfo);
-            IsThereAnyOpenableChests = _openableChests.Count > 0;
+            OpenChest(chestToOpenInfo);
         }
 
 #region MonoBehaviour
@@ -103,6 +126,7 @@ namespace Game.Characters.Chest
             foreach (var chest in chests)
             {
                 chest.onPlayerEnteredChestZone += AnyChestDistanceToPlayerChange;
+                chest.onPlayerExitedChestZone += PlayerExitedAnyChestZone;
             }
         }
 
@@ -111,6 +135,7 @@ namespace Game.Characters.Chest
             foreach (var chest in chests)
             {
                 chest.onPlayerEnteredChestZone -= AnyChestDistanceToPlayerChange;
+                chest.onPlayerExitedChestZone -= PlayerExitedAnyChestZone;
             }
         }
 

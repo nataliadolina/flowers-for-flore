@@ -49,6 +49,7 @@ namespace Game.Characters.States {
 
         public override void OnStartState()
         {
+            Debug.Log("Walk Set detectors enabled");
             _body.SetCollisionDetectorsEnabled(true);
             _body.SetRigidbodiesEnabled(false);
         }

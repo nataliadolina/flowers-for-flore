@@ -13,10 +13,10 @@ using DI.Kernel.Interfaces;
 using DI.Kernel.Enums;
 
 
-namespace Game.Characters
+namespace Game.Characters.Flower
 {
     [Register]
-    internal class Flower : BaseChestEntity, IScoreManager
+    internal class FlowerInsideChestHandler : BaseChestEntity, IScoreManager
     {
         [SerializeField] private float score = 0;
         [SerializeField] private List<GameObject> flowerMeshes = null;
@@ -110,7 +110,7 @@ namespace Game.Characters
         {
             SetMesh();
             IsActive = false;
-            _chestAnimator.onOpenAnimationStoppedPlaying += () => IsActive = true;
+            _chestAnimator.onOpenAnimationStoppedPlaying += OnFlowerAppear;
         }
 
 #endregion

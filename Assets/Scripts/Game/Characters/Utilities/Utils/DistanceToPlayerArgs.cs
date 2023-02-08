@@ -7,15 +7,19 @@ namespace Game.Characters.Utilities.Utils
 {
     internal struct DistanceToPlayerArgs
     {
-        internal float DistanceToPlayer;
+        private Transform _chestTransform;
+        private Transform _playerTransform;
+        
         internal IChest Chest;
-        internal bool CanBeOpened;
 
-        internal DistanceToPlayerArgs(float distanceToPlayer, IChest chest, bool canBeOpened)
+        internal float DistanceToPlayer { get => Vector3.Distance(_playerTransform.position, _chestTransform.position); }
+        internal bool CanBeOpened { get => Chest.CanBeOpened; }
+
+        internal DistanceToPlayerArgs(Transform chestTransform, Transform playerTransform, IChest chest)
         {
-            DistanceToPlayer = distanceToPlayer;
+            _chestTransform = chestTransform;
+            _playerTransform = playerTransform;
             Chest = chest;
-            CanBeOpened = canBeOpened;
         }
     }
 }

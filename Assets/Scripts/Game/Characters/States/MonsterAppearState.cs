@@ -8,6 +8,7 @@ using DI.Attributes.Run;
 using DI.Kernel.Interfaces;
 using Game.Characters.Abstract;
 using Game.Characters.Enums;
+using System;
 
 namespace Game.Characters.States
 {
@@ -47,14 +48,12 @@ namespace Game.Characters.States
 
         private protected override void BeforeTerminate()
         {
+            Debug.Log($"Change current state runtime to {RuntimeType.PersueWalk}");
             _movingAgent.ChangeCurrentRuntime(RuntimeType.PersueWalk);
             _chestEntityBody.SetRigidbodiesEnabled(false);
         }
 
 #region KernelEntity
-
-        [ConstructField]
-        private IChest _chest;
 
         private Transform _thisTransform;
 

@@ -5,6 +5,7 @@ using DI.Kernel.Interfaces;
 using Game.Characters.Interfaces;
 using Game.Characters.Enums;
 using Game.Characters.States.Managers;
+using Game.Characters.Runtimes;
 
 namespace Game.Characters.Handlers
 {
@@ -20,7 +21,7 @@ namespace Game.Characters.Handlers
         [SerializeField]
         private DistanceToSubjectZoneProcessor distanceToPlayerProcessor;
 
-        private void OnSubjectEnter(float distance)
+        private void OnSubjectEnter(Transform aimTransform)
         {
             _movingAgent.ChangeCurrentState(stateOnEnterZone);
         }
@@ -44,6 +45,9 @@ namespace Game.Characters.Handlers
         [ConstructField]
         private MovingAgent _movingAgent;
 
+        [ConstructField]
+        private PersueWalkRuntime _persueWalkRuntime;
+
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
@@ -56,11 +60,24 @@ namespace Game.Characters.Handlers
 
         private void SetSubscriptions()
         {
+            Debug.Log("Set subscriptions");
+            _persueWalkRuntime.onPersueWalkRuntimeStartedRunning += SetDistanceProcessorSubscriptions;
+            _persueWalkRuntime.onPersueWalkRuntimeStoppedRunning += ClearDistanceProcessorSubscriptions;
+        }
+
+        private void ClearSubscriptions()
+        {
+            _persueWalkRuntime.onPersueWalkRuntimeStartedRunning -= SetDistanceProcessorSubscriptions;
+            _persueWalkRuntime.onPersueWalkRuntimeStoppedRunning -= ClearDistanceProcessorSubscriptions;
+        }
+
+        private void SetDistanceProcessorSubscriptions()
+        {
             distanceToPlayerProcessor.onAimEnterZone += OnSubjectEnter;
             distanceToPlayerProcessor.onAimExitZone += OnSubjectLeave;
         }
 
-        private void ClearSubscriptions()
+        private void ClearDistanceProcessorSubscriptions()
         {
             distanceToPlayerProcessor.onAimEnterZone -= OnSubjectEnter;
             distanceToPlayerProcessor.onAimExitZone -= OnSubjectLeave;
