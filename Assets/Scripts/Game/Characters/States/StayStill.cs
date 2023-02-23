@@ -12,8 +12,7 @@ namespace Game.Characters.States
     [Register]
     internal class StayStill : BaseState
     {
-        [SerializeField] private StateEntityType stateEntityType = StateEntityType.Still;
-        public override StateEntityType StateEntityType { get => stateEntityType; }
+        public override StateEntityType StateEntityType { get => StateEntityType.Still; }
 
         public override void Run()
         {
@@ -27,7 +26,7 @@ namespace Game.Characters.States
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _body = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
+            _body = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.Creature);
         }
 
         [RunMethod]

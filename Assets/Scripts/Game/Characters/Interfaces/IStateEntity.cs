@@ -6,8 +6,9 @@ namespace Game.Characters.Interfaces
     {
         StateEntityType StateEntityType { get; }
 
-        void Run();
-        void Terminate();
-        void OnStartState();
+        public void Run();
+        public void BeforeTerminate();
+        public void Terminate();
+        public void OnStartState();
     }
 }

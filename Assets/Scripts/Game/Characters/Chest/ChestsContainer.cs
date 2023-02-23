@@ -50,7 +50,8 @@ namespace Game.Characters.Chest
             UpdateOpenableChests();
 
             chest.Open();
-            
+
+            Debug.Log("Opened chest");
             IsThereAnyOpenableChests = _openableChests.Count > 0;
         }
 

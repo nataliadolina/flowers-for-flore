@@ -53,7 +53,7 @@ namespace Game.Characters.Handlers
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
-            _chestEntityBody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
+            _chestEntityBody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.Creature);
         }
 
 #endregion

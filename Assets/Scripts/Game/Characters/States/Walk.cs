@@ -16,6 +16,9 @@ namespace Game.Characters.States {
     [Register]
     internal class Walk : BaseState
     {
+        [SerializeField]
+        private float speed;
+
         [SerializeField] private MovingSystem movingSystem;
         [SerializeField] private TypeMove typeMove;
         private Transform targetPoint = null;
@@ -49,7 +52,6 @@ namespace Game.Characters.States {
 
         public override void OnStartState()
         {
-            Debug.Log("Walk Set detectors enabled");
             _body.SetCollisionDetectorsEnabled(true);
             _body.SetRigidbodiesEnabled(false);
         }
@@ -63,7 +65,7 @@ namespace Game.Characters.States {
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _body = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
+            _body = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.Creature);
             _chestEntityTransform = _body.Transform;
         }
 

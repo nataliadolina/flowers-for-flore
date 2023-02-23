@@ -6,6 +6,8 @@ using Game.Characters.Abstract;
 using DI.Kernel.Interfaces;
 using DI.Attributes.Register;
 using DI.Attributes.Construct;
+using Game.Characters.States.Managers;
+using Game.Characters.Enums;
 
 namespace Game.Characters.Monster
 {
@@ -19,18 +21,27 @@ namespace Game.Characters.Monster
             IsActive = true;
         }
 
+        private void OnAppearStateTerminated()
+        {
+            _stateManager.IsActive = true;
+        }
+
 #region Kernel Entity
 
         [ConstructField]
-        private IAppearState appearState;
+        private IChestAnimator _chestAnimator;
 
         [ConstructField]
-        private IChestAnimator _chestAnimator;
+        private IStateManager _stateManager;
+
+        [ConstructField]
+        private IAppearState _appearState;
 
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
             _currentMesh = currentMesh;
+            _stateManager.IsActive = false;
             IsActive = false;
             SetSubscriptions();
         }
@@ -42,6 +53,7 @@ namespace Game.Characters.Monster
         private void SetSubscriptions()
         {
             _chestAnimator.onOpenAnimationStoppedPlaying += OnMonsterAppear;
+            _appearState.onAppearStateTerminated += OnAppearStateTerminated;
         }
 
 #endregion

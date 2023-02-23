@@ -19,6 +19,8 @@ namespace Game.Characters.States
     [Register]
     internal class PersueState : BaseState
     {
+        [SerializeField] private float speed;
+
         [SerializeField] private StateEntityType stateEntityType = StateEntityType.Persue;
         public override StateEntityType StateEntityType { get => stateEntityType; }
 
@@ -44,7 +46,7 @@ namespace Game.Characters.States
         [RunMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _chestEntitybody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
+            _chestEntitybody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.Creature);
             _thisTransform = _chestEntitybody.Transform;
         }
 

@@ -13,20 +13,20 @@ using System;
 namespace Game.Characters.States
 {
     [Register]
-    internal class MonsterAppearState : BaseState
+    [Register(typeof(IAppearState))]
+    internal class MonsterAppearState : BaseState, IAppearState
     {
+        public event Action onAppearStateTerminated;
+
+        [SerializeField]
+        private float speed;
+
         private float _lastPositionY;
-        private bool _startUpdate = false;
 
         public override StateEntityType StateEntityType { get => StateEntityType.Appear; }
 
         public override void Run()
         {
-            if (!_startUpdate)
-            {
-                return;
-            }
-
             float currentY = _thisTransform.position.y;
             if (currentY < _lastPositionY)
             {
@@ -41,37 +41,38 @@ namespace Game.Characters.States
 
         public override void OnStartState()
         {
-            _chestEntityBody.SetRigidbodiesEnabled(true);
+            _creatureBody.SetRigidbodiesEnabled(true);
             _chestEntityRigidbody.AddForce(Vector3.up * speed * 0.02f, ForceMode.Impulse);
-            _startUpdate = true;
         }
 
-        private protected override void BeforeTerminate()
+        public override void BeforeTerminate()
         {
-            Debug.Log($"Change current state runtime to {RuntimeType.PersueWalk}");
-            _movingAgent.ChangeCurrentRuntime(RuntimeType.PersueWalk);
-            _chestEntityBody.SetRigidbodiesEnabled(false);
+            onAppearStateTerminated?.Invoke();
+            _creatureBody.SetRigidbodiesEnabled(false);
         }
 
 #region KernelEntity
 
         private Transform _thisTransform;
 
-        private IBody _chestEntityBody;
+        private IBody _creatureBody;
 
         private Rigidbody _chestEntityRigidbody;
+
+        [ConstructField]
+        private IStateManager _stateManager;
 
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _chestEntityBody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
+            _creatureBody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.Creature);
         }
 
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
-            _thisTransform = _chestEntityBody.Transform;
-            _chestEntityRigidbody = _chestEntityBody.Rigidbody;
+            _thisTransform = _creatureBody.Transform;
+            _chestEntityRigidbody = _creatureBody.Rigidbody;
         }
 
 #endregion

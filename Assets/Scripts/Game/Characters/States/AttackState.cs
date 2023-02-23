@@ -9,13 +9,14 @@ using DI.Kernel.Interfaces;
 using DI.Kernel.Enums;
 using Game.Characters.Player;
 using Game.Characters.Interfaces;
+using Utilities;
 
 namespace Game.Characters.States
 {
-    [Register(typeof(IMonsterAttack))]
-    internal class AttackState : BaseState, IMonsterAttack
+    [Register(typeof(ICausePlayerDamage))]
+    internal class AttackState : BaseState, ICausePlayerDamage
     {
-        public event Action<float> onMonsterAttackedPlayer;
+        public event Action<float> onCausedPlayerDamage;
 
         [SerializeField] private float harm;
         [SerializeField] float timeBeetweenAttacks = 1f;
@@ -28,11 +29,11 @@ namespace Game.Characters.States
         {
             if (_currentTime < timeBeetweenAttacks)
             {
-                _currentTime += Time.deltaTime;
+                _currentTime += GameParams.UPDATE_RATE;
                 return;
             }
 
-            onMonsterAttackedPlayer(harm);
+            onCausedPlayerDamage(harm);
             _currentTime = 0f;
         }
         

@@ -12,7 +12,6 @@ namespace Game.Characters.States.Abstract
     internal abstract class BaseState : MonoBehaviour, IKernelEntity, IStateEntity
     {   
         [SerializeField] private StateEntityType nextState;
-        [SerializeField] protected float speed;
 
         public abstract StateEntityType StateEntityType { get; }
 
@@ -24,7 +23,7 @@ namespace Game.Characters.States.Abstract
             _movingAgent.ChangeCurrentState(nextState);
         }
 
-        private protected virtual void BeforeTerminate() { }
+        public virtual void BeforeTerminate() { }
         public virtual void OnStartState() { }
 
 #region Kernel Entity

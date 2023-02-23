@@ -7,6 +7,6 @@ namespace Game.Characters.Interfaces
 {
     internal interface IAppearState
     {
-        public event Action onAppeared;
+        public event Action onAppearStateTerminated;
     }
 }

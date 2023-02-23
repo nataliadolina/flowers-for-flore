@@ -102,7 +102,7 @@ namespace Game.Characters.Flower
         [ConstructMethod]
         private void OnConstruct(IKernel kernel)
         {
-            _chestEntityBody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity);
+            _chestEntityBody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.Creature);
         }
 
         [RunMethod]

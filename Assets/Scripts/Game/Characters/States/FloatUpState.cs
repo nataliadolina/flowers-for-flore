@@ -12,22 +12,27 @@ using System;
 
 namespace Game.Characters.States
 {
-    internal class FloatUpState : BaseState
+    [Register(typeof(IAppearState))]
+    internal class FloatUpState : BaseState, IAppearState
     {
-        [SerializeField] private float height = 1f;
-        [SerializeField] private StateEntityType stateEntityType = StateEntityType.Appear;
+        public event Action onAppearStateTerminated;
 
-        public override StateEntityType StateEntityType { get => stateEntityType; }
+        [SerializeField]
+        private float speed;
+
+        [SerializeField] private float height = 1f;
+
+        public override StateEntityType StateEntityType { get => StateEntityType.Appear; }
 
         public override void Run()
         {
-            float delta = _chestEntityTransform.position.y - _startPoint;
+            float delta = _creatureTransform.position.y - _startPoint;
             if (delta < height)
             {
                 float translateSpeed = speed;
                 if (delta > 0.5f * height)
                     translateSpeed = 2 * speed;
-                _chestEntityTransform.Translate(Vector3.up * translateSpeed * Time.deltaTime);
+                _creatureTransform.Translate(Vector3.up * translateSpeed * Time.deltaTime);
             }
             else
             {
@@ -35,26 +40,24 @@ namespace Game.Characters.States
             }
         }
 
-        public override void OnStartState()
+        public override void BeforeTerminate()
         {
-            _chestEntityBody.SetCollisionDetectorsEnabled(true);
+            onAppearStateTerminated?.Invoke();
         }
 
 
 #region Kernel Entity
 
-        private Transform _chestEntityTransform;
-
-        private IBody _chestEntityBody;
+        private Transform _creatureTransform;
 
         private float _startPoint;
 
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
-            _chestEntityBody = kernel.GetInjection<IBody>();
-            _chestEntityTransform = _chestEntityBody.Transform;
-            _startPoint = _chestEntityTransform.position.y;
+            IBody creatureBody = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.Creature);
+            _creatureTransform = creatureBody.Transform;
+            _startPoint = _creatureTransform.position.y;
         }
 
 #endregion

@@ -30,7 +30,7 @@ namespace Game.Characters.Chest
 
 #region IChest
 
-        public bool CanBeOpened { get => _canBeOpened;}
+        public bool CanBeOpened { get => _canBeOpened; }
 
         public void Open()
         {
@@ -48,12 +48,22 @@ namespace Game.Characters.Chest
 
         private void OnPlayerEnteredChestZone(Transform playerTransform)
         {
+            if (_canBeOpened == true)
+            {
+                return;
+            }
+
             _canBeOpened = true;
             onPlayerEnteredChestZone?.Invoke(new DistanceToPlayerArgs(Transform, playerTransform, this));
         }
 
         private void OnPlayerExitedChestZone()
         {
+            if (_canBeOpened == false)
+            {
+                return;
+            }
+
             _canBeOpened = false;
             onPlayerExitedChestZone?.Invoke(this);
         }
@@ -89,7 +99,7 @@ namespace Game.Characters.Chest
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
-            _chestEntityTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.ChestEntity).Transform;
+            _chestEntityTransform = kernel.GetInjection<IBody>(x => x.OwnerType == OwnerType.Creature).Transform;
         }
 
 #endregion

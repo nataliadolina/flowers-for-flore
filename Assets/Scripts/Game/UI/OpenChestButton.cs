@@ -26,10 +26,11 @@ namespace Game.UI
 
 #region MonoBehaviour
 
-        private protected override void OnPostStart()
+        private protected override void OnStartInternal()
         {
             SetActive(false);
         }
+
         private void OnDestroy()
         {
             ClearSubstriptions();

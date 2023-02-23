@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Characters.Interfaces
 {
-    internal interface IStateManager
+    internal interface IStateManager : ISetActive
     {
         
     }

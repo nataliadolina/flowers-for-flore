@@ -24,7 +24,6 @@ namespace Game.Characters.Handlers
             if (other.GetComponent<PlayerMovement>())
             {
                 _movingAgent.CurrentState.Terminate();
-                Debug.Log($"Changed to state {_movingAgent.CurrentState}");
             }
         }
 

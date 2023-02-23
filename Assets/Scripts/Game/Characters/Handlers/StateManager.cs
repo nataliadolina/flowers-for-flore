@@ -6,82 +6,60 @@ using Game.Characters.Interfaces;
 using Game.Characters.Enums;
 using Game.Characters.States.Managers;
 using Game.Characters.Runtimes;
+using System;
+using System.Linq;
+using Utilities.Utils;
+using System.Collections.Generic;
 
 namespace Game.Characters.Handlers
 {
     [Register]
-    internal class StateManager : MonoBehaviour, IKernelEntity
+    [Register(typeof(IStateManager))]
+    internal class StateManager : MonoBehaviour, IKernelEntity, IStateManager
     {
         [SerializeField]
-        private StateEntityType stateOnEnterZone;
+        private StateEntityType stateOnOutsideAllZones;
 
         [SerializeField]
-        private StateEntityType stateOnExitZone;
+        private List<ZoneProcessorStateArgs> zoneProcessorPriorityMap;
 
-        [SerializeField]
-        private DistanceToSubjectZoneProcessor distanceToPlayerProcessor;
+#region ISetActive
 
-        private void OnSubjectEnter(Transform aimTransform)
-        {
-            _movingAgent.ChangeCurrentState(stateOnEnterZone);
-        }
-       
-        private void OnSubjectLeave()
-        {
-            _movingAgent.ChangeCurrentState(stateOnExitZone);
-        }
+        private bool _isActive = true;
 
-#region MonoBehaviour
-
-        private void OnDestroy()
-        {
-            ClearSubscriptions();
+        public bool IsActive 
+        { 
+            get => _isActive;
+            set => _isActive = value;
         }
 
 #endregion
+
+        private void Update()
+        {
+            if (!_isActive)
+            {
+                return;
+            }
+
+            ZoneProcessorStateArgs[] maxPriorityArgs = zoneProcessorPriorityMap.Where(x => x.DistanceToSubjectZoneProcessor.IsSubjectInsideZone == true).OrderByDescending(x => x.Priority).ToArray();
+
+            if (maxPriorityArgs.Length == 0)
+            {
+                _movingAgent.ChangeCurrentState(stateOnOutsideAllZones);
+                return;
+            }
+
+            var maxPriorityArg = maxPriorityArgs[0];
+            DistanceToSubjectZoneProcessor distanceToSubjectZoneProcessor = maxPriorityArg.DistanceToSubjectZoneProcessor;
+
+            _movingAgent.ChangeCurrentState(maxPriorityArg.StateEntityTypeOnEnterZone);
+        }
 
 #region KernelEntity
 
         [ConstructField]
         private MovingAgent _movingAgent;
-
-        [ConstructField]
-        private PersueWalkRuntime _persueWalkRuntime;
-
-        [ConstructMethod]
-        private void OnConstruct(IKernel kernel)
-        {
-            SetSubscriptions();
-        }
-
-#endregion
-
-#region Subscriptions
-
-        private void SetSubscriptions()
-        {
-            Debug.Log("Set subscriptions");
-            _persueWalkRuntime.onPersueWalkRuntimeStartedRunning += SetDistanceProcessorSubscriptions;
-            _persueWalkRuntime.onPersueWalkRuntimeStoppedRunning += ClearDistanceProcessorSubscriptions;
-        }
-
-        private void ClearSubscriptions()
-        {
-            _persueWalkRuntime.onPersueWalkRuntimeStartedRunning -= SetDistanceProcessorSubscriptions;
-            _persueWalkRuntime.onPersueWalkRuntimeStoppedRunning -= ClearDistanceProcessorSubscriptions;
-        }
-
-        private void SetDistanceProcessorSubscriptions()
-        {
-            distanceToPlayerProcessor.onAimEnterZone += OnSubjectEnter;
-            distanceToPlayerProcessor.onAimExitZone += OnSubjectLeave;
-        }
-
-        private void ClearDistanceProcessorSubscriptions()
-        {
-            distanceToPlayerProcessor.onAimEnterZone -= OnSubjectEnter;
-            distanceToPlayerProcessor.onAimExitZone -= OnSubjectLeave;
-        }
 
 #endregion
     }

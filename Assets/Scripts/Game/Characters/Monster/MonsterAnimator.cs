@@ -53,7 +53,7 @@ namespace Game.Characters.Monster
 #region Kernel Entity
 
         [ConstructField]
-        private IMonsterAttack _monsterAttack;
+        private ICausePlayerDamage _damage;
 
         [ConstructField]
         private MovingAgent _movingAgent;
@@ -73,13 +73,13 @@ namespace Game.Characters.Monster
 
         private void SetSubscriptions()
         {
-            _monsterAttack.onMonsterAttackedPlayer += Attack;
+            _damage.onCausedPlayerDamage += Attack;
             _movingAgent.onCurrentStateChanged += OnCurrentStateChanged;
         }
 
         private void ClearSubscriptions()
         {
-            _monsterAttack.onMonsterAttackedPlayer -= Attack;
+            _damage.onCausedPlayerDamage -= Attack;
             _movingAgent.onCurrentStateChanged -= OnCurrentStateChanged;
         }
 

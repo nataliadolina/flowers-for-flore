@@ -27,15 +27,26 @@ namespace Game.Characters.States.Managers
         private IStateEntity _currentState;
         private IRuntime _currentRuntime;
 
-        public IStateEntity CurrentState { get { return _currentState; } 
+        internal IStateEntity CurrentState { get { return _currentState; } 
             set
             {
-                _currentState = value;
-                _currentState.OnStartState();
+                if (_currentState.StateEntityType == value.StateEntityType)
+                {
+                    return;
+                }
 
-                onCurrentStateChanged?.Invoke(value.StateEntityType);
-                currentState = value.StateEntityType;
+                _currentState.BeforeTerminate();
+                SetNewState(value);
             } 
+        }
+
+        private void SetNewState(IStateEntity newState)
+        {
+            _currentState = newState;
+            _currentState.OnStartState();
+
+            onCurrentStateChanged?.Invoke(newState.StateEntityType);
+            currentState = newState.StateEntityType;
         }
 
         private void Update()
@@ -89,7 +100,7 @@ namespace Game.Characters.States.Managers
         [RunMethod]
         private void OnRun(IKernel kernel)
         {
-            CurrentState = _stateEntitiesMap[startState];
+            SetNewState(_stateEntitiesMap[startState]);
             _currentRuntime = _runtimeEntitiesMap[startRuntime];
             _currentRuntime.OnStartRunning();
 

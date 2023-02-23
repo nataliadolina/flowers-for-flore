@@ -8,8 +8,9 @@ namespace Game.Characters.Enums
     [Flags]
     internal enum OwnerTypeFlags
     {
-        ChestEntity = 1,
+        Creature = 1,
         Chest = 2,
-        Runtime = 3
+        Runtime = 4,
+        Other = 8,
     }
 }
