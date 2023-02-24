@@ -3,12 +3,9 @@ using Game.Characters.States.Abstract;
 using Game.Characters.Effects;
 using System;
 using Game.Characters.Enums;
-using DI.Attributes.Register;
+using Utilities;
 using DI.Attributes.Construct;
-using DI.Kernel.Interfaces;
-using DI.Kernel.Enums;
-using Game.Characters.Player;
-using Game.Characters.Interfaces;
+using Game.Characters.ShootSystem;
 
 namespace Game.Characters.States
 {
@@ -16,7 +13,6 @@ namespace Game.Characters.States
     {
         public event Action<float> onMonsterAttackedPlayer;
         
-        [SerializeField] private GameObject patron;
         [SerializeField] float timeBeetweenAttacks = 0.5f;
 
         private float _currentTime = 0f;
@@ -27,12 +23,12 @@ namespace Game.Characters.States
         {
             if (_currentTime <= timeBeetweenAttacks)
             {
-                _currentTime += Time.deltaTime;
+                _currentTime += GameParams.UPDATE_RATE;
                 return;
             }
 
-            Instantiate(patron);
             _currentTime = 0f;
+            _gunHandler.Shoot();
         }
 
 #region MonoBehaviour
@@ -41,6 +37,13 @@ namespace Game.Characters.States
         {
             _currentTime = timeBeetweenAttacks;
         }
+
+#endregion
+
+#region Kernel Entity
+
+        [ConstructField]
+        private GunHandler _gunHandler;
 
 #endregion
     }

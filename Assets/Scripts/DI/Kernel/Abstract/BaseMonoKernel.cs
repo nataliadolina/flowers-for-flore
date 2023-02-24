@@ -11,12 +11,23 @@ namespace DI.Kernel.Abstract
 {
     internal abstract class BaseMonoKernel : MonoBehaviour, IKernel
     {
+        [SerializeField]
+        private bool _delayedStart;
+
         private readonly IDictionary<Type, List<object>> _injectionsMap = new Dictionary<Type, List<object>>();
 
         private protected IKernelEntity[] _injectionsToConstruct;
 
         public abstract KernelContextType KernelContextType { get; }
         public abstract KernelTypeOwner KernelTypeOwner { get; }
+
+        private void Start()
+        {
+            if (_delayedStart)
+            {
+                KernelManager.Instance.AddKernel(this);
+            }
+        }
 
         public virtual void RegisterInjections() { }
 

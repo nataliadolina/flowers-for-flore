@@ -24,6 +24,8 @@ namespace DI.Kernel
             typeof(IKernel).GetMethod(RUN_METHOD_NAME, BindingFlags.Public | BindingFlags.Instance), 
         };
 
+        private Queue<IKernel> _kernelsToProccess = new Queue<IKernel>();
+
         private void Awake()
         {
             Instance = this;
@@ -31,25 +33,55 @@ namespace DI.Kernel
 
         private void Start()
         {
+            ProcessAllKernelsOnScene();
+        }
+
+        internal void AddKernel(IKernel kernel)
+        {
+            RegisterKernel(kernel);
+            ProcessKernel(kernel);
+        }
+
+        private void ProcessAllKernelsOnScene()
+        {
             IKernel[] kernels = FindObjectsOfType<BaseMonoKernel>();
-            
+
             foreach (IKernel kernel in kernels)
             {
                 KernelTypeOwner owner = kernel.KernelTypeOwner;
-                if (!KernelOwnerMap.ContainsKey(owner))
-                {
-                    KernelOwnerMap.Add(owner, new List<IKernel>());
-                }
-
-                KernelOwnerMap[owner].Add(kernel);
+                RegisterKernel(kernel);
             }
 
+            ProcessAllKernels(kernels);
+        }
+
+        private void RegisterKernel(IKernel kernel)
+        {
+            KernelTypeOwner kernelOwner = kernel.KernelTypeOwner;
+            if (!KernelOwnerMap.ContainsKey(kernelOwner))
+            {
+                KernelOwnerMap.Add(kernelOwner, new List<IKernel>());
+            }
+
+            KernelOwnerMap[kernelOwner].Add(kernel);
+        }
+
+        private void ProcessAllKernels(IKernel[] kernels)
+        {
             for (int i = 0; i < 3; i++)
             {
-                foreach ( IKernel kernel in kernels)
+                foreach (IKernel kernel in kernels)
                 {
                     KERNEL_METHODS_ORDER[i].Invoke(kernel, new object[0]);
                 }
+            }
+        }
+
+        private void ProcessKernel(IKernel kernel)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                KERNEL_METHODS_ORDER[i].Invoke(kernel, new object[0]);
             }
         }
     }

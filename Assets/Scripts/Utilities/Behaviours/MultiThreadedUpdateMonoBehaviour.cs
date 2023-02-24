@@ -16,7 +16,7 @@ namespace Game.Utilities.Behaviours
             StartUpdate();
         }
 
-        private void StartUpdate()
+        private protected void StartUpdate()
         {
             foreach (var updateThread in _updateThreads)
             {
@@ -24,12 +24,17 @@ namespace Game.Utilities.Behaviours
             }
         }
 
-        private void OnDestroy()
+        private protected void StopUpdate()
         {
             foreach (var updateThread in _updateThreads)
             {
                 updateThread.Cancel(this);
             }
+        }
+
+        private void OnDestroy()
+        {
+            StopUpdate();
         }
     }
 }
