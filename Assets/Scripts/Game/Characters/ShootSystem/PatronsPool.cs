@@ -32,7 +32,7 @@ namespace Game.Characters.ShootSystem
         private void OnConstruct(IKernel kernel)
         {
             _patronStartPosition = _gunHandler.transform.position;
-            AddObjects(10);
+            AddObjects(initialCapacity);
         }
 
 #endregion

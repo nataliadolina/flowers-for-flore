@@ -2272,7 +2272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89343e73ef7e06b4c83ce570a2918cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialCapacity: 0
+  initialCapacity: 4
   patron: {fileID: 1776216511165712852, guid: 60324565af90d614a93c2b4f1e755105, type: 3}
 --- !u!1 &1249509268
 GameObject:
